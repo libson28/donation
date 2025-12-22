@@ -1,0 +1,1149 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nos Projets - DonSolidaire</title>
+    <script src="https://cdn.tailwindcss.com/3.4.16"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#EF9221',
+                        secondary: '#41B64B'
+                    },
+                    borderRadius: {
+                        'button': '8px'
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/5.5.0/echarts.min.js"></script>
+    <style>
+        :where([class^="ri-"])::before {
+            content: "\f3c2";
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+        .modal-content {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 1rem;
+            max-width: 500px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        .donation-amount {
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 1rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .donation-amount:hover {
+            border-color: #EF9221;
+            background-color: #fef3e9;
+        }
+        .donation-amount.selected {
+            border-color: #EF9221;
+            background-color: #fef3e9;
+        }
+    </style>
+</head>
+<body class="bg-white">
+    <!-- Header -->
+    <header class="bg-white shadow-sm sticky top-0 z-50" style="padding: 5px 0;">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-17">
+                <!-- Logo -->
+                <div class="flex items-center">
+                    <img src="logo.png" style="width: 70px;" alt="Logo" class="w-12 md:w-16 lg:w-20">
+                </div>
+                
+                <!-- Navigation Desktop -->
+                <nav class="hidden md:flex space-x-6 lg:space-x-8">
+                    <a href="index.html" class="text-gray-700 hover:text-primary transition-colors text-sm lg:text-base" data-i18n="nav.home">Accueil</a>
+                    <a href="Apropos.html" class="text-gray-700 hover:text-primary transition-colors text-sm lg:text-base" data-i18n="nav.about">À propos</a>
+                    <a href="#" class="text-primary font-semibold transition-colors text-sm lg:text-base" data-i18n="nav.projects">Projets</a>
+                    <a href="galerie.html" class="text-gray-700 hover:text-primary transition-colors text-sm lg:text-base" data-i18n="nav.gallery">Galerie</a>
+                    <a href="article.html" class="text-gray-700 hover:text-primary transition-colors text-sm lg:text-base" data-i18n="nav.news">Actualités</a>
+                    <a href="contact.html" class="text-gray-700 hover:text-primary transition-colors text-sm lg:text-base" data-i18n="nav.contact">Contact</a>
+                </nav>
+
+                <!-- Côté droit - Actions -->
+                <div class="flex items-center space-x-3 md:space-x-4">
+                    <!-- Sélecteur de langue -->
+                    <div class="relative hidden sm:block">
+                        <button class="flex items-center space-x-1 text-gray-700 hover:text-primary" id="languageBtn">
+                            <span class="text-sm" id="currentLang">FR</span>
+                            <div class="w-4 h-4 flex items-center justify-center">
+                                <i class="ri-arrow-down-s-line"></i>
+                            </div>
+                        </button>
+                        <div class="absolute right-0 mt-2 w-20 bg-white rounded shadow-lg hidden" id="languageMenu">
+                            <a href="#" class="block px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 lang-option" data-lang="fr">FR</a>
+                            <a href="#" class="block px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 lang-option" data-lang="en">EN</a>
+                            <a href="#" class="block px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 lang-option" data-lang="ar">AR</a>
+                        </div>
+                    </div>
+                    
+                    <!-- Bouton Don -->
+                    <button class="bg-primary text-white px-4 py-2 !rounded-button hover:bg-orange-600 transition-colors whitespace-nowrap text-sm md:px-6 md:text-base" onclick="openDonationModal()" data-i18n="header.donate">
+                        Faire un don
+                    </button>
+                    
+                    <!-- Menu Burger Mobile -->
+                    <button class="md:hidden text-gray-700 hover:text-primary" id="mobileMenuBtn">
+                        <i class="ri-menu-line text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Menu Mobile -->
+            <div class="md:hidden bg-white shadow-lg rounded-b-lg hidden" id="mobileMenu">
+                <div class="py-4 space-y-4">
+                    <a href="index.html" class="block px-4 py-2 text-gray-700 hover:text-primary hover:bg-gray-50 transition-colors" data-i18n="nav.home">Accueil</a>
+                    <a href="Apropos.html" class="block px-4 py-2 text-gray-700 hover:text-primary hover:bg-gray-50 transition-colors" data-i18n="nav.about">À propos</a>
+                    <a href="#" class="block px-4 py-2 text-primary font-semibold hover:bg-gray-50 transition-colors" data-i18n="nav.projects">Projets</a>
+                    <a href="galerie.html" class="block px-4 py-2 text-gray-700 hover:text-primary hover:bg-gray-50 transition-colors" data-i18n="nav.gallery">Galerie</a>
+                    <a href="article.html" class="block px-4 py-2 text-gray-700 hover:text-primary hover:bg-gray-50 transition-colors" data-i18n="nav.news">Actualités</a>
+                    <a href="contact.html" class="block px-4 py-2 text-gray-700 hover:text-primary hover:bg-gray-50 transition-colors" data-i18n="nav.contact">Contact</a>
+                    
+                    <!-- Sélecteur de langue mobile -->
+                    <div class="px-4 pt-4 border-t border-gray-100">
+                        <div class="flex items-center space-x-3">
+                            <span class="text-gray-600 text-sm" data-i18n="language">Langue :</span>
+                            <div class="flex space-x-2">
+                                <a href="#" class="px-3 py-1 text-sm bg-gray-100 text-gray-700 rounded lang-option" data-lang="fr">FR</a>
+                                <a href="#" class="px-3 py-1 text-sm text-gray-600 hover:text-gray-900 rounded lang-option" data-lang="en">EN</a>
+                                <a href="#" class="px-3 py-1 text-sm text-gray-600 hover:text-gray-900 rounded lang-option" data-lang="ar">AR</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Popup Donation -->
+    <div id="donationModal" class="modal">
+        <div class="modal-content">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-2xl font-bold text-gray-900" data-i18n="donation.title">Faire un don</h3>
+                <button onclick="closeDonationModal()" class="text-gray-500 hover:text-gray-700">
+                    <i class="ri-close-line text-2xl"></i>
+                </button>
+            </div>
+            
+            <div class="space-y-6">
+                <div>
+                    <label class="block text-gray-700 mb-2" data-i18n="donation.amount">Montant du don</label>
+                    <div class="grid grid-cols-2 md:grid-cols-2 gap-3 mb-4">
+                        <div class="donation-amount" data-amount="10000">
+                            <div class="text-lg font-semibold">10 000 F</div>
+                            <div class="text-sm text-gray-500" data-i18n="donation.food">Nourriture 1 mois</div>
+                        </div>
+                        <div class="donation-amount" data-amount="25000">
+                            <div class="text-lg font-semibold">25 000 F</div>
+                            <div class="text-sm text-gray-500" data-i18n="donation.medical">Soins médicaux</div>
+                        </div>
+                        <div class="donation-amount" data-amount="50000">
+                            <div class="text-lg font-semibold">50 000 F</div>
+                            <div class="text-sm text-gray-500" data-i18n="donation.education">Éducation 1 enfant</div>
+                        </div>
+                        <div class="donation-amount" data-amount="100000">
+                            <div class="text-lg font-semibold">100 000 F</div>
+                            <div class="text-sm text-gray-500" data-i18n="donation.water">Accès à l'eau</div>
+                        </div>
+                    </div>
+                    
+                    <div class="relative">
+                        <input type="number" id="customAmount" placeholder="Autre montant" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" data-i18n-placeholder="donation.custom">
+                        <div class="absolute right-3 top-3 text-gray-500">FCFA</div>
+                    </div>
+                </div>
+                
+                <div>
+                    <label class="block text-gray-700 mb-2" data-i18n="donation.method">Méthode de paiement</label>
+                    <div class="grid grid-cols-2 md:grid-cols-3 gap-3">
+                        <button class="flex flex-col items-center justify-center p-4 border border-gray-300 rounded-lg hover:border-primary transition-colors">
+                            <i class="ri-smartphone-line text-2xl text-gray-700 mb-2"></i>
+                            <span class="text-sm">Wave</span>
+                        </button>
+                        <button class="flex flex-col items-center justify-center p-4 border border-gray-300 rounded-lg hover:border-primary transition-colors">
+                            <i class="ri-phone-line text-2xl text-gray-700 mb-2"></i>
+                            <span class="text-sm">Orange Money</span>
+                        </button>
+                        <button class="flex flex-col items-center justify-center p-4 border border-gray-300 rounded-lg hover:border-primary transition-colors">
+                            <i class="ri-bank-card-line text-2xl text-gray-700 mb-2"></i>
+                            <span class="text-sm">Carte bancaire</span>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="pt-4">
+                    <button class="w-full bg-primary text-white py-4 rounded-lg hover:bg-orange-600 transition-colors font-semibold" data-i18n="donation.submit">
+                        Effectuer le don
+                    </button>
+                </div>
+                
+                <p class="text-sm text-gray-500 text-center" data-i18n="donation.security">
+                    Votre don est sécurisé. 98% des fonds sont directement alloués aux programmes.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="relative py-36" style="background-image: url('projet.jpeg'); background-size: cover; background-position: center;">
+        <div class="absolute inset-0 bg-black bg-opacity-50"></div>
+        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="max-w-3xl">
+                <h1 class="text-5xl font-bold text-white mb-6" data-i18n="projects.title">Nos Projets</h1>
+                <p class="text-xl text-white leading-relaxed" data-i18n="projects.description">
+                    Découvrez nos actions concrètes et leur impact sur le terrain. Des initiatives qui changent des vies au quotidien.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projets Principaux -->
+    <section class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <!-- Projet Aide Alimentaire -->
+                <div class="bg-gray-50 rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-shadow">
+                    <img src="bouffe.jpeg" alt="Aide alimentaire" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <div class="flex items-center mb-4">
+                            <div class="w-10 h-10 bg-primary bg-opacity-10 rounded-full flex items-center justify-center mr-3">
+                                <div class="w-5 h-5 flex items-center justify-center">
+                                    <i class="ri-restaurant-line text-primary"></i>
+                                </div>
+                            </div>
+                            <h3 class="text-xl font-bold text-gray-900" data-i18n="projects.food.title">Aide Alimentaire</h3>
+                        </div>
+                        <p class="text-gray-600 mb-6" data-i18n="projects.food.description">
+                            Distribution quotidienne de repas chauds et de colis alimentaires aux personnes en situation de précarité.
+                        </p>
+                        <div class="flex items-center justify-between">
+                            <div class="text-sm text-gray-500">
+                                <div class="flex items-center">
+                                    <div class="w-4 h-4 flex items-center justify-center mr-1">
+                                        <i class="ri-user-line"></i>
+                                    </div>
+                                    <span data-i18n="projects.beneficiaries">2,500+ bénéficiaires</span>
+                                </div>
+                            </div>
+                            <button class="text-primary hover:text-orange-600 transition-colors flex items-center gap-1 text-sm font-medium" data-i18n="projects.learnMore">
+                                En savoir plus
+                                <div class="w-4 h-4 flex items-center justify-center">
+                                    <i class="ri-arrow-right-line"></i>
+                                </div>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Projet Éducation -->
+                <div class="bg-gray-50 rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-shadow">
+                    <img src="https://readdy.ai/api/search-image?query=Modern%20classroom%20setting%20with%20students%20and%20tutors%20working%20together%2C%20bright%20and%20welcoming%20educational%20space%2C%20interactive%20learning%20materials%2C%20diverse%20group%20of%20children%20engaged%20in%20studies%2C%20supportive%20learning%20environment&width=600&height=400&seq=project2&orientation=landscape" alt="Éducation" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <div class="flex items-center mb-4">
+                            <div class="w-10 h-10 bg-secondary bg-opacity-10 rounded-full flex items-center justify-center mr-3">
+                                <div class="w-5 h-5 flex items-center justify-center">
+                                    <i class="ri-book-open-line text-secondary"></i>
+                                </div>
+                            </div>
+                            <h3 class="text-xl font-bold text-gray-900" data-i18n="projects.education.title">Éducation</h3>
+                        </div>
+                        <p class="text-gray-600 mb-6" data-i18n="projects.education.description">
+                            Soutien scolaire, fourniture de matériel et accompagnement personnalisé pour la réussite de chaque enfant.
+                        </p>
+                        <div class="flex items-center justify-between">
+                            <div class="text-sm text-gray-500">
+                                <div class="flex items-center">
+                                    <div class="w-4 h-4 flex items-center justify-center mr-1">
+                                        <i class="ri-user-line"></i>
+                                    </div>
+                                    <span data-i18n="projects.students">1,800+ élèves</span>
+                                </div>
+                            </div>
+                            <button class="text-primary hover:text-orange-600 transition-colors flex items-center gap-1 text-sm font-medium" data-i18n="projects.learnMore">
+                                En savoir plus
+                                <div class="w-4 h-4 flex items-center justify-center">
+                                    <i class="ri-arrow-right-line"></i>
+                                </div>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Projet Logement -->
+                <div class="bg-gray-50 rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-shadow">
+                    <img src="https://readdy.ai/api/search-image?query=Modern%20temporary%20housing%20facility%20with%20comfortable%20living%20spaces%2C%20well-lit%20rooms%20with%20basic%20amenities%2C%20clean%20and%20dignified%20environment%2C%20support%20staff%20helping%20residents%2C%20welcoming%20atmosphere%20for%20families%20in%20need&width=600&height=400&seq=project3&orientation=landscape" alt="Logement" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <div class="flex items-center mb-4">
+                            <div class="w-10 h-10 bg-primary bg-opacity-10 rounded-full flex items-center justify-center mr-3">
+                                <div class="w-5 h-5 flex items-center justify-center">
+                                    <i class="ri-home-heart-line text-primary"></i>
+                                </div>
+                            </div>
+                            <h3 class="text-xl font-bold text-gray-900" data-i18n="projects.housing.title">Logement</h3>
+                        </div>
+                        <p class="text-gray-600 mb-6" data-i18n="projects.housing.description">
+                            Hébergement d'urgence et accompagnement vers un logement stable pour les familles en difficulté.
+                        </p>
+                        <div class="flex items-center justify-between">
+                            <div class="text-sm text-gray-500">
+                                <div class="flex items-center">
+                                    <div class="w-4 h-4 flex items-center justify-center mr-1">
+                                        <i class="ri-user-line"></i>
+                                    </div>
+                                    <span data-i18n="projects.families">450+ familles</span>
+                                </div>
+                            </div>
+                            <button class="text-primary hover:text-orange-600 transition-colors flex items-center gap-1 text-sm font-medium" data-i18n="projects.learnMore">
+                                En savoir plus
+                                <div class="w-4 h-4 flex items-center justify-center">
+                                    <i class="ri-arrow-right-line"></i>
+                                </div>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projets en cours -->
+    <section class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-gray-900 mb-4" data-i18n="projects.current.title">Projets en cours</h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto" data-i18n="projects.current.description">
+                    Découvrez nos initiatives actuelles et comment vous pouvez y participer
+                </p>
+            </div>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <!-- Centre d'accueil -->
+                <div class="bg-white rounded-xl p-8 shadow-sm">
+                    <div class="flex items-start gap-6">
+                        <div class="w-20 h-20 bg-primary bg-opacity-10 rounded-xl flex items-center justify-center flex-shrink-0">
+                            <div class="w-10 h-10 flex items-center justify-center">
+                                <i class="ri-building-line text-primary text-3xl"></i>
+                            </div>
+                        </div>
+                        <div>
+                            <h3 class="text-2xl font-bold text-gray-900 mb-4" data-i18n="projects.current.center.title">Centre d'accueil Saint-Michel</h3>
+                            <p class="text-gray-600 mb-6" data-i18n="projects.current.center.description">
+                                Rénovation et agrandissement du centre pour augmenter notre capacité d'accueil et améliorer les conditions d'hébergement.
+                            </p>
+                            <div class="space-y-4">
+                                <div>
+                                    <div class="flex justify-between text-sm text-gray-600 mb-1">
+                                        <span data-i18n="projects.progress">Progression</span>
+                                        <span>75%</span>
+                                    </div>
+                                    <div class="h-2 bg-gray-200 rounded-full">
+                                        <div class="h-2 bg-primary rounded-full" style="width: 75%"></div>
+                                    </div>
+                                </div>
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center gap-4">
+                                        <div class="text-sm text-gray-500">
+                                            <div class="flex items-center">
+                                                <div class="w-4 h-4 flex items-center justify-center mr-1">
+                                                    <i class="ri-calendar-line"></i>
+                                                </div>
+                                                <span data-i18n="projects.deadline">Fin prévue : Décembre 2025</span>
+                                            </div>
+                                        </div>
+                                        <div class="text-sm text-gray-500">
+                                            <div class="flex items-center">
+                                                <div class="w-4 h-4 flex items-center justify-center mr-1">
+                                                    <i class="ri-money-euro-circle-line"></i>
+                                                </div>
+                                                <span data-i18n="projects.budget">Budget : 450,000 €</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button class="text-primary hover:text-orange-600 transition-colors flex items-center gap-1 text-sm font-medium" data-i18n="projects.participate">
+                                        Participer
+                                        <div class="w-4 h-4 flex items-center justify-center">
+                                            <i class="ri-arrow-right-line"></i>
+                                        </div>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Jardin Solidaire -->
+                <div class="bg-white rounded-xl p-8 shadow-sm">
+                    <div class="flex items-start gap-6">
+                        <div class="w-20 h-20 bg-secondary bg-opacity-10 rounded-xl flex items-center justify-center flex-shrink-0">
+                            <div class="w-10 h-10 flex items-center justify-center">
+                                <i class="ri-seedling-line text-secondary text-3xl"></i>
+                            </div>
+                        </div>
+                        <div>
+                            <h3 class="text-2xl font-bold text-gray-900 mb-4" data-i18n="projects.current.garden.title">Jardin Solidaire</h3>
+                            <p class="text-gray-600 mb-6" data-i18n="projects.current.garden.description">
+                                Création d'un potager communautaire pour fournir des légumes frais aux bénéficiaires et créer du lien social.
+                            </p>
+                            <div class="space-y-4">
+                                <div>
+                                    <div class="flex justify-between text-sm text-gray-600 mb-1">
+                                        <span data-i18n="projects.progress">Progression</span>
+                                        <span>40%</span>
+                                    </div>
+                                    <div class="h-2 bg-gray-200 rounded-full">
+                                        <div class="h-2 bg-secondary rounded-full" style="width: 40%"></div>
+                                    </div>
+                                </div>
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center gap-4">
+                                        <div class="text-sm text-gray-500">
+                                            <div class="flex items-center">
+                                                <div class="w-4 h-4 flex items-center justify-center mr-1">
+                                                    <i class="ri-calendar-line"></i>
+                                                </div>
+                                                <span data-i18n="projects.deadline">Fin prévue : Mars 2026</span>
+                                            </div>
+                                        </div>
+                                        <div class="text-sm text-gray-500">
+                                            <div class="flex items-center">
+                                                <div class="w-4 h-4 flex items-center justify-center mr-1">
+                                                    <i class="ri-money-euro-circle-line"></i>
+                                                </div>
+                                                <span data-i18n="projects.budget">Budget : 120,000 €</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button class="text-primary hover:text-orange-600 transition-colors flex items-center gap-1 text-sm font-medium" data-i18n="projects.participate">
+                                        Participer
+                                        <div class="w-4 h-4 flex items-center justify-center">
+                                            <i class="ri-arrow-right-line"></i>
+                                        </div>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Impact -->
+    <section class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-gray-900 mb-4" data-i18n="projects.impact.title">Impact de nos projets</h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto" data-i18n="projects.impact.description">
+                    Des résultats concrets qui témoignent de l'efficacité de nos actions
+                </p>
+            </div>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                <div>
+                    <div id="impactChart" class="h-96"></div>
+                </div>
+                <div class="space-y-8">
+                    <div class="bg-gray-50 p-6 rounded-xl">
+                        <div class="flex items-center mb-4">
+                            <div class="w-12 h-12 bg-primary bg-opacity-10 rounded-full flex items-center justify-center mr-4">
+                                <div class="w-6 h-6 flex items-center justify-center">
+                                    <i class="ri-line-chart-line text-primary text-xl"></i>
+                                </div>
+                            </div>
+                            <h3 class="text-xl font-bold text-gray-900" data-i18n="projects.impact.growth.title">Croissance continue</h3>
+                        </div>
+                        <p class="text-gray-600" data-i18n="projects.impact.growth.description">
+                            Augmentation constante du nombre de bénéficiaires et de l'impact de nos actions sur les cinq dernières années.
+                        </p>
+                    </div>
+                    <div class="bg-gray-50 p-6 rounded-xl">
+                        <div class="flex items-center mb-4">
+                            <div class="w-12 h-12 bg-secondary bg-opacity-10 rounded-full flex items-center justify-center mr-4">
+                                <div class="w-6 h-6 flex items-center justify-center">
+                                    <i class="ri-group-line text-secondary text-xl"></i>
+                                </div>
+                            </div>
+                            <h3 class="text-xl font-bold text-gray-900" data-i18n="projects.impact.sustainable.title">Impact durable</h3>
+                        </div>
+                        <p class="text-gray-600" data-i18n="projects.impact.sustainable.description">
+                            85% des familles accompagnées retrouvent une stabilité à long terme grâce à nos programmes.
+                        </p>
+                    </div>
+                    <div class="bg-gray-50 p-6 rounded-xl">
+                        <div class="flex items-center mb-4">
+                            <div class="w-12 h-12 bg-primary bg-opacity-10 rounded-full flex items-center justify-center mr-4">
+                                <div class="w-6 h-6 flex items-center justify-center">
+                                    <i class="ri-hand-heart-line text-primary text-xl"></i>
+                                </div>
+                            </div>
+                            <h3 class="text-xl font-bold text-gray-900" data-i18n="projects.impact.community.title">Engagement communautaire</h3>
+                        </div>
+                        <p class="text-gray-600" data-i18n="projects.impact.community.description">
+                            Plus de 850 bénévoles actifs et 200 partenaires locaux impliqués dans nos projets.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Comment participer -->
+    <section class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-gray-900 mb-4" data-i18n="projects.participate.title">Comment participer ?</h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto" data-i18n="projects.participate.description">
+                    Plusieurs façons de soutenir nos projets et de faire la différence
+                </p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Faire un don -->
+                <div class="bg-white p-8 rounded-xl shadow-sm text-center">
+                    <div class="w-16 h-16 bg-primary bg-opacity-10 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <div class="w-8 h-8 flex items-center justify-center">
+                            <i class="ri-heart-line text-primary text-2xl"></i>
+                        </div>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-4" data-i18n="projects.participate.donate.title">Faire un don</h3>
+                    <p class="text-gray-600 mb-6" data-i18n="projects.participate.donate.description">
+                        Soutenez nos projets financièrement pour nous aider à atteindre nos objectifs.
+                    </p>
+                    <button class="bg-primary text-white px-6 py-3 !rounded-button hover:bg-orange-600 transition-colors whitespace-nowrap w-full" onclick="openDonationModal()" data-i18n="projects.participate.donate.button">
+                        Je donne
+                    </button>
+                </div>
+
+                <!-- Devenir bénévole -->
+                <div class="bg-white p-8 rounded-xl shadow-sm text-center">
+                    <div class="w-16 h-16 bg-secondary bg-opacity-10 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <div class="w-8 h-8 flex items-center justify-center">
+                            <i class="ri-team-line text-secondary text-2xl"></i>
+                        </div>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-4" data-i18n="projects.participate.volunteer.title">Devenir bénévole</h3>
+                    <p class="text-gray-600 mb-6" data-i18n="projects.participate.volunteer.description">
+                        Rejoignez notre équipe de bénévoles et participez activement à nos projets.
+                    </p>
+                    <button class="bg-secondary text-white px-6 py-3 !rounded-button hover:bg-green-600 transition-colors whitespace-nowrap w-full" data-i18n="projects.participate.volunteer.button">
+                        Je m'engage
+                    </button>
+                </div>
+
+                <!-- Devenir partenaire -->
+                <div class="bg-white p-8 rounded-xl shadow-sm text-center">
+                    <div class="w-16 h-16 bg-primary bg-opacity-10 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <div class="w-8 h-8 flex items-center justify-center">
+                            <i class="ri-building-2-line text-primary text-2xl"></i>
+                        </div>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-4" data-i18n="projects.participate.partner.title">Devenir partenaire</h3>
+                    <p class="text-gray-600 mb-6" data-i18n="projects.participate.partner.description">
+                        Établissez un partenariat avec nous pour amplifier notre impact social.
+                    </p>
+                    <button class="bg-primary text-white px-6 py-3 !rounded-button hover:bg-orange-600 transition-colors whitespace-nowrap w-full" data-i18n="projects.participate.partner.button">
+                        Nous contacter
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div>
+                    <img src="logo.png" style="width: 70px;" alt="Logo" class="w-12 md:w-16 lg:w-20">
+                    <p class="text-gray-300 mb-6" data-i18n="footer.description">
+                        Association humanitaire œuvrant pour un monde plus solidaire et équitable.
+                    </p>
+                    <div class="space-y-2 text-sm text-gray-300">
+                        <div class="flex items-center">
+                            <div class="w-4 h-4 flex items-center justify-center mr-3">
+                                <i class="ri-map-pin-line"></i>
+                            </div>
+                            <span data-i18n="footer.address">123 Avenue de la Solidarité, Dakar, Sénégal</span>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="w-4 h-4 flex items-center justify-center mr-3">
+                                <i class="ri-phone-line"></i>
+                            </div>
+                            <span>+221 33 123 45 67</span>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="w-4 h-4 flex items-center justify-center mr-3">
+                                <i class="ri-mail-line"></i>
+                            </div>
+                            <span>contact@entraidehumanitaire.org</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-semibold mb-4" data-i18n="footer.links">Liens utiles</h3>
+                    <ul class="space-y-2 text-gray-300">
+                        <li><a href="index.html#about" class="hover:text-primary transition-colors" data-i18n="nav.about">À propos</a></li>
+                        <li><a href="projets.html" class="hover:text-primary transition-colors" data-i18n="nav.projects">Nos projets</a></li>
+                        <li><a href="#" class="hover:text-primary transition-colors" onclick="openDonationModal()" data-i18n="header.donate">Faire un don</a></li>
+                        <li><a href="galerie.html" class="hover:text-primary transition-colors" data-i18n="nav.gallery">Galerie</a></li>
+                        <li><a href="articles.html" class="hover:text-primary transition-colors" data-i18n="nav.news">Actualités</a></li>
+                        <li><a href="index.html#contact" class="hover:text-primary transition-colors" data-i18n="nav.contact">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-semibold mb-4" data-i18n="footer.follow">Suivez-nous</h3>
+                    <div class="flex space-x-4 mb-6">
+                        <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-primary transition-colors">
+                            <i class="ri-facebook-line"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-primary transition-colors">
+                            <i class="ri-twitter-line"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-primary transition-colors">
+                            <i class="ri-instagram-line"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-primary transition-colors">
+                            <i class="ri-linkedin-line"></i>
+                        </a>
+                    </div>
+                    <div class="text-sm text-gray-300">
+                        <p class="mb-2" data-i18n="footer.payment">Modes de paiement acceptés :</p>
+                        <div class="flex space-x-3">
+                            <div class="w-6 h-6 flex items-center justify-center">
+                                <i class="ri-smartphone-line"></i>
+                            </div>
+                            <span class="text-xs">Wave</span>
+                            <div class="w-6 h-6 flex items-center justify-center">
+                                <i class="ri-phone-line"></i>
+                            </div>
+                            <span class="text-xs">Orange Money</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-semibold mb-4" data-i18n="footer.legal">Informations légales</h3>
+                    <ul class="space-y-2 text-gray-300 text-sm">
+                        <li><a href="#" class="hover:text-primary transition-colors" data-i18n="footer.legalNotice">Mentions légales</a></li>
+                        <li><a href="#" class="hover:text-primary transition-colors" data-i18n="footer.privacyPolicy">Politique de confidentialité</a></li>
+                        <li><a href="#" class="hover:text-primary transition-colors" data-i18n="footer.terms">Conditions d'utilisation</a></li>
+                        <li><a href="#" class="hover:text-primary transition-colors" data-i18n="footer.financialReport">Rapport financier</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 mt-12 pt-8 text-center text-gray-400 text-sm">
+                <p data-i18n="footer.copyright">&copy; 2025 Entr'aide Humanitaire. Tous droits réservés.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        // Dictionnaire de traduction
+        const translations = {
+            fr: {
+                // Navigation
+                "nav.home": "Accueil",
+                "nav.about": "À propos",
+                "nav.projects": "Projets",
+                "nav.gallery": "Galerie",
+                "nav.news": "Actualités",
+                "nav.contact": "Contact",
+                "header.donate": "Faire un don",
+                "language": "Langue :",
+                
+                // Hero Section
+                "projects.title": "Nos Projets",
+                "projects.description": "Découvrez nos actions concrètes et leur impact sur le terrain. Des initiatives qui changent des vies au quotidien.",
+                
+                // Projets Principaux
+                "projects.food.title": "Aide Alimentaire",
+                "projects.food.description": "Distribution quotidienne de repas chauds et de colis alimentaires aux personnes en situation de précarité.",
+                "projects.education.title": "Éducation",
+                "projects.education.description": "Soutien scolaire, fourniture de matériel et accompagnement personnalisé pour la réussite de chaque enfant.",
+                "projects.housing.title": "Logement",
+                "projects.housing.description": "Hébergement d'urgence et accompagnement vers un logement stable pour les familles en difficulté.",
+                "projects.beneficiaries": "2,500+ bénéficiaires",
+                "projects.students": "1,800+ élèves",
+                "projects.families": "450+ familles",
+                "projects.learnMore": "En savoir plus",
+                
+                // Projets en cours
+                "projects.current.title": "Projets en cours",
+                "projects.current.description": "Découvrez nos initiatives actuelles et comment vous pouvez y participer",
+                "projects.current.center.title": "Centre d'accueil Saint-Michel",
+                "projects.current.center.description": "Rénovation et agrandissement du centre pour augmenter notre capacité d'accueil et améliorer les conditions d'hébergement.",
+                "projects.current.garden.title": "Jardin Solidaire",
+                "projects.current.garden.description": "Création d'un potager communautaire pour fournir des légumes frais aux bénéficiaires et créer du lien social.",
+                "projects.progress": "Progression",
+                "projects.deadline": "Fin prévue",
+                "projects.budget": "Budget",
+                "projects.participate": "Participer",
+                
+                // Impact
+                "projects.impact.title": "Impact de nos projets",
+                "projects.impact.description": "Des résultats concrets qui témoignent de l'efficacité de nos actions",
+                "projects.impact.growth.title": "Croissance continue",
+                "projects.impact.growth.description": "Augmentation constante du nombre de bénéficiaires et de l'impact de nos actions sur les cinq dernières années.",
+                "projects.impact.sustainable.title": "Impact durable",
+                "projects.impact.sustainable.description": "85% des familles accompagnées retrouvent une stabilité à long terme grâce à nos programmes.",
+                "projects.impact.community.title": "Engagement communautaire",
+                "projects.impact.community.description": "Plus de 850 bénévoles actifs et 200 partenaires locaux impliqués dans nos projets.",
+                
+                // Comment participer
+                "projects.participate.title": "Comment participer ?",
+                "projects.participate.description": "Plusieurs façons de soutenir nos projets et de faire la différence",
+                "projects.participate.donate.title": "Faire un don",
+                "projects.participate.donate.description": "Soutenez nos projets financièrement pour nous aider à atteindre nos objectifs.",
+                "projects.participate.donate.button": "Je donne",
+                "projects.participate.volunteer.title": "Devenir bénévole",
+                "projects.participate.volunteer.description": "Rejoignez notre équipe de bénévoles et participez activement à nos projets.",
+                "projects.participate.volunteer.button": "Je m'engage",
+                "projects.participate.partner.title": "Devenir partenaire",
+                "projects.participate.partner.description": "Établissez un partenariat avec nous pour amplifier notre impact social.",
+                "projects.participate.partner.button": "Nous contacter",
+                
+                // Footer
+                "footer.description": "Association humanitaire œuvrant pour un monde plus solidaire et équitable.",
+                "footer.address": "123 Avenue de la Solidarité, Dakar, Sénégal",
+                "footer.links": "Liens utiles",
+                "footer.follow": "Suivez-nous",
+                "footer.payment": "Modes de paiement acceptés :",
+                "footer.legal": "Informations légales",
+                "footer.legalNotice": "Mentions légales",
+                "footer.privacyPolicy": "Politique de confidentialité",
+                "footer.terms": "Conditions d'utilisation",
+                "footer.financialReport": "Rapport financier",
+                "footer.copyright": "© 2025 Entr'aide Humanitaire. Tous droits réservés.",
+                
+                // Donation Modal
+                "donation.title": "Faire un don",
+                "donation.amount": "Montant du don",
+                "donation.food": "Nourriture 1 mois",
+                "donation.medical": "Soins médicaux",
+                "donation.education": "Éducation 1 enfant",
+                "donation.water": "Accès à l'eau",
+                "donation.custom": "Autre montant",
+                "donation.method": "Méthode de paiement",
+                "donation.submit": "Effectuer le don",
+                "donation.security": "Votre don est sécurisé. 98% des fonds sont directement alloués aux programmes."
+            },
+            en: {
+                // Navigation
+                "nav.home": "Home",
+                "nav.about": "About",
+                "nav.projects": "Projects",
+                "nav.gallery": "Gallery",
+                "nav.news": "News",
+                "nav.contact": "Contact",
+                "header.donate": "Make a donation",
+                "language": "Language:",
+                
+                // Hero Section
+                "projects.title": "Our Projects",
+                "projects.description": "Discover our concrete actions and their impact on the ground. Initiatives that change lives every day.",
+                
+                // Projets Principaux
+                "projects.food.title": "Food Aid",
+                "projects.food.description": "Daily distribution of hot meals and food parcels to people in precarious situations.",
+                "projects.education.title": "Education",
+                "projects.education.description": "School support, provision of materials and personalized support for the success of each child.",
+                "projects.housing.title": "Housing",
+                "projects.housing.description": "Emergency accommodation and support towards stable housing for families in difficulty.",
+                "projects.beneficiaries": "2,500+ beneficiaries",
+                "projects.students": "1,800+ students",
+                "projects.families": "450+ families",
+                "projects.learnMore": "Learn more",
+                
+                // Projets en cours
+                "projects.current.title": "Current Projects",
+                "projects.current.description": "Discover our current initiatives and how you can participate",
+                "projects.current.center.title": "Saint-Michel Reception Center",
+                "projects.current.center.description": "Renovation and expansion of the center to increase our reception capacity and improve accommodation conditions.",
+                "projects.current.garden.title": "Solidarity Garden",
+                "projects.current.garden.description": "Creation of a community vegetable garden to provide fresh vegetables to beneficiaries and create social connections.",
+                "projects.progress": "Progress",
+                "projects.deadline": "Planned completion",
+                "projects.budget": "Budget",
+                "projects.participate": "Participate",
+                
+                // Impact
+                "projects.impact.title": "Impact of our projects",
+                "projects.impact.description": "Concrete results that testify to the effectiveness of our actions",
+                "projects.impact.growth.title": "Continuous growth",
+                "projects.impact.growth.description": "Constant increase in the number of beneficiaries and the impact of our actions over the last five years.",
+                "projects.impact.sustainable.title": "Sustainable impact",
+                "projects.impact.sustainable.description": "85% of accompanied families regain long-term stability thanks to our programs.",
+                "projects.impact.community.title": "Community engagement",
+                "projects.impact.community.description": "More than 850 active volunteers and 200 local partners involved in our projects.",
+                
+                // Comment participer
+                "projects.participate.title": "How to participate?",
+                "projects.participate.description": "Several ways to support our projects and make a difference",
+                "projects.participate.donate.title": "Make a donation",
+                "projects.participate.donate.description": "Support our projects financially to help us achieve our goals.",
+                "projects.participate.donate.button": "I donate",
+                "projects.participate.volunteer.title": "Become a volunteer",
+                "projects.participate.volunteer.description": "Join our team of volunteers and actively participate in our projects.",
+                "projects.participate.volunteer.button": "I commit",
+                "projects.participate.partner.title": "Become a partner",
+                "projects.participate.partner.description": "Establish a partnership with us to amplify our social impact.",
+                "projects.participate.partner.button": "Contact us",
+                
+                // Footer
+                "footer.description": "Humanitarian association working for a more supportive and equitable world.",
+                "footer.address": "123 Solidarity Avenue, Dakar, Senegal",
+                "footer.links": "Useful links",
+                "footer.follow": "Follow us",
+                "footer.payment": "Accepted payment methods:",
+                "footer.legal": "Legal information",
+                "footer.legalNotice": "Legal notice",
+                "footer.privacyPolicy": "Privacy policy",
+                "footer.terms": "Terms of use",
+                "footer.financialReport": "Financial report",
+                "footer.copyright": "© 2025 Entr'aide Humanitaire. All rights reserved.",
+                
+                // Donation Modal
+                "donation.title": "Make a donation",
+                "donation.amount": "Donation amount",
+                "donation.food": "Food for 1 month",
+                "donation.medical": "Medical care",
+                "donation.education": "Education for 1 child",
+                "donation.water": "Water access",
+                "donation.custom": "Other amount",
+                "donation.method": "Payment method",
+                "donation.submit": "Make donation",
+                "donation.security": "Your donation is secure. 98% of funds are directly allocated to programs."
+            },
+            ar: {
+                // Navigation
+                "nav.home": "الرئيسية",
+                "nav.about": "من نحن",
+                "nav.projects": "المشاريع",
+                "nav.gallery": "معرض الصور",
+                "nav.news": "الأخبار",
+                "nav.contact": "اتصل بنا",
+                "header.donate": "التبرع",
+                "language": "اللغة:",
+                
+                // Hero Section
+                "projects.title": "مشاريعنا",
+                "projects.description": "اكتشف إجراءاتنا الملموسة وتأثيرها على الأرض. مبادرات تغير حياة الناس كل يوم.",
+                
+                // Projets Principaux
+                "projects.food.title": "المساعدة الغذائية",
+                "projects.food.description": "توزيع يومي للوجبات الساخنة والحزم الغذائية للأشخاص في أوضاع هشة.",
+                "projects.education.title": "التعليم",
+                "projects.education.description": "دعم مدرسي، توفير مواد ودعم شخصي لنجاح كل طفل.",
+                "projects.housing.title": "الإسكان",
+                "projects.housing.description": "إيواء طارئ ودعم نحو سكن مستقر للأسر في صعوبة.",
+                "projects.beneficiaries": "2500+ مستفيد",
+                "projects.students": "1800+ تلميذ",
+                "projects.families": "450+ أسرة",
+                "projects.learnMore": "المزيد",
+                
+                // Projets en cours
+                "projects.current.title": "المشاريع الجارية",
+                "projects.current.description": "اكتشف مبادراتنا الحالية وكيف يمكنك المشاركة",
+                "projects.current.center.title": "مركز الاستقبال سان ميشيل",
+                "projects.current.center.description": "تجديد وتوسيع المركز لزيادة قدرة الاستقبال لدينا وتحسين ظروف الإيواء.",
+                "projects.current.garden.title": "الحديقة التضامنية",
+                "projects.current.garden.description": "إنشاء حديقة خضروات مجتمعية لتوفير خضروات طازجة للمستفيدين وخلق روابط اجتماعية.",
+                "projects.progress": "التقدم",
+                "projects.deadline": "الانتهاء المخطط",
+                "projects.budget": "الميزانية",
+                "projects.participate": "المشاركة",
+                
+                // Impact
+                "projects.impact.title": "تأثير مشاريعنا",
+                "projects.impact.description": "نتائج ملموسة تشهد على فعالية إجراءاتنا",
+                "projects.impact.growth.title": "نمو مستمر",
+                "projects.impact.growth.description": "زيادة مستمرة في عدد المستفيدين وتأثير إجراءاتنا على مدى السنوات الخمس الماضية.",
+                "projects.impact.sustainable.title": "تأثير مستدام",
+                "projects.impact.sustainable.description": "85% من الأسر المرافقة تستعيد الاستقرار على المدى الطويل بفضل برامجنا.",
+                "projects.impact.community.title": "المشاركة المجتمعية",
+                "projects.impact.community.description": "أكثر من 850 متطوعًا نشطًا و200 شريك محلي مشاركين في مشاريعنا.",
+                
+                // Comment participer
+                "projects.participate.title": "كيف تشارك؟",
+                "projects.participate.description": "عدة طرق لدعم مشاريعنا وإحداث فرق",
+                "projects.participate.donate.title": "التبرع",
+                "projects.participate.donate.description": "ادعم مشاريعنا مالياً لمساعدتنا في تحقيق أهدافنا.",
+                "projects.participate.donate.button": "أتبرع",
+                "projects.participate.volunteer.title": "كن متطوعًا",
+                "projects.participate.volunteer.description": "انضم إلى فريق متطوعينا وشارك بنشاط في مشاريعنا.",
+                "projects.participate.volunteer.button": "أتعهد",
+                "projects.participate.partner.title": "كن شريكًا",
+                "projects.participate.partner.description": "أنشئ شراكة معنا لتضخيم تأثيرنا الاجتماعي.",
+                "projects.participate.partner.button": "اتصل بنا",
+                
+                // Footer
+                "footer.description": "جمعية إنسانية تعمل من أجل عالم أكثر تضامنًا وعدالة.",
+                "footer.address": "123 شارع التضامن، داكار، السنغال",
+                "footer.links": "روابط مفيدة",
+                "footer.follow": "تابعنا",
+                "footer.payment": "طرق الدفع المقبولة:",
+                "footer.legal": "المعلومات القانونية",
+                "footer.legalNotice": "إشعار قانوني",
+                "footer.privacyPolicy": "سياسة الخصوصية",
+                "footer.terms": "شروط الاستخدام",
+                "footer.financialReport": "التقرير المالي",
+                "footer.copyright": "© 2025 التضامن الإنساني. جميع الحقوق محفوظة.",
+                
+                // Donation Modal
+                "donation.title": "التبرع",
+                "donation.amount": "مبلغ التبرع",
+                "donation.food": "طعام لمدة شهر",
+                "donation.medical": "الرعاية الطبية",
+                "donation.education": "تعليم طفل واحد",
+                "donation.water": "الوصول إلى المياه",
+                "donation.custom": "مبلغ آخر",
+                "donation.method": "طريقة الدفع",
+                "donation.submit": "التبرع",
+                "donation.security": "تبرعك آمن. يتم تخصيص 98٪ من الأموال مباشرة للبرامج."
+            }
+        };
+
+        // Initial language
+        let currentLang = 'fr';
+
+        // Function to change language
+        function changeLanguage(lang) {
+            currentLang = lang;
+            document.getElementById('currentLang').textContent = lang.toUpperCase();
+            document.documentElement.lang = lang;
+            
+            // Update all elements with data-i18n attribute
+            document.querySelectorAll('[data-i18n]').forEach(element => {
+                const key = element.getAttribute('data-i18n');
+                if (translations[lang] && translations[lang][key]) {
+                    element.textContent = translations[lang][key];
+                }
+            });
+            
+            // Update placeholder texts
+            document.querySelectorAll('[data-i18n-placeholder]').forEach(element => {
+                const key = element.getAttribute('data-i18n-placeholder');
+                if (translations[lang] && translations[lang][key]) {
+                    element.placeholder = translations[lang][key];
+                }
+            });
+            
+            // Close language menu
+            document.getElementById('languageMenu').classList.add('hidden');
+            
+            // Save preference to localStorage
+            localStorage.setItem('preferredLanguage', lang);
+        }
+
+        // Function to open donation modal
+        function openDonationModal() {
+            document.getElementById('donationModal').style.display = 'flex';
+        }
+
+        // Function to close donation modal
+        function closeDonationModal() {
+            document.getElementById('donationModal').style.display = 'none';
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Menu mobile
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            const mobileMenu = document.getElementById('mobileMenu');
+            
+            if (mobileMenuBtn && mobileMenu) {
+                mobileMenuBtn.addEventListener('click', function() {
+                    mobileMenu.classList.toggle('hidden');
+                    const icon = mobileMenuBtn.querySelector('i');
+                    if (mobileMenu.classList.contains('hidden')) {
+                        icon.className = 'ri-menu-line text-2xl';
+                    } else {
+                        icon.className = 'ri-close-line text-2xl';
+                    }
+                });
+            }
+            
+            // Sélecteur de langue
+            const languageBtn = document.getElementById('languageBtn');
+            const languageMenu = document.getElementById('languageMenu');
+            
+            if (languageBtn && languageMenu) {
+                languageBtn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    languageMenu.classList.toggle('hidden');
+                });
+                
+                // Fermer le menu langue en cliquant ailleurs
+                document.addEventListener('click', function() {
+                    languageMenu.classList.add('hidden');
+                });
+                
+                // Empêcher la fermeture quand on clique dans le menu
+                languageMenu.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                });
+            }
+            
+            // Gestion des clics sur les options de langue
+            document.querySelectorAll('.lang-option').forEach(option => {
+                option.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const lang = this.getAttribute('data-lang');
+                    changeLanguage(lang);
+                });
+            });
+            
+            // Gestion des montants de don
+            document.querySelectorAll('.donation-amount').forEach(amount => {
+                amount.addEventListener('click', function() {
+                    document.querySelectorAll('.donation-amount').forEach(a => a.classList.remove('selected'));
+                    this.classList.add('selected');
+                    document.getElementById('customAmount').value = this.getAttribute('data-amount');
+                });
+            });
+            
+            // Fermer le modal en cliquant en dehors
+            document.getElementById('donationModal').addEventListener('click', function(e) {
+                if (e.target === this) {
+                    closeDonationModal();
+                }
+            });
+            
+            // Fermer le modal avec la touche Échap
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    closeDonationModal();
+                }
+            });
+            
+            // Restaurer la langue préférée
+            const savedLang = localStorage.getItem('preferredLanguage');
+            if (savedLang && translations[savedLang]) {
+                changeLanguage(savedLang);
+            }
+            
+            // Initialiser les graphiques
+            const impactChartDom = document.getElementById('impactChart');
+            if (impactChartDom) {
+                const impactChart = echarts.init(impactChartDom);
+                const impactOption = {
+                    animation: false,
+                    tooltip: {
+                        trigger: 'axis',
+                        backgroundColor: 'rgba(255, 255, 255, 0.9)',
+                        textStyle: {
+                            color: '#1f2937'
+                        }
+                    },
+                    legend: {
+                        data: ['Bénéficiaires', 'Projets réalisés'],
+                        top: 0,
+                        textStyle: {
+                            color: '#1f2937'
+                        }
+                    },
+                    grid: {
+                        left: '3%',
+                        right: '4%',
+                        bottom: '3%',
+                        containLabel: true
+                    },
+                    xAxis: {
+                        type: 'category',
+                        boundaryGap: false,
+                        data: ['2021', '2022', '2023', '2024', '2025'],
+                        axisLabel: {
+                            color: '#1f2937'
+                        }
+                    },
+                    yAxis: {
+                        type: 'value',
+                        axisLabel: {
+                            color: '#1f2937'
+                        }
+                    },
+                    series: [{
+                        name: 'Bénéficiaires',
+                        type: 'line',
+                        smooth: true,
+                        data: [3200, 4100, 5300, 7100, 8500],
+                        itemStyle: {
+                            color: '#EF9221'
+                        },
+                        areaStyle: {
+                            color: {
+                                type: 'linear',
+                                x: 0,
+                                y: 0,
+                                x2: 0,
+                                y2: 1,
+                                colorStops: [{
+                                    offset: 0,
+                                    color: 'rgba(239, 146, 33, 0.2)'
+                                }, {
+                                    offset: 1,
+                                    color: 'rgba(239, 146, 33, 0)'
+                                }]
+                            }
+                        }
+                    }, {
+                        name: 'Projets réalisés',
+                        type: 'line',
+                        smooth: true,
+                        data: [15, 25, 35, 45, 52],
+                        itemStyle: {
+                            color: '#41B64B'
+                        },
+                        areaStyle: {
+                            color: {
+                                type: 'linear',
+                                x: 0,
+                                y: 0,
+                                x2: 0,
+                                y2: 1,
+                                colorStops: [{
+                                    offset: 0,
+                                    color: 'rgba(65, 182, 75, 0.2)'
+                                }, {
+                                    offset: 1,
+                                    color: 'rgba(65, 182, 75, 0)'
+                                }]
+                            }
+                        }
+                    }]
+                };
+                impactChart.setOption(impactOption);
+            }
+        });
+    </script>
+</body>
+</html>

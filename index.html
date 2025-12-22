@@ -1,0 +1,1209 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Entr'aide Humanitaire - Association Humanitaire</title>
+    <script src="https://cdn.tailwindcss.com/3.4.16"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#EF9221',
+                        secondary: '#41B64B'
+                    },
+                    borderRadius: {
+                        'none': '0px',
+                        'sm': '4px',
+                        DEFAULT: '8px',
+                        'md': '12px',
+                        'lg': '16px',
+                        'xl': '20px',
+                        '2xl': '24px',
+                        '3xl': '32px',
+                        'full': '9999px',
+                        'button': '8px'
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css" rel="stylesheet">
+    <style>
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+        .modal-content {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 1rem;
+            max-width: 500px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        .donation-amount {
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 1rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .donation-amount:hover {
+            border-color: #EF9221;
+            background-color: #fef3e9;
+        }
+        .donation-amount.selected {
+            border-color: #EF9221;
+            background-color: #fef3e9;
+        }
+    </style>
+</head>
+<body class="bg-white">
+    <!-- Header -->
+    <header class="bg-white shadow-sm sticky top-0 z-50" style="padding: 5px 0;">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-17">
+                <!-- Logo -->
+                <div class="flex items-center">
+                    <img src="logo.png" style="width: 70px;" alt="Logo" class="w-12 md:w-16 lg:w-20">
+                </div>
+                
+                <!-- Navigation Desktop -->
+                <nav class="hidden md:flex space-x-6 lg:space-x-8">
+                    <a href="#" class="text-primary font-semibold hover:text-primary transition-colors text-sm lg:text-base" data-i18n="nav.home">Accueil</a>
+                    <a href="Apropos.html" class="text-gray-700 transition-colors text-sm lg:text-base" data-i18n="nav.about">À propos</a>
+                    <a href="projet.html" class="text-gray-700 hover:text-primary transition-colors text-sm lg:text-base" data-i18n="nav.projects">Projets</a>
+                    <a href="galerie.html" class="text-gray-700 hover:text-primary transition-colors text-sm lg:text-base" data-i18n="nav.gallery">Galerie</a>
+                    <a href="article.html" class="text-gray-700 hover:text-primary transition-colors text-sm lg:text-base" data-i18n="nav.news">Actualités</a>
+                    <a href="contact.html" class="text-gray-700 hover:text-primary transition-colors text-sm lg:text-base" data-i18n="nav.contact">Contact</a>
+                </nav>
+
+                <!-- Côté droit - Actions -->
+                <div class="flex items-center space-x-3 md:space-x-4">
+                    <!-- Sélecteur de langue -->
+                    <div class="relative hidden sm:block">
+                        <button class="flex items-center space-x-1 text-gray-700 hover:text-primary" id="languageBtn">
+                            <span class="text-sm" id="currentLang">FR</span>
+                            <div class="w-4 h-4 flex items-center justify-center">
+                                <i class="ri-arrow-down-s-line"></i>
+                            </div>
+                        </button>
+                        <div class="absolute right-0 mt-2 w-20 bg-white rounded shadow-lg hidden" id="languageMenu">
+                            <a href="#" class="block px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 lang-option" data-lang="fr">FR</a>
+                            <a href="#" class="block px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 lang-option" data-lang="en">EN</a>
+                            <a href="#" class="block px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 lang-option" data-lang="ar">AR</a>
+                        </div>
+                    </div>
+                    
+                    <!-- Bouton Don -->
+                    <button class="bg-primary text-white px-4 py-2 !rounded-button hover:bg-orange-600 transition-colors whitespace-nowrap text-sm md:px-6 md:text-base" onclick="openDonationModal()" data-i18n="header.donate">
+                        Faire un don
+                    </button>
+                    
+                    <!-- Menu Burger Mobile -->
+                    <button class="md:hidden text-gray-700 hover:text-primary" id="mobileMenuBtn">
+                        <i class="ri-menu-line text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Menu Mobile -->
+            <div class="md:hidden bg-white shadow-lg rounded-b-lg hidden" id="mobileMenu">
+                <div class="py-4 space-y-4">
+                    <a href="#" class="block px-4 py-2 text-primary hover:text-primary hover:bg-gray-50 transition-colors" data-i18n="nav.home">Accueil</a>
+                    <a href="Apropos.html" class="block px-4 py-2 text-gray-700 hover:text-primary hover:bg-gray-50 transition-colors" data-i18n="nav.about">À propos</a>
+                    <a href="projet.html" class="block px-4 py-2 text-gray-700 hover:text-primary hover:bg-gray-50 transition-colors" data-i18n="nav.projects">Projets</a>
+                    <a href="galerie.html" class="block px-4 py-2 text-gray-700 hover:text-primary hover:bg-gray-50 transition-colors" data-i18n="nav.gallery">Galerie</a>
+                    <a href="article.html" class="block px-4 py-2 text-gray-700 hover:text-primary hover:bg-gray-50 transition-colors" data-i18n="nav.news">Actualités</a>
+                    <a href="contact.html" class="block px-4 py-2 text-gray-700 hover:text-primary hover:bg-gray-50 transition-colors" data-i18n="nav.contact">Contact</a>
+                    
+                    <!-- Sélecteur de langue mobile -->
+                    <div class="px-4 pt-4 border-t border-gray-100">
+                        <div class="flex items-center space-x-3">
+                            <span class="text-gray-600 text-sm" data-i18n="language">Langue :</span>
+                            <div class="flex space-x-2">
+                                <a href="#" class="px-3 py-1 text-sm bg-gray-100 text-gray-700 rounded lang-option" data-lang="fr">FR</a>
+                                <a href="#" class="px-3 py-1 text-sm text-gray-600 hover:text-gray-900 rounded lang-option" data-lang="en">EN</a>
+                                <a href="#" class="px-3 py-1 text-sm text-gray-600 hover:text-gray-900 rounded lang-option" data-lang="ar">AR</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Popup Donation -->
+    <div id="donationModal" class="modal" >
+        <div class="modal-content">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-2xl font-bold text-gray-900" data-i18n="donation.title">Faire un don</h3>
+                <button onclick="closeDonationModal()" class="text-gray-500 hover:text-gray-700">
+                    <i class="ri-close-line text-2xl"></i>
+                </button>
+            </div>
+            
+            <div class="space-y-6">
+                <div>
+                    <label class="block text-gray-700 mb-2" data-i18n="donation.amount">Montant du don</label>
+                    <div class="grid grid-cols-12 md:grid-cols-2 gap-3 mb-4">
+                        <div class="donation-amount" data-amount="10000">
+                            <div class="text-lg font-semibold">10 000 F</div>
+                            <div class="text-sm text-gray-500" data-i18n="donation.food">Nourriture 1 mois</div>
+                        </div>
+                        <div class="donation-amount" data-amount="25000">
+                            <div class="text-lg font-semibold">25 000 F</div>
+                            <div class="text-sm text-gray-500" data-i18n="donation.medical">Soins médicaux</div>
+                        </div>
+                        <div class="donation-amount" data-amount="50000">
+                            <div class="text-lg font-semibold">50 000 F</div>
+                            <div class="text-sm text-gray-500" data-i18n="donation.education">Éducation 1 enfant</div>
+                        </div>
+                        <div class="donation-amount" data-amount="100000">
+                            <div class="text-lg font-semibold">100 000 F</div>
+                            <div class="text-sm text-gray-500" data-i18n="donation.water">Accès à l'eau</div>
+                        </div>
+                    </div>
+                    
+                    <div class="relative">
+                        <input type="number" id="customAmount" placeholder="Autre montant" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
+                        <div class="absolute right-3 top-3 text-gray-500">FCFA</div>
+                    </div>
+                </div>
+                
+                <div>
+                    <label class="block text-gray-700 mb-2" data-i18n="donation.method">Méthode de paiement</label>
+                    <div class="grid grid-cols-2 md:grid-cols-3 gap-3">
+                        <button class="flex flex-col items-center justify-center p-4 border border-gray-300 rounded-lg hover:border-primary transition-colors">
+                            <i class="ri-smartphone-line text-2xl text-gray-700 mb-2"></i>
+                            <span class="text-sm">Wave</span>
+                        </button>
+                        <button class="flex flex-col items-center justify-center p-4 border border-gray-300 rounded-lg hover:border-primary transition-colors">
+                            <i class="ri-phone-line text-2xl text-gray-700 mb-2"></i>
+                            <span class="text-sm">Orange Money</span>
+                        </button>
+                        <button class="flex flex-col items-center justify-center p-4 border border-gray-300 rounded-lg hover:border-primary transition-colors">
+                            <i class="ri-bank-card-line text-2xl text-gray-700 mb-2"></i>
+                            <span class="text-sm">Carte bancaire</span>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="pt-4">
+                    <button class="w-full bg-primary text-white py-4 rounded-lg hover:bg-orange-600 transition-colors font-semibold" data-i18n="donation.submit">
+                        Effectuer le don
+                    </button>
+                </div>
+                
+                <p class="text-sm text-gray-500 text-center" data-i18n="donation.security">
+                    Votre don est sécurisé. 98% des fonds sont directement alloués aux programmes.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Popup Volunteer -->
+    <div id="volunteerModal" class="modal">
+        <div class="modal-content">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-2xl font-bold text-gray-900" data-i18n="volunteer.title">Devenir bénévole</h3>
+                <button onclick="closeVolunteerModal()" class="text-gray-500 hover:text-gray-700">
+                    <i class="ri-close-line text-2xl"></i>
+                </button>
+            </div>
+            
+            <form class="space-y-4">
+                <div class="grid md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-gray-700 mb-2" data-i18n="form.firstName">Prénom</label>
+                        <input type="text" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
+                    </div>
+                    <div>
+                        <label class="block text-gray-700 mb-2" data-i18n="form.lastName">Nom</label>
+                        <input type="text" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
+                    </div>
+                </div>
+                
+                <div>
+                    <label class="block text-gray-700 mb-2" data-i18n="form.email">Email</label>
+                    <input type="email" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
+                </div>
+                
+                <div>
+                    <label class="block text-gray-700 mb-2" data-i18n="form.phone">Téléphone</label>
+                    <input type="tel" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
+                </div>
+                
+                <div>
+                    <label class="block text-gray-700 mb-2" data-i18n="volunteer.skills">Compétences</label>
+                    <textarea class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" rows="3" placeholder="Médecine, enseignement, logistique, construction..."></textarea>
+                </div>
+                
+                <div>
+                    <label class="block text-gray-700 mb-2" data-i18n="volunteer.availability">Disponibilité</label>
+                    <div class="flex flex-wrap gap-2">
+                        <label class="inline-flex items-center">
+                            <input type="checkbox" class="rounded border-gray-300 text-primary focus:ring-primary">
+                            <span class="ml-2 text-gray-700" data-i18n="volunteer.weekend">Week-end</span>
+                        </label>
+                        <label class="inline-flex items-center">
+                            <input type="checkbox" class="rounded border-gray-300 text-primary focus:ring-primary">
+                            <span class="ml-2 text-gray-700" data-i18n="volunteer.evening">Soirée</span>
+                        </label>
+                        <label class="inline-flex items-center">
+                            <input type="checkbox" class="rounded border-gray-300 text-primary focus:ring-primary">
+                            <span class="ml-2 text-gray-700" data-i18n="volunteer.fulltime">Temps plein</span>
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="pt-4">
+                    <button type="submit" class="w-full bg-primary text-white py-4 rounded-lg hover:bg-orange-600 transition-colors font-semibold" data-i18n="volunteer.submit">
+                        Postuler comme bénévole
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="relative bg-cover bg-center min-h-screen flex items-center" style="background-image: url('banner.jpeg')">
+        <div class="absolute inset-0 bg-black bg-opacity-30"></div>
+        <div class="relative w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="max-w-2xl">
+                <h1 class="text-5xl md:text-6xl font-bold text-white mb-6 leading-tight" data-i18n="hero.title">
+                    Ensemble pour un monde plus solidaire
+                </h1>
+                <p class="text-xl text-white mb-8 leading-relaxed" data-i18n="hero.description">
+                    Nous œuvrons chaque jour pour apporter aide et espoir aux communautés les plus vulnérables. Rejoignez notre mission humanitaire et contribuez à construire un avenir meilleur.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4">
+                    <button class="bg-secondary text-white px-8 py-4 !rounded-button hover:bg-green-600 transition-colors text-lg whitespace-nowrap" data-i18n="hero.discover">
+                        Découvrir nos projets
+                    </button>
+                    <button class="bg-primary text-white px-8 py-4 !rounded-button hover:bg-orange-600 transition-colors text-lg whitespace-nowrap" onclick="openDonationModal()" data-i18n="hero.donate">
+                        Faire un don
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mission & Values -->
+    <section class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-gray-900 mb-4" data-i18n="mission.title">Notre engagement humanitaire</h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto" data-i18n="mission.description">
+                    Guidés par nos valeurs de solidarité et de transparence, nous agissons concrètement pour améliorer les conditions de vie des plus démunis.
+                </p>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-12">
+                <div class="text-center">
+                    <div class="w-20 h-20 bg-primary rounded-full flex items-center justify-center mx-auto mb-6">
+                        <i class="ri-heart-line text-3xl text-white"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-900 mb-4" data-i18n="mission.mission">Notre Mission</h3>
+                    <p class="text-gray-600 leading-relaxed" data-i18n="mission.missionText">
+                        Apporter une aide humanitaire durable aux populations en détresse, en privilégiant l'autonomisation et le développement local des communautés.
+                    </p>
+                </div>
+                
+                <div class="text-center">
+                    <div class="w-20 h-20 bg-secondary rounded-full flex items-center justify-center mx-auto mb-6">
+                        <i class="ri-shield-check-line text-3xl text-white"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-900 mb-4" data-i18n="mission.values">Nos Valeurs</h3>
+                    <p class="text-gray-600 leading-relaxed" data-i18n="mission.valuesText">
+                        Transparence, respect de la dignité humaine, solidarité internationale et engagement communautaire guident toutes nos actions sur le terrain.
+                    </p>
+                </div>
+                
+                <div class="text-center">
+                    <div class="w-20 h-20 bg-primary rounded-full flex items-center justify-center mx-auto mb-6">
+                        <i class="ri-bar-chart-line text-3xl text-white"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-900 mb-4" data-i18n="mission.impact">Notre Impact</h3>
+                    <p class="text-gray-600 leading-relaxed" data-i18n="mission.impactText">
+                        Plus de 15 000 bénéficiaires aidés, 25 projets réalisés dans 8 pays, avec 98% des fonds directement alloués aux programmes humanitaires.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Current Projects -->
+    <section class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-gray-900 mb-4" data-i18n="projects.title">Projets en cours</h2>
+                <p class="text-xl text-gray-600" data-i18n="projects.description">
+                    Découvrez nos initiatives actuelles et leur impact sur les communautés
+                </p>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+                    <img src="3.jpeg" alt="Projet eau potable" class="w-full h-48 object-cover object-top">
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-gray-900 mb-3" data-i18n="projects.water.title">Accès à l'eau potable - Kaolack</h3>
+                        <p class="text-gray-600 mb-4" data-i18n="projects.water.description">
+                            Construction de puits et installation de systèmes d'assainissement pour 5 villages ruraux, bénéficiant à plus de 2 000 habitants.
+                        </p>
+                        <div class="mb-4">
+                            <div class="flex justify-between text-sm text-gray-600 mb-2">
+                                <span data-i18n="projects.funded">Financé à 75%</span>
+                                <span>120 750f / 250 000f</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2">
+                                <div class="bg-secondary h-2 rounded-full" style="width: 75%"></div>
+                            </div>
+                        </div>
+                        <button class="w-full bg-primary text-white py-3 !rounded-button hover:bg-orange-600 transition-colors whitespace-nowrap" data-i18n="projects.learnMore">
+                            En savoir plus
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+                    <img src="classe.jpeg" alt="Projet éducation" class="w-full h-48 object-cover object-top">
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-gray-900 mb-3" data-i18n="projects.education.title">Éducation pour tous - Sénégal</h3>
+                        <p class="text-gray-600 mb-4" data-i18n="projects.education.description">
+                            Programme d'alphabétisation et de formation professionnelle pour 300 jeunes et adultes dans la région de Mbour.
+                        </p>
+                        <div class="mb-4">
+                            <div class="flex justify-between text-sm text-gray-600 mb-2">
+                                <span data-i18n="projects.funded">Financé à 60%</span>
+                                <span>1 200 000f / 5 500 000f</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2">
+                                <div class="bg-secondary h-2 rounded-full" style="width: 60%"></div>
+                            </div>
+                        </div>
+                        <button class="w-full bg-primary text-white py-3 !rounded-button hover:bg-orange-600 transition-colors whitespace-nowrap" data-i18n="projects.learnMore">
+                            En savoir plus
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+                    <img src="sante.jpg" alt="Projet santé" class="w-full h-48 object-cover object-top">
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-gray-900 mb-3" data-i18n="projects.health.title">Soins de santé - Keur Momar</h3>
+                        <p class="text-gray-600 mb-4" data-i18n="projects.health.description">
+                            Mise en place d'un centre de santé communautaire et formation d'agents de santé locaux pour améliorer l'accès aux soins.
+                        </p>
+                        <div class="mb-4">
+                            <div class="flex justify-between text-sm text-gray-600 mb-2">
+                                <span data-i18n="projects.funded">Financé à 45%</span>
+                                <span>367 000f / 1 500 000f</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2">
+                                <div class="bg-secondary h-2 rounded-full" style="width: 45%"></div>
+                            </div>
+                        </div>
+                        <button class="w-full bg-primary text-white py-3 !rounded-button hover:bg-orange-600 transition-colors whitespace-nowrap" data-i18n="projects.learnMore">
+                            En savoir plus
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-gray-900 mb-4" data-i18n="testimonials.title">Témoignages</h2>
+                <p class="text-xl text-gray-600" data-i18n="testimonials.description">
+                    Les voix de ceux que nous accompagnons
+                </p>
+            </div>
+            
+            <div class="relative">
+                <div class="testimonial-container overflow-hidden">
+                    <div class="testimonial-slide flex transition-transform duration-500" id="testimonialSlider">
+                        <div class="w-full flex-shrink-0 px-4">
+                            <div class="max-w-4xl mx-auto text-center">
+                                <img src="https://readdy.ai/api/search-image?query=Portrait%20of%20smiling%20African%20woman%20in%20traditional%20clothing%20showing%20gratitude%20and%20hope%2C%20natural%20lighting%2C%20dignified%20and%20authentic%20expression%2C%20warm%20background&width=150&height=150&seq=testimonial001&orientation=squarish" alt="Aminata Diallo" class="w-24 h-24 rounded-full mx-auto mb-6 object-cover">
+                                <blockquote class="text-2xl text-gray-700 italic mb-6 leading-relaxed" data-i18n="testimonials.1.quote">
+                                    "Grâce à Entr'aide Humanitaire, notre village a maintenant accès à l'eau potable. Mes enfants n'ont plus à marcher des kilomètres pour chercher de l'eau et peuvent aller à l'école."
+                                </blockquote>
+                                <cite class="text-lg font-semibold text-gray-900" data-i18n="testimonials.1.name">Aminata Diallo</cite>
+                                <p class="text-gray-600" data-i18n="testimonials.1.role">Bénéficiaire du projet eau potable, Mali</p>
+                            </div>
+                        </div>
+                        
+                        <div class="w-full flex-shrink-0 px-4">
+                            <div class="max-w-4xl mx-auto text-center">
+                                <img src="https://readdy.ai/api/search-image?query=Portrait%20of%20young%20African%20man%20with%20confident%20smile%2C%20modern%20clothing%2C%20educational%20background%2C%20hope%20and%20determination%2C%20natural%20lighting%2C%20authentic%20expression&width=150&height=150&seq=testimonial002&orientation=squarish" alt="Moussa Traoré" class="w-24 h-24 rounded-full mx-auto mb-6 object-cover">
+                                <blockquote class="text-2xl text-gray-700 italic mb-6 leading-relaxed" data-i18n="testimonials.2.quote">
+                                    "Le programme de formation m'a permis d'apprendre un métier. Aujourd'hui, je peux subvenir aux besoins de ma famille et contribuer au développement de ma communauté."
+                                </blockquote>
+                                <cite class="text-lg font-semibold text-gray-900" data-i18n="testimonials.2.name">Moussa Traoré</cite>
+                                <p class="text-gray-600" data-i18n="testimonials.2.role">Bénéficiaire du programme éducation, Sénégal</p>
+                            </div>
+                        </div>
+                        
+                        <div class="w-full flex-shrink-0 px-4">
+                            <div class="max-w-4xl mx-auto text-center">
+                                <img src="https://readdy.ai/api/search-image?query=Portrait%20of%20African%20healthcare%20worker%20in%20medical%20uniform%20showing%20pride%20and%20dedication%2C%20hospital%20background%2C%20professional%20and%20caring%20expression%2C%20natural%20lighting&width=150&height=150&seq=testimonial003&orientation=squarish" alt="Fatou Sankara" class="w-24 h-24 rounded-full mx-auto mb-6 object-cover">
+                                <blockquote class="text-2xl text-gray-700 italic mb-6 leading-relaxed" data-i18n="testimonials.3.quote">
+                                    "En tant qu'agent de santé formée par l'association, je peux maintenant soigner les membres de ma communauté et sauver des vies. C'est un honneur immense."
+                                </blockquote>
+                                <cite class="text-lg font-semibold text-gray-900" data-i18n="testimonials.3.name">Fatou Sankara</cite>
+                                <p class="text-gray-600" data-i18n="testimonials.3.role">Agent de santé, Burkina Faso</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="flex justify-center mt-8 space-x-2">
+                    <button class="w-3 h-3 rounded-full bg-primary testimonial-dot active" data-slide="0"></button>
+                    <button class="w-3 h-3 rounded-full bg-gray-300 testimonial-dot" data-slide="1"></button>
+                    <button class="w-3 h-3 rounded-full bg-gray-300 testimonial-dot" data-slide="2"></button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to Action -->
+    <section class="py-20 bg-gradient-to-r from-primary to-secondary">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-4xl font-bold text-white mb-6" data-i18n="cta.title">Rejoignez notre mission</h2>
+            <p class="text-xl text-white mb-8 max-w-3xl mx-auto" data-i18n="cta.description">
+                Ensemble, nous avons déjà changé la vie de milliers de personnes. Votre soutien peut faire la différence pour encore plus de familles dans le besoin.
+            </p>
+            
+            <div class="grid md:grid-cols-3 gap-8 mb-12">
+                <div class="text-center">
+                    <div class="text-4xl font-bold text-white mb-2">1000+</div>
+                    <div class="text-white" data-i18n="cta.beneficiaries">Bénéficiaires aidés</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-4xl font-bold text-white mb-2">25</div>
+                    <div class="text-white" data-i18n="cta.projects">Projets réalisés</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-4xl font-bold text-white mb-2">8</div>
+                    <div class="text-white" data-i18n="cta.countries">Regions d'intervention</div>
+                </div>
+            </div>
+            
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <button class="bg-white text-primary px-8 py-4 !rounded-button hover:bg-gray-100 transition-colors text-lg font-semibold whitespace-nowrap" onclick="openDonationModal()" data-i18n="cta.donate">
+                    Faire un don
+                </button>
+                <button class="bg-transparent border-2 border-white text-white px-8 py-4 !rounded-button hover:bg-white hover:text-primary transition-colors text-lg font-semibold whitespace-nowrap" onclick="openVolunteerModal()" data-i18n="cta.volunteer">
+                    Devenir bénévole
+                </button>
+                <button class="bg-transparent border-2 border-white text-white px-8 py-4 !rounded-button hover:bg-white hover:text-primary transition-colors text-lg font-semibold whitespace-nowrap" data-i18n="cta.news">
+                    Suivre nos actualités
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <section id="multimedia" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-gray-900 mb-4" data-i18n="gallery.title">Galerie</h2>
+                <p class="text-xl text-gray-600 max-w-2xl mx-auto" data-i18n="gallery.description">
+                    Suivez nos dernières actions et découvrez l'impact de votre soutien
+                </p>
+            </div>
+            <div class="grid md:grid-cols-2 gap-6 mb-8">
+                <div class="relative group overflow-hidden rounded-2xl">
+    <!-- Conteneur vidéo avec overlay -->
+    <div class="relative h-80 w-full overflow-hidden">
+        <video 
+            id="backgroundVideo"
+            class="absolute inset-0 w-full h-full object-cover"
+            autoplay 
+            muted 
+            loop 
+            playsinline
+            preload="auto"
+            poster="WhatsApp Image 2025-12-21 at 14.34.38.jpeg"
+        >
+            <source src="video1.mp4" type="video/mp4">
+            <source src="video1.webm" type="video/webm">
+            <!-- Message de fallback -->
+            Votre navigateur ne supporte pas les vidéos HTML5.
+        </video>
+        
+        <!-- Overlay de secours pour mobile (optionnel) -->
+        <div class="md:hidden absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+    </div>
+    
+    <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+        <button class="bg-white text-gray-900 px-6 py-3 rounded-button font-semibold whitespace-nowrap !rounded-button hover:bg-gray-100 transition-colors">
+            <a href="galerie.html" data-i18n="gallery.viewPhotos" class="block">Voir la galerie photos</a>
+        </button>
+    </div>
+</div>
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="relative group overflow-hidden rounded-2xl">
+                        <div class="h-36 bg-cover bg-center" style="background-image: url('1.jpeg');"></div>
+                    </div>
+                    <div class="relative group overflow-hidden rounded-2xl">
+                        <div class="h-36 bg-cover bg-center" style="background-image: url('WhatsApp\ Image\ 2025-12-21\ at\ 14.34.30\ \(1\).jpeg');"></div>
+                    </div>
+                    <div class="relative group overflow-hidden rounded-2xl">
+                        <div class="h-36 bg-cover bg-center" style="background-image: url('WhatsApp\ Image\ 2022-09-24\ at\ 12.19.44.jpeg');"></div>
+                    </div>
+                    <div class="relative group overflow-hidden rounded-2xl">
+                        <div class="h-36 bg-cover bg-center" style="background-image: url('classe.jpeg');"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center">
+                <button class="bg-primary text-white px-8 py-4 rounded-button text-lg font-semibold hover:bg-secondary transition-colors whitespace-nowrap !rounded-button">
+                    <a href="multimedia.html" data-i18n="gallery.viewAll">Voir toute la galerie</a>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter -->
+    <section class="py-20 bg-gray-50">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-4xl font-bold text-gray-900 mb-4" data-i18n="newsletter.title">Restez informés</h2>
+            <p class="text-xl text-gray-600 mb-8" data-i18n="newsletter.description">
+                Recevez nos actualités et découvrez l'impact concret de nos actions humanitaires
+            </p>
+            
+            <div class="max-w-md mx-auto">
+                <div class="flex gap-4">
+                    <input type="email" placeholder="Votre adresse email" class="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" data-i18n-placeholder="newsletter.placeholder">
+                    <button class="bg-primary text-white px-6 py-3 !rounded-button hover:bg-orange-600 transition-colors whitespace-nowrap" data-i18n="newsletter.subscribe">
+                        S'abonner
+                    </button>
+                </div>
+                <p class="text-sm text-gray-500 mt-4" data-i18n="newsletter.privacy">
+                    Nous respectons votre vie privée. Désabonnement possible à tout moment.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div>
+                    <img src="logo.png" style="width: 70px;" alt="Logo" class="w-12 md:w-16 lg:w-20">
+                    <p class="text-gray-300 mb-6" data-i18n="footer.description">
+                        Association humanitaire œuvrant pour un monde plus solidaire et équitable.
+                    </p>
+                    <div class="space-y-2 text-sm text-gray-300">
+                        <div class="flex items-center">
+                            <div class="w-4 h-4 flex items-center justify-center mr-3">
+                                <i class="ri-map-pin-line"></i>
+                            </div>
+                            <span data-i18n="footer.address">123 Avenue de la Solidarité, Dakar, Sénégal</span>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="w-4 h-4 flex items-center justify-center mr-3">
+                                <i class="ri-phone-line"></i>
+                            </div>
+                            <span>+221 33 123 45 67</span>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="w-4 h-4 flex items-center justify-center mr-3">
+                                <i class="ri-mail-line"></i>
+                            </div>
+                            <span>contact@entraidehumanitaire.org</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-semibold mb-4" data-i18n="footer.links">Liens utiles</h3>
+                    <ul class="space-y-2 text-gray-300">
+                        <li><a href="#" class="hover:text-primary transition-colors" data-i18n="nav.about">À propos</a></li>
+                        <li><a href="#" class="hover:text-primary transition-colors" data-i18n="nav.projects">Nos projets</a></li>
+                        <li><a href="#" class="hover:text-primary transition-colors" data-i18n="header.donate">Faire un don</a></li>
+                        <li><a href="#" class="hover:text-primary transition-colors" data-i18n="cta.volunteer">Devenir bénévole</a></li>
+                        <li><a href="#" class="hover:text-primary transition-colors" data-i18n="nav.news">Actualités</a></li>
+                        <li><a href="#" class="hover:text-primary transition-colors" data-i18n="nav.contact">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-semibold mb-4" data-i18n="footer.follow">Suivez-nous</h3>
+                    <div class="flex space-x-4 mb-6">
+                        <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-primary transition-colors">
+                            <i class="ri-facebook-line"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-primary transition-colors">
+                            <i class="ri-twitter-line"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-primary transition-colors">
+                            <i class="ri-instagram-line"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-primary transition-colors">
+                            <i class="ri-linkedin-line"></i>
+                        </a>
+                    </div>
+                    <div class="text-sm text-gray-300">
+                        <p class="mb-2" data-i18n="footer.payment">Modes de paiement acceptés :</p>
+                        <div class="flex space-x-3">
+                            <div class="w-6 h-6 flex items-center justify-center">
+                                <i class="ri-smartphone-line"></i>
+                            </div>
+                            <span class="text-xs">Wave</span>
+                            <div class="w-6 h-6 flex items-center justify-center">
+                                <i class="ri-phone-line"></i>
+                            </div>
+                            <span class="text-xs">Orange Money</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-semibold mb-4" data-i18n="footer.legal">Informations légales</h3>
+                    <ul class="space-y-2 text-gray-300 text-sm">
+                        <li><a href="#" class="hover:text-primary transition-colors" data-i18n="footer.legalNotice">Mentions légales</a></li>
+                        <li><a href="#" class="hover:text-primary transition-colors" data-i18n="footer.privacyPolicy">Politique de confidentialité</a></li>
+                        <li><a href="#" class="hover:text-primary transition-colors" data-i18n="footer.terms">Conditions d'utilisation</a></li>
+                        <li><a href="#" class="hover:text-primary transition-colors" data-i18n="footer.financialReport">Rapport financier</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 mt-12 pt-8 text-center text-gray-400 text-sm">
+                <p data-i18n="footer.copyright">&copy; 2025 Entr'aide Humanitaire. Tous droits réservés.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        // Dictionnaire de traduction
+        const translations = {
+            fr: {
+                // Header & Navigation
+                "nav.home": "Accueil",
+                "nav.about": "À propos",
+                "nav.projects": "Projets",
+                "nav.gallery": "Galerie",
+                "nav.news": "Actualités",
+                "nav.contact": "Contact",
+                "header.donate": "Faire un don",
+                "language": "Langue :",
+                
+                // Hero Section
+                "hero.title": "Ensemble pour un monde plus solidaire",
+                "hero.description": "Nous œuvrons chaque jour pour apporter aide et espoir aux communautés les plus vulnérables. Rejoignez notre mission humanitaire et contribuez à construire un avenir meilleur.",
+                "hero.discover": "Découvrir nos projets",
+                "hero.donate": "Faire un don",
+                
+                // Mission Section
+                "mission.title": "Notre engagement humanitaire",
+                "mission.description": "Guidés par nos valeurs de solidarité et de transparence, nous agissons concrètement pour améliorer les conditions de vie des plus démunis.",
+                "mission.mission": "Notre Mission",
+                "mission.missionText": "Apporter une aide humanitaire durable aux populations en détresse, en privilégiant l'autonomisation et le développement local des communautés.",
+                "mission.values": "Nos Valeurs",
+                "mission.valuesText": "Transparence, respect de la dignité humaine, solidarité internationale et engagement communautaire guident toutes nos actions sur le terrain.",
+                "mission.impact": "Notre Impact",
+                "mission.impactText": "Plus de 15 000 bénéficiaires aidés, 25 projets réalisés dans 8 regions, avec 98% des fonds directement alloués aux programmes humanitaires.",
+                
+                // Projects Section
+                "projects.title": "Projets en cours",
+                "projects.description": "Découvrez nos initiatives actuelles et leur impact sur les communautés",
+                "projects.water.title": "Accès à l'eau potable - Kaolack",
+                "projects.water.description": "Construction de puits et installation de systèmes d'assainissement pour 5 villages ruraux, bénéficiant à plus de 2 000 habitants.",
+                "projects.education.title": "Éducation pour tous - Sénégal",
+                "projects.education.description": "Programme d'alphabétisation et de formation professionnelle pour 300 jeunes et adultes dans la région de Mbour.",
+                "projects.health.title": "Soins de santé - Keur Momar",
+                "projects.health.description": "Mise en place d'un centre de santé communautaire et formation d'agents de santé locaux pour améliorer l'accès aux soins.",
+                "projects.funded": "Financé à",
+                "projects.learnMore": "En savoir plus",
+                
+                // Testimonials
+                "testimonials.title": "Témoignages",
+                "testimonials.description": "Les voix de ceux que nous accompagnons",
+                "testimonials.1.quote": "\"Grâce à Entr'aide Humanitaire, notre village a maintenant accès à l'eau potable. Mes enfants n'ont plus à marcher des kilomètres pour chercher de l'eau et peuvent aller à l'école.\"",
+                "testimonials.1.name": "Aminata Diallo",
+                "testimonials.1.role": "Bénéficiaire du projet eau potable, Mali",
+                "testimonials.2.quote": "\"Le programme de formation m'a permis d'apprendre un métier. Aujourd'hui, je peux subvenir aux besoins de ma famille et contribuer au développement de ma communauté.\"",
+                "testimonials.2.name": "Moussa Traoré",
+                "testimonials.2.role": "Bénéficiaire du programme éducation, Sénégal",
+                "testimonials.3.quote": "\"En tant qu'agent de santé formée par l'association, je peux maintenant soigner les membres de ma communauté et sauver des vies. C'est un honneur immense.\"",
+                "testimonials.3.name": "Fatou Sankara",
+                "testimonials.3.role": "Agent de santé, Burkina Faso",
+                
+                // CTA Section
+                "cta.title": "Rejoignez notre mission",
+                "cta.description": "Ensemble, nous avons déjà changé la vie de milliers de personnes. Votre soutien peut faire la différence pour encore plus de familles dans le besoin.",
+                "cta.beneficiaries": "Bénéficiaires aidés",
+                "cta.projects": "Projets réalisés",
+                "cta.countries": "Regions d'intervention",
+                "cta.donate": "Faire un don",
+                "cta.volunteer": "Devenir bénévole",
+                "cta.news": "Suivre nos actualités",
+                
+                // Gallery
+                "gallery.title": "Galerie",
+                "gallery.description": "Suivez nos dernières actions et découvrez l'impact de votre soutien",
+                "gallery.viewPhotos": "Voir la galerie photos",
+                "gallery.viewAll": "Voir toute la galerie",
+                
+                // Newsletter
+                "newsletter.title": "Restez informés",
+                "newsletter.description": "Recevez nos actualités et découvrez l'impact concret de nos actions humanitaires",
+                "newsletter.placeholder": "Votre adresse email",
+                "newsletter.subscribe": "S'abonner",
+                "newsletter.privacy": "Nous respectons votre vie privée. Désabonnement possible à tout moment.",
+                
+                // Footer
+                "footer.description": "Association humanitaire œuvrant pour un monde plus solidaire et équitable.",
+                "footer.address": "123 Avenue de la Solidarité, Dakar, Sénégal",
+                "footer.links": "Liens utiles",
+                "footer.follow": "Suivez-nous",
+                "footer.payment": "Modes de paiement acceptés :",
+                "footer.legal": "Informations légales",
+                "footer.legalNotice": "Mentions légales",
+                "footer.privacyPolicy": "Politique de confidentialité",
+                "footer.terms": "Conditions d'utilisation",
+                "footer.financialReport": "Rapport financier",
+                "footer.copyright": "© 2025 Entr'aide Humanitaire. Tous droits réservés.",
+                
+                // Donation Modal
+                "donation.title": "Faire un don",
+                "donation.amount": "Montant du don",
+                "donation.food": "Nourriture 1 mois",
+                "donation.medical": "Soins médicaux",
+                "donation.education": "Éducation 1 enfant",
+                "donation.water": "Accès à l'eau",
+                "donation.method": "Méthode de paiement",
+                "donation.submit": "Effectuer le don",
+                "donation.security": "Votre don est sécurisé. 98% des fonds sont directement alloués aux programmes.",
+                
+                // Volunteer Modal
+                "volunteer.title": "Devenir bénévole",
+                "form.firstName": "Prénom",
+                "form.lastName": "Nom",
+                "form.email": "Email",
+                "form.phone": "Téléphone",
+                "volunteer.skills": "Compétences",
+                "volunteer.availability": "Disponibilité",
+                "volunteer.weekend": "Week-end",
+                "volunteer.evening": "Soirée",
+                "volunteer.fulltime": "Temps plein",
+                "volunteer.submit": "Postuler comme bénévole"
+            },
+            en: {
+                // Header & Navigation
+                "nav.home": "Home",
+                "nav.about": "About",
+                "nav.projects": "Projects",
+                "nav.gallery": "Gallery",
+                "nav.news": "News",
+                "nav.contact": "Contact",
+                "header.donate": "Make a donation",
+                "language": "Language:",
+                
+                // Hero Section
+                "hero.title": "Together for a more supportive world",
+                "hero.description": "We work every day to bring help and hope to the most vulnerable communities. Join our humanitarian mission and help build a better future.",
+                "hero.discover": "Discover our projects",
+                "hero.donate": "Make a donation",
+                
+                // Mission Section
+                "mission.title": "Our humanitarian commitment",
+                "mission.description": "Guided by our values of solidarity and transparency, we act concretely to improve the living conditions of the most deprived.",
+                "mission.mission": "Our Mission",
+                "mission.missionText": "Provide sustainable humanitarian aid to populations in distress, prioritizing the empowerment and local development of communities.",
+                "mission.values": "Our Values",
+                "mission.valuesText": "Transparency, respect for human dignity, international solidarity and community engagement guide all our actions on the ground.",
+                "mission.impact": "Our Impact",
+                "mission.impactText": "Over 15,000 beneficiaries helped, 25 projects completed in 8 countries, with 98% of funds directly allocated to humanitarian programs.",
+                
+                // Projects Section
+                "projects.title": "Current projects",
+                "projects.description": "Discover our current initiatives and their impact on communities",
+                "projects.water.title": "Access to drinking water - Kaolack",
+                "projects.water.description": "Construction of wells and installation of sanitation systems for 5 rural villages, benefiting more than 2,000 inhabitants.",
+                "projects.education.title": "Education for all - Senegal",
+                "projects.education.description": "Literacy and vocational training program for 300 youth and adults in the Mbour region.",
+                "projects.health.title": "Healthcare - Keur Momar",
+                "projects.health.description": "Establishment of a community health center and training of local health workers to improve access to care.",
+                "projects.funded": "Funded at",
+                "projects.learnMore": "Learn more",
+                
+                // Testimonials
+                "testimonials.title": "Testimonials",
+                "testimonials.description": "The voices of those we accompany",
+                "testimonials.1.quote": "\"Thanks to Entr'aide Humanitaire, our village now has access to drinking water. My children no longer have to walk kilometers to fetch water and can go to school.\"",
+                "testimonials.1.name": "Aminata Diallo",
+                "testimonials.1.role": "Beneficiary of water project, Mali",
+                "testimonials.2.quote": "\"The training program allowed me to learn a trade. Today, I can provide for my family's needs and contribute to my community's development.\"",
+                "testimonials.2.name": "Moussa Traoré",
+                "testimonials.2.role": "Beneficiary of education program, Senegal",
+                "testimonials.3.quote": "\"As a health worker trained by the association, I can now treat members of my community and save lives. It's a great honor.\"",
+                "testimonials.3.name": "Fatou Sankara",
+                "testimonials.3.role": "Health worker, Burkina Faso",
+                
+                // CTA Section
+                "cta.title": "Join our mission",
+                "cta.description": "Together, we have already changed the lives of thousands of people. Your support can make a difference for even more families in need.",
+                "cta.beneficiaries": "Beneficiaries helped",
+                "cta.projects": "Projects completed",
+                "cta.countries": "Regions of intervention",
+                "cta.donate": "Make a donation",
+                "cta.volunteer": "Become a volunteer",
+                "cta.news": "Follow our news",
+                
+                // Gallery
+                "gallery.title": "Gallery",
+                "gallery.description": "Follow our latest actions and discover the impact of your support",
+                "gallery.viewPhotos": "View photo gallery",
+                "gallery.viewAll": "View all gallery",
+                
+                // Newsletter
+                "newsletter.title": "Stay informed",
+                "newsletter.description": "Receive our news and discover the concrete impact of our humanitarian actions",
+                "newsletter.placeholder": "Your email address",
+                "newsletter.subscribe": "Subscribe",
+                "newsletter.privacy": "We respect your privacy. Unsubscribe at any time.",
+                
+                // Footer
+                "footer.description": "Humanitarian association working for a more supportive and equitable world.",
+                "footer.address": "123 Solidarity Avenue, Dakar, Senegal",
+                "footer.links": "Useful links",
+                "footer.follow": "Follow us",
+                "footer.payment": "Accepted payment methods:",
+                "footer.legal": "Legal information",
+                "footer.legalNotice": "Legal notice",
+                "footer.privacyPolicy": "Privacy policy",
+                "footer.terms": "Terms of use",
+                "footer.financialReport": "Financial report",
+                "footer.copyright": "© 2025 Entr'aide Humanitaire. All rights reserved.",
+                
+                // Donation Modal
+                "donation.title": "Make a donation",
+                "donation.amount": "Donation amount",
+                "donation.food": "Food for 1 month",
+                "donation.medical": "Medical care",
+                "donation.education": "Education for 1 child",
+                "donation.water": "Water access",
+                "donation.method": "Payment method",
+                "donation.submit": "Make donation",
+                "donation.security": "Your donation is secure. 98% of funds are directly allocated to programs.",
+                
+                // Volunteer Modal
+                "volunteer.title": "Become a volunteer",
+                "form.firstName": "First name",
+                "form.lastName": "Last name",
+                "form.email": "Email",
+                "form.phone": "Phone",
+                "volunteer.skills": "Skills",
+                "volunteer.availability": "Availability",
+                "volunteer.weekend": "Weekend",
+                "volunteer.evening": "Evening",
+                "volunteer.fulltime": "Full time",
+                "volunteer.submit": "Apply as volunteer"
+            },
+            ar: {
+                // Header & Navigation
+                "nav.home": "الرئيسية",
+                "nav.about": "من نحن",
+                "nav.projects": "المشاريع",
+                "nav.gallery": "معرض الصور",
+                "nav.news": "الأخبار",
+                "nav.contact": "اتصل بنا",
+                "header.donate": "التبرع",
+                "language": "اللغة:",
+                
+                // Hero Section
+                "hero.title": "معًا من أجل عالم أكثر تضامنًا",
+                "hero.description": "نعمل يوميًا لتقديم المساعدة والأمل للمجتمعات الأكثر ضعفًا. انضم إلى مهمتنا الإنسانية وساعد في بناء مستقبل أفضل.",
+                "hero.discover": "اكتشف مشاريعنا",
+                "hero.donate": "التبرع",
+                
+                // Mission Section
+                "mission.title": "التزامنا الإنساني",
+                "mission.description": "نعمل بموجهة من قيمنا في التضامن والشفافية، لنحسن بشكل ملموس ظروف المعيشة للأكثر حرمانًا.",
+                "mission.mission": "مهمتنا",
+                "mission.missionText": "تقديم المساعدة الإنسانية المستدامة للسكان في محنة، مع إعطاء الأولوية لتمكين المجتمعات وتنميتها المحلية.",
+                "mission.values": "قيمنا",
+                "mission.valuesText": "توجِّه الشفافية، واحترام الكرامة الإنسانية، والتضامن الدولي، والمشاركة المجتمعية جميع أعمالنا على الأرض.",
+                "mission.impact": "تأثيرنا",
+                "mission.impactText": "أكثر من 15000 مستفيد تمت مساعدتهم، 25 مشروعًا اكتمل في 8 دول، مع تخصيص 98% من الأموال مباشرةً للبرامج الإنسانية.",
+                
+                // Projects Section
+                "projects.title": "المشاريع الجارية",
+                "projects.description": "اكتشف مبادراتنا الحالية وتأثيرها على المجتمعات",
+                "projects.water.title": "الوصول إلى المياه الصالحة للشرب - كاولاك",
+                "projects.water.description": "بناء آبار وتركيب أنظمة صرف صحي لـ 5 قرى ريفية، مما يفيد أكثر من 2000 نسمة.",
+                "projects.education.title": "التعليم للجميع - السنغال",
+                "projects.education.description": "برنامج محو الأمية والتدريب المهني لـ 300 شاب وبالغ في منطقة مبور.",
+                "projects.health.title": "الرعاية الصحية - كيور مومار",
+                "projects.health.description": "إنشاء مركز صحي مجتمعي وتدريب عمال صحيين محليين لتحسين الوصول إلى الرعاية.",
+                "projects.funded": "تم تمويله بنسبة",
+                "projects.learnMore": "المزيد",
+                
+                // Testimonials
+                "testimonials.title": "الشهادات",
+                "testimonials.description": "أصوات من نرافقهم",
+                "testimonials.1.quote": "\"بفضل التضامن الإنساني، أصبح لقريتنا الآن إمكانية الوصول إلى المياه الصالحة للشرب. لم يعد أطفالي مضطرين للسير كيلومترات لجلب المياه ويمكنهم الذهاب إلى المدرسة.\"",
+                "testimonials.1.name": "أميناتا ديالو",
+                "testimonials.1.role": "مستفيدة من مشروع المياه، مالي",
+                "testimonials.2.quote": "\"سمح لي برنامج التدريب بتعلم حرفة. اليوم، يمكنني تلبية احتياجات عائلتي والمساهمة في تنمية مجتمعي.\"",
+                "testimonials.2.name": "موسى تراوري",
+                "testimonials.2.role": "مستفيد من برنامج التعليم، السنغال",
+                "testimonials.3.quote": "\"كعامل صحي تدربت من قبل الجمعية، يمكنني الآن علاج أفراد مجتمعي وإنقاذ الأرواح. إنه شرف عظيم.\"",
+                "testimonials.3.name": "فاتو سانكارا",
+                "testimonials.3.role": "عامل صحي، بوركينا فاسو",
+                
+                // CTA Section
+                "cta.title": "انضم إلى مهمتنا",
+                "cta.description": "معًا، غيرنا بالفعل حياة آلاف الأشخاص. يمكن لدعمك أن يُحدث فرقًا للمزيد من العائلات المحتاجة.",
+                "cta.beneficiaries": "المستفيدون",
+                "cta.projects": "المشاريع المنجزة",
+                "cta.countries": "دول المناطق",
+                "cta.donate": "التبرع",
+                "cta.volunteer": "كن متطوعًا",
+                "cta.news": "تابع أخبارنا",
+                
+                // Gallery
+                "gallery.title": "المعرض",
+                "gallery.description": "تابع أحدث أعمالنا واكتشف تأثير دعمك",
+                "gallery.viewPhotos": "عرض معرض الصور",
+                "gallery.viewAll": "عرض كل المعرض",
+                
+                // Newsletter
+                "newsletter.title": "ابق على اطلاع",
+                "newsletter.description": "تلقي أخبارنا واكتشف التأثير الملموس لأعمالنا الإنسانية",
+                "newsletter.placeholder": "عنوان بريدك الإلكتروني",
+                "newsletter.subscribe": "اشتراك",
+                "newsletter.privacy": "نحن نحترم خصوصيتك. يمكنك إلغاء الاشتراك في أي وقت.",
+                
+                // Footer
+                "footer.description": "جمعية إنسانية تعمل من أجل عالم أكثر تضامنًا وعدالة.",
+                "footer.address": "123 شارع التضامن، داكار، السنغال",
+                "footer.links": "روابط مفيدة",
+                "footer.follow": "تابعنا",
+                "footer.payment": "طرق الدفع المقبولة:",
+                "footer.legal": "المعلومات القانونية",
+                "footer.legalNotice": "إشعار قانوني",
+                "footer.privacyPolicy": "سياسة الخصوصية",
+                "footer.terms": "شروط الاستخدام",
+                "footer.financialReport": "التقرير المالي",
+                "footer.copyright": "© 2025 التضامن الإنساني. جميع الحقوق محفوظة.",
+                
+                // Donation Modal
+                "donation.title": "التبرع",
+                "donation.amount": "مبلغ التبرع",
+                "donation.food": "طعام لمدة شهر",
+                "donation.medical": "الرعاية الطبية",
+                "donation.education": "تعليم طفل واحد",
+                "donation.water": "الوصول إلى المياه",
+                "donation.method": "طريقة الدفع",
+                "donation.submit": "التبرع",
+                "donation.security": "تبرعك آمن. يتم تخصيص 98٪ من الأموال مباشرة للبرامج.",
+                
+                // Volunteer Modal
+                "volunteer.title": "كن متطوعًا",
+                "form.firstName": "الاسم الأول",
+                "form.lastName": "اسم العائلة",
+                "form.email": "البريد الإلكتروني",
+                "form.phone": "الهاتف",
+                "volunteer.skills": "المهارات",
+                "volunteer.availability": "التوفر",
+                "volunteer.weekend": "عطلة نهاية الأسبوع",
+                "volunteer.evening": "المساء",
+                "volunteer.fulltime": "دوام كامل",
+                "volunteer.submit": "التقديم كمتطوع"
+            }
+        };
+
+        // Initial language
+        let currentLang = 'fr';
+
+        // Function to change language
+        function changeLanguage(lang) {
+            currentLang = lang;
+            document.getElementById('currentLang').textContent = lang.toUpperCase();
+            document.documentElement.lang = lang;
+            
+            // Update all elements with data-i18n attribute
+            document.querySelectorAll('[data-i18n]').forEach(element => {
+                const key = element.getAttribute('data-i18n');
+                if (translations[lang] && translations[lang][key]) {
+                    element.textContent = translations[lang][key];
+                }
+            });
+            
+            // Update placeholder texts
+            document.querySelectorAll('[data-i18n-placeholder]').forEach(element => {
+                const key = element.getAttribute('data-i18n-placeholder');
+                if (translations[lang] && translations[lang][key]) {
+                    element.placeholder = translations[lang][key];
+                }
+            });
+            
+            // Close language menu
+            document.getElementById('languageMenu').classList.add('hidden');
+            
+            // Save preference to localStorage
+            localStorage.setItem('preferredLanguage', lang);
+        }
+
+        // Function to open donation modal
+        function openDonationModal() {
+            document.getElementById('donationModal').style.display = 'flex';
+        }
+
+        // Function to close donation modal
+        function closeDonationModal() {
+            document.getElementById('donationModal').style.display = 'none';
+        }
+
+        // Function to open volunteer modal
+        function openVolunteerModal() {
+            document.getElementById('volunteerModal').style.display = 'flex';
+        }
+
+        // Function to close volunteer modal
+        function closeVolunteerModal() {
+            document.getElementById('volunteerModal').style.display = 'none';
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Menu mobile
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            const mobileMenu = document.getElementById('mobileMenu');
+            
+            if (mobileMenuBtn && mobileMenu) {
+                mobileMenuBtn.addEventListener('click', function() {
+                    mobileMenu.classList.toggle('hidden');
+                    // Changer l'icône du menu
+                    const icon = mobileMenuBtn.querySelector('i');
+                    if (mobileMenu.classList.contains('hidden')) {
+                        icon.className = 'ri-menu-line text-2xl';
+                    } else {
+                        icon.className = 'ri-close-line text-2xl';
+                    }
+                });
+            }
+            
+            // Sélecteur de langue
+            const languageBtn = document.getElementById('languageBtn');
+            const languageMenu = document.getElementById('languageMenu');
+            
+            if (languageBtn && languageMenu) {
+                languageBtn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    languageMenu.classList.toggle('hidden');
+                });
+                
+                // Fermer le menu langue en cliquant ailleurs
+                document.addEventListener('click', function() {
+                    languageMenu.classList.add('hidden');
+                });
+                
+                // Empêcher la fermeture quand on clique dans le menu
+                languageMenu.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                });
+            }
+            
+            // Gestion des clics sur les options de langue
+            document.querySelectorAll('.lang-option').forEach(option => {
+                option.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const lang = this.getAttribute('data-lang');
+                    changeLanguage(lang);
+                });
+            });
+            
+            // Gestion des montants de don
+            document.querySelectorAll('.donation-amount').forEach(amount => {
+                amount.addEventListener('click', function() {
+                    document.querySelectorAll('.donation-amount').forEach(a => a.classList.remove('selected'));
+                    this.classList.add('selected');
+                    document.getElementById('customAmount').value = this.getAttribute('data-amount');
+                });
+            });
+            
+            // Fermer les modales en cliquant en dehors
+            document.querySelectorAll('.modal').forEach(modal => {
+                modal.addEventListener('click', function(e) {
+                    if (e.target === this) {
+                        this.style.display = 'none';
+                    }
+                });
+            });
+            
+            // Fermer les modales avec la touche Échap
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    closeDonationModal();
+                    closeVolunteerModal();
+                }
+            });
+            
+            // Restaurer la langue préférée
+            const savedLang = localStorage.getItem('preferredLanguage');
+            if (savedLang && translations[savedLang]) {
+                changeLanguage(savedLang);
+            }
+            
+            // Testimonial slider
+            const slider = document.getElementById('testimonialSlider');
+            const dots = document.querySelectorAll('.testimonial-dot');
+            let currentSlide = 0;
+            
+            function showSlide(index) {
+                if (slider) {
+                    slider.style.transform = `translateX(-${index * 100}%)`;
+                    dots.forEach((dot, i) => {
+                        if (i === index) {
+                            dot.classList.remove('bg-gray-300');
+                            dot.classList.add('bg-primary');
+                        } else {
+                            dot.classList.remove('bg-primary');
+                            dot.classList.add('bg-gray-300');
+                        }
+                    });
+                    currentSlide = index;
+                }
+            }
+            
+            if (dots.length > 0) {
+                dots.forEach((dot, index) => {
+                    dot.addEventListener('click', () => showSlide(index));
+                });
+                
+                setInterval(() => {
+                    if (dots.length > 0) {
+                        currentSlide = (currentSlide + 1) % dots.length;
+                        showSlide(currentSlide);
+                    }
+                }, 5000);
+            }
+        });
+    </script>
+</body>
+</html>
