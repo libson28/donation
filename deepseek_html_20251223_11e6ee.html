@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galerie - DonSolidaire</title>
+    <script src="https://cdn.tailwindcss.com/3.4.16"></script>
+    <script>
+    tailwind.config = {
+        theme: {
+            extend: {
+                colors: {
+                    primary: '#EF9221',
+                    secondary: '#41B64B'
+                }
+            }
+        }
+    }
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css">
+    <style>
+    /* Animation de défilement continu */
+    @keyframes scrollHorizontal {
+        0% {
+            transform: translateX(0);
+        }
+        100% {
+            transform: translateX(calc(-250px * 6));
+        }
+    }
+    
+    /* Cacher la scrollbar mais garder le défilement */
+    .scrollbar-hide {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+    }
+    .scrollbar-hide::-webkit-scrollbar {
+        display: none;
+    }
+    
+    /* Animation fluide pour le défilement automatique */
+    .animate-scroll {
+        animation: scrollHorizontal 40s linear infinite;
+    }
+    
+    /* Pause l'animation au survol */
+    .gallery-container:hover .animate-scroll {
+        animation-play-state: paused;
+    }
+    
+    
+    </style>
+</head>
+<body class="bg-white">
+    <!-- Section Galerie -->
+    <section class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- En-tête -->
+            <div class="text-center mb-12">
+                <h2 class="text-4xl font-bold text-gray-900 mb-4">Notre Galerie</h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto mb-8">
+                    Découvrez nos actions en images. Chaque photo raconte une histoire d'espoir et de solidarité.
+                </p>
+                
+                <!-- Filtres -->
+                <div class="flex flex-wrap justify-center gap-3 mb-8">
+                    <button class="px-4 py-2 bg-primary text-white rounded-full font-medium hover:bg-orange-600 transition-colors active-filter">
+                        <i class="ri-grid-fill mr-2"></i>Toutes les photos
+                    </button>
+                    <button class="px-4 py-2 bg-white text-gray-700 border border-gray-300 rounded-full font-medium hover:bg-gray-50 hover:border-primary hover:text-primary transition-colors">
+                        <i class="ri-restaurant-line mr-2"></i>Aide alimentaire
+                    </button>
+                    <button class="px-4 py-2 bg-white text-gray-700 border border-gray-300 rounded-full font-medium hover:bg-gray-50 hover:border-primary hover:text-primary transition-colors">
+                        <i class="ri-book-open-line mr-2"></i>Éducation
+                    </button>
+                    <button class="px-4 py-2 bg-white text-gray-700 border border-gray-300 rounded-full font-medium hover:bg-gray-50 hover:border-primary hover:text-primary transition-colors">
+                        <i class="ri-home-heart-line mr-2"></i>Logement
+                    </button>
+                    <button class="px-4 py-2 bg-white text-gray-700 border border-gray-300 rounded-full font-medium hover:bg-gray-50 hover:border-primary hover:text-primary transition-colors">
+                        <i class="ri-team-line mr-2"></i>Événements
+                    </button>
+                </div>
+            </div>
+
+            <!-- Galerie avec défilement horizontal -->
+            <div class="relative fade-edges">
+                <!-- Boutons de navigation -->
+                <button onclick="scrollGallery(-1)" class="hidden lg:flex absolute left-0 top-1/2 transform -translate-y-1/2 z-10 w-12 h-12 bg-white rounded-full shadow-lg items-center justify-center hover:bg-gray-50 transition-colors -ml-6">
+                    <i class="ri-arrow-left-s-line text-2xl text-gray-700"></i>
+                </button>
+                
+                <button onclick="scrollGallery(1)" class="hidden lg:flex absolute right-0 top-1/2 transform -translate-y-1/2 z-10 w-12 h-12 bg-white rounded-full shadow-lg items-center justify-center hover:bg-gray-50 transition-colors -mr-6">
+                    <i class="ri-arrow-right-s-line text-2xl text-gray-700"></i>
+                </button>
+
+                <!-- Container de la galerie -->
+                <div class="gallery-container overflow-x-auto scrollbar-hide py-4">
+                    <div class="flex space-x-4 md:space-x-6 gallery-track" id="galleryTrack">
+                        <!-- Les images seront ajoutées dynamiquement -->
+                    </div>
+                </div>
+                
+                <!-- Galerie automatique (optionnel) -->
+                <div class="mt-12">
+                    <div class="flex items-center justify-between mb-6">
+                        <h3 class="text-2xl font-bold text-gray-900">Défilement automatique</h3>
+                        <div class="flex items-center gap-2">
+                            <button onclick="toggleAutoScroll()" id="autoScrollBtn" class="px-4 py-2 bg-primary text-white rounded-lg hover:bg-orange-600 transition-colors flex items-center gap-2">
+                                <i class="ri-play-fill" id="playIcon"></i>
+                                <span id="autoScrollText">Démarrer</span>
+                            </button>
+                            <div class="flex items-center gap-2 text-sm text-gray-600">
+                                <button onclick="changeSpeed(0.5)" class="px-2 py-1 bg-gray-100 rounded hover:bg-gray-200">Lent</button>
+                                <button onclick="changeSpeed(1)" class="px-2 py-1 bg-gray-100 rounded hover:bg-gray-200">Normal</button>
+                                <button onclick="changeSpeed(2)" class="px-2 py-1 bg-gray-100 rounded hover:bg-gray-200">Rapide</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="relative fade-edges overflow-hidden h-72">
+                        <div class="flex gallery-auto-track animate-scroll" id="autoGalleryTrack">
+                            <!-- Les mêmes images en double pour l'effet infini -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Statistiques -->
+            <div class="mt-16 grid grid-cols-2 md:grid-cols-4 gap-6">
+                <div class="text-center p-6 bg-white rounded-xl shadow-sm">
+                    <div class="text-3xl font-bold text-primary mb-2" id="photoCount">0</div>
+                    <div class="text-gray-600">Photos</div>
+                </div>
+                <div class="text-center p-6 bg-white rounded-xl shadow-sm">
+                    <div class="text-3xl font-bold text-secondary mb-2">15</div>
+                    <div class="text-gray-600">Projets documentés</div>
+                </div>
+                <div class="text-center p-6 bg-white rounded-xl shadow-sm">
+                    <div class="text-3xl font-bold text-primary mb-2">2020</div>
+                    <div class="text-gray-600">Première photo</div>
+                </div>
+                <div class="text-center p-6 bg-white rounded-xl shadow-sm">
+                    <div class="text-3xl font-bold text-secondary mb-2">12</div>
+                    <div class="text-gray-600">Photographes bénévoles</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modal pour afficher une image en grand -->
+    <div id="imageModal" class="hidden fixed inset-0 bg-black bg-opacity-90 z-50 flex items-center justify-center p-4">
+        <div class="relative w-full max-w-6xl">
+            <button onclick="closeImageModal()" class="absolute top-4 right-4 z-10 w-10 h-10 bg-white rounded-full flex items-center justify-center hover:bg-gray-100 transition-colors">
+                <i class="ri-close-line text-2xl text-gray-700"></i>
+            </button>
+            
+            <div class="flex flex-col lg:flex-row gap-8">
+                <div class="lg:w-2/3">
+                    <img id="modalImage" class="w-full h-auto max-h-[80vh] object-contain rounded-lg">
+                </div>
+                <div class="lg:w-1/3 bg-white p-6 rounded-lg">
+                    <h3 id="modalTitle" class="text-2xl font-bold text-gray-900 mb-4"></h3>
+                    <p id="modalDescription" class="text-gray-600 mb-6"></p>
+                    <div class="space-y-4">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 bg-primary bg-opacity-10 rounded-full flex items-center justify-center">
+                                <i class="ri-calendar-line text-primary"></i>
+                            </div>
+                            <div>
+                                <p class="text-sm text-gray-500">Date</p>
+                                <p id="modalDate" class="font-semibold"></p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 bg-secondary bg-opacity-10 rounded-full flex items-center justify-center">
+                                <i class="ri-map-pin-line text-secondary"></i>
+                            </div>
+                            <div>
+                                <p class="text-sm text-gray-500">Lieu</p>
+                                <p id="modalLocation" class="font-semibold"></p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 bg-primary bg-opacity-10 rounded-full flex items-center justify-center">
+                                <i class="ri-camera-line text-primary"></i>
+                            </div>
+                            <div>
+                                <p class="text-sm text-gray-500">Photographe</p>
+                                <p id="modalPhotographer" class="font-semibold"></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-8 pt-6 border-t border-gray-200">
+                        <div class="flex justify-between">
+                            <button onclick="prevImage()" class="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors flex items-center gap-2">
+                                <i class="ri-arrow-left-line"></i>
+                                Précédent
+                            </button>
+                            <button onclick="nextImage()" class="px-4 py-2 bg-primary text-white rounded-lg hover:bg-orange-600 transition-colors flex items-center gap-2">
+                                Suivant
+                                <i class="ri-arrow-right-line"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    // Données de la galerie
+    const galleryData = [
+        {
+            id: 1,
+            src: "bouffe.jpeg",
+            title: "Distribution alimentaire",
+            description: "Distribution quotidienne de repas chauds dans le quartier de Medina.",
+            category: "Aide alimentaire",
+            date: "15 Mars 2024",
+            location: "Dakar, Sénégal",
+            photographer: "Amadou Diallo"
+        },
+        {
+            id: 2,
+            src: "education.jpeg",
+            title: "Soutien scolaire",
+            description: "Séance de soutien scolaire pour les enfants du quartier.",
+            category: "Éducation",
+            date: "10 Février 2024",
+            location: "Thiès, Sénégal",
+            photographer: "Fatou Ndiaye"
+        },
+        {
+            id: 3,
+            src: "logement.jpeg",
+            title: "Remise des clés",
+            description: "Remise des clés à une famille relogée après des travaux de rénovation.",
+            category: "Logement",
+            date: "5 Janvier 2024",
+            location: "Saint-Louis, Sénégal",
+            photographer: "Ibrahima Sow"
+        },
+        {
+            id: 4,
+            src: "chantier.png",
+            title: "Travaux de construction",
+            description: "Avancement des travaux du nouveau centre d'accueil.",
+            category: "Logement",
+            date: "20 Décembre 2023",
+            location: "Darou khoudosse, Sénégal",
+            photographer: "Moussa Fall"
+        },
+        {
+            id: 5,
+            src: "jardin.jpg",
+            title: "Jardin communautaire",
+            description: "Premières récoltes du jardin solidaire.",
+            category: "Agriculture",
+            date: "30 Novembre 2023",
+            location: "Pikine, Sénégal",
+            photographer: "Aïssatou Diop"
+        },
+        {
+            id: 6,
+            src: "about.jpeg",
+            title: "Équipe sur le terrain",
+            description: "Notre équipe lors d'une mission d'évaluation des besoins.",
+            category: "Équipe",
+            date: "15 Novembre 2023",
+            location: "Ziguinchor, Sénégal",
+            photographer: "Oumar Ba"
+        },
+        {
+            id: 7,
+            src: "about1.jpg",
+            title: "Formation professionnelle",
+            description: "Atelier de formation en couture pour les femmes du quartier.",
+            category: "Formation",
+            date: "5 Novembre 2023",
+            location: "Kaolack, Sénégal",
+            photographer: "Mariama Sy"
+        },
+        {
+            id: 8,
+            src: "about2.jpeg",
+            title: "Distribution de kits scolaires",
+            description: "Remise de fournitures scolaires aux enfants défavorisés.",
+            category: "Éducation",
+            date: "25 Octobre 2023",
+            location: "Rufisque, Sénégal",
+            photographer: "Cheikh Ndiaye"
+        },
+        {
+            id: 9,
+            src: "projet1.jpg",
+            title: "Visite médicale",
+            description: "Campagne de consultation médicale gratuite.",
+            category: "Santé",
+            date: "10 Octobre 2023",
+            location: "Guédiawaye, Sénégal",
+            photographer: "Aminata Kane"
+        },
+        {
+            id: 10,
+            src: "projet2.jpg",
+            title: "Atelier nutrition",
+            description: "Séance de sensibilisation à la nutrition équilibrée.",
+            category: "Santé",
+            date: "30 Septembre 2023",
+            location: "Mbour, Sénégal",
+            photographer: "Papa Diouf"
+        },
+        {
+            id: 11,
+            src: "projet3.jpg",
+            title: "Construction de puits",
+            description: "Inauguration d'un nouveau puits dans un village isolé.",
+            category: "Eau",
+            date: "15 Septembre 2023",
+            location: "Kolda, Sénégal",
+            photographer: "Saliou Mbaye"
+        },
+        {
+            id: 12,
+            src: "bouffe.jpeg",
+            title: "Repas de fête",
+            description: "Préparation d'un repas spécial pour l'Aïd al-Fitr.",
+            category: "Aide alimentaire",
+            date: "10 Avril 2023",
+            location: "Dakar, Sénégal",
+            photographer: "Ndèye Fatou Ndiaye"
+        }
+    ];
+
+    let currentImageIndex = 0;
+    let autoScrollEnabled = false;
+    let scrollSpeed = 1;
+
+    // Initialiser la galerie
+    function initGallery() {
+        const galleryTrack = document.getElementById('galleryTrack');
+        const autoGalleryTrack = document.getElementById('autoGalleryTrack');
+        
+        // Mettre à jour le compteur
+        document.getElementById('photoCount').textContent = galleryData.length;
+        
+        // Créer les éléments d'image
+        galleryData.forEach((image, index) => {
+            // Pour la galerie manuelle
+            const galleryItem = createGalleryItem(image, index);
+            galleryTrack.appendChild(galleryItem);
+            
+            // Pour la galerie automatique (en double pour l'effet infini)
+            const autoItem1 = createGalleryItem(image, index);
+            const autoItem2 = createGalleryItem(image, index);
+            autoGalleryTrack.appendChild(autoItem1.cloneNode(true));
+            autoGalleryTrack.appendChild(autoItem2.cloneNode(true));
+        });
+    }
+
+    // Créer un élément de galerie
+    function createGalleryItem(image, index) {
+        const div = document.createElement('div');
+        div.className = 'flex-shrink-0 w-64 md:w-80 gallery-item';
+        div.dataset.index = index;
+        
+        div.innerHTML = `
+            <div class="relative overflow-hidden rounded-xl shadow-lg group cursor-pointer transform transition-transform duration-300 hover:scale-105">
+                <img src="${image.src}" alt="${image.title}" class="w-full h-64 object-cover">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-4">
+                    <div class="transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+                        <div class="inline-block px-3 py-1 bg-primary text-white text-sm rounded-full mb-2">${image.category}</div>
+                        <h4 class="text-white font-bold text-lg mb-1">${image.title}</h4>
+                        <p class="text-white/90 text-sm">${image.description.substring(0, 60)}...</p>
+                    </div>
+                </div>
+                <div class="absolute top-4 right-4 bg-white/90 backdrop-blur-sm rounded-full w-10 h-10 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <i class="ri-expand-left-right-line text-gray-700"></i>
+                </div>
+            </div>
+        `;
+        
+        // Ajouter l'événement de clic
+        div.addEventListener('click', () => openImageModal(index));
+        
+        return div;
+    }
+
+    // Défilement manuel
+    function scrollGallery(direction) {
+        const track = document.getElementById('galleryTrack');
+        const scrollAmount = 300;
+        track.scrollLeft += direction * scrollAmount;
+    }
+
+    // Ouvrir le modal d'image
+    function openImageModal(index) {
+        currentImageIndex = index;
+        const image = galleryData[index];
+        
+        document.getElementById('modalImage').src = image.src;
+        document.getElementById('modalImage').alt = image.title;
+        document.getElementById('modalTitle').textContent = image.title;
+        document.getElementById('modalDescription').textContent = image.description;
+        document.getElementById('modalDate').textContent = image.date;
+        document.getElementById('modalLocation').textContent = image.location;
+        document.getElementById('modalPhotographer').textContent = image.photographer;
+        
+        document.getElementById('imageModal').classList.remove('hidden');
+        document.body.classList.add('overflow-hidden');
+    }
+
+    // Fermer le modal
+    function closeImageModal() {
+        document.getElementById('imageModal').classList.add('hidden');
+        document.body.classList.remove('overflow-hidden');
+    }
+
+    // Navigation dans le modal
+    function prevImage() {
+        currentImageIndex = (currentImageIndex - 1 + galleryData.length) % galleryData.length;
+        openImageModal(currentImageIndex);
+    }
+
+    function nextImage() {
+        currentImageIndex = (currentImageIndex + 1) % galleryData.length;
+        openImageModal(currentImageIndex);
+    }
+
+    // Défilement automatique
+    function toggleAutoScroll() {
+        const track = document.getElementById('autoGalleryTrack');
+        const button = document.getElementById('autoScrollBtn');
+        const playIcon = document.getElementById('playIcon');
+        const text = document.getElementById('autoScrollText');
+        
+        autoScrollEnabled = !autoScrollEnabled;
+        
+        if (autoScrollEnabled) {
+            track.style.animationPlayState = 'running';
+            playIcon.className = 'ri-pause-fill';
+            text.textContent = 'Pause';
+            button.classList.add('bg-secondary');
+            button.classList.remove('bg-primary');
+        } else {
+            track.style.animationPlayState = 'paused';
+            playIcon.className = 'ri-play-fill';
+            text.textContent = 'Reprendre';
+            button.classList.add('bg-primary');
+            button.classList.remove('bg-secondary');
+        }
+    }
+
+    // Changer la vitesse
+    function changeSpeed(speed) {
+        scrollSpeed = speed;
+        const track = document.getElementById('autoGalleryTrack');
+        track.style.animationDuration = `${40 / speed}s`;
+        
+        // Mettre à jour les boutons de vitesse
+        document.querySelectorAll('[onclick^="changeSpeed"]').forEach(btn => {
+            btn.classList.remove('bg-primary', 'text-white');
+            btn.classList.add('bg-gray-100', 'text-gray-600');
+        });
+        
+        // Mettre en surbrillance le bouton actif
+        const activeBtn = document.querySelector(`[onclick="changeSpeed(${speed})"]`);
+        if (activeBtn) {
+            activeBtn.classList.remove('bg-gray-100', 'text-gray-600');
+            activeBtn.classList.add('bg-primary', 'text-white');
+        }
+    }
+
+    // Filtrer les images
+    function filterGallery(category) {
+        const items = document.querySelectorAll('.gallery-item');
+        const buttons = document.querySelectorAll('[onclick^="filterGallery"]');
+        
+        // Mettre à jour les boutons
+        buttons.forEach(btn => {
+            btn.classList.remove('bg-primary', 'text-white', 'border-primary');
+            btn.classList.add('bg-white', 'text-gray-700', 'border-gray-300');
+        });
+        
+        // Activer le bouton sélectionné
+        const activeBtn = document.querySelector(`[onclick="filterGallery('${category}')"]`);
+        if (activeBtn) {
+            activeBtn.classList.remove('bg-white', 'text-gray-700', 'border-gray-300');
+            activeBtn.classList.add('bg-primary', 'text-white', 'border-primary');
+        }
+        
+        // Filtrer les images
+        items.forEach(item => {
+            const index = item.dataset.index;
+            const image = galleryData[index];
+            
+            if (category === 'all' || image.category === category) {
+                item.classList.remove('hidden');
+                item.classList.add('block');
+            } else {
+                item.classList.remove('block');
+                item.classList.add('hidden');
+            }
+        });
+    }
+
+    // Fermer le modal avec Échap
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            closeImageModal();
+        } else if (e.key === 'ArrowLeft' && !document.getElementById('imageModal').classList.contains('hidden')) {
+            prevImage();
+        } else if (e.key === 'ArrowRight' && !document.getElementById('imageModal').classList.contains('hidden')) {
+            nextImage();
+        }
+    });
+
+    // Initialiser la galerie au chargement
+    document.addEventListener('DOMContentLoaded', initGallery);
+    </script>
+</body>
+</html>

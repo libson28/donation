@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Entr'aide Humanitaire - Association Humanitaire</title>
-    <script src="https://cdn.tailwindcss.com/3.4.16"></script>
-    <script>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Entr'aide Humanitaire - Association Humanitaire</title>
+        <script src="https://cdn.tailwindcss.com/3.4.16"></script>
+        <script>
         tailwind.config = {
             theme: {
                 extend: {
@@ -28,12 +28,12 @@
                 }
             }
         }
-    </script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css" rel="stylesheet">
-    <style>
+        </script>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css" rel="stylesheet">
+        <style>
         .modal {
             display: none;
             position: fixed;
@@ -71,633 +71,626 @@
             border-color: #EF9221;
             background-color: #fef3e9;
         }
-    </style>
-</head>
-<body class="bg-white">
-    <!-- Header -->
-     <header class="bg-white shadow-sm sticky top-0 z-50" style="padding: 5px 0;">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-17">
-                <!-- Logo -->
-                <div class="flex items-center">
-                    <img src="logo.png" style="width: 70px;" alt="Logo" class="w-12 md:w-16 lg:w-20">
-                </div>
-                
-                <!-- Navigation Desktop -->
-                <nav class="hidden md:flex space-x-6 lg:space-x-8">
-                    <a href="#" class="text-primary font-semibold hover:text-primary transition-colors text-sm lg:text-base" data-i18n="nav.home">Accueil</a>
-                    <a href="Apropos.html" class="text-gray-700 hover:text-primary transition-colors text-sm lg:text-base" data-i18n="nav.about">À propos</a>
-                    <a href="projet.html" class="text-gray-700 hover:text-primary transition-colors text-sm lg:text-base" data-i18n="nav.projects">Projets</a>
-                    <a href="galerie.html" class="text-gray-700 hover:text-primary transition-colors text-sm lg:text-base" data-i18n="nav.gallery">Galerie</a>
-                    <a href="article.html" class="text-gray-700 hover:text-primary transition-colors text-sm lg:text-base" data-i18n="nav.news">Actualités</a>
-                    <a href="contact.html" class="text-gray-700 hover:text-primary transition-colors text-sm lg:text-base" data-i18n="nav.contact">Contact</a>
-                </nav>
-
-                <!-- Côté droit - Actions -->
-                <div class="flex items-center space-x-3 md:space-x-4">
-                    <!-- Sélecteur de langue -->
-                    <div class="relative hidden sm:block">
-                        <button class="flex items-center space-x-1 text-gray-700 hover:text-primary" id="languageBtn">
-                            <span class="text-sm" id="currentLang">FR</span>
-                            <div class="w-4 h-4 flex items-center justify-center">
-                                <i class="ri-arrow-down-s-line"></i>
-                            </div>
-                        </button>
-                        <div class="absolute right-0 mt-2 w-20 bg-white rounded shadow-lg hidden" id="languageMenu">
-                            <a href="#" class="block px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 lang-option" data-lang="fr">FR</a>
-                            <a href="#" class="block px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 lang-option" data-lang="en">EN</a>
-                            <a href="#" class="block px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 lang-option" data-lang="ar">AR</a>
-                        </div>
+        </style>
+    </head>
+    <body class="bg-white">
+        <!-- Header -->
+        <header class="bg-white shadow-sm sticky top-0 z-50" style="padding: 5px 0;">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex justify-between items-center h-17">
+                    <!-- Logo -->
+                    <div class="flex items-center">
+                        <img
+                            src="logo.png"
+                            style="width: 70px;"
+                            alt="Logo"
+                            class="w-12 md:w-16 lg:w-20"
+                        >
                     </div>
-                    
-                    <!-- Bouton Don -->
-                    <button class="bg-primary text-white px-4 py-2 !rounded-button hover:bg-orange-600 transition-colors whitespace-nowrap text-sm md:px-6 md:text-base" onclick="openDonationModal()" data-i18n="header.donate">
-                        Faire un don
-                    </button>
-                    
-                    <!-- Menu Burger Mobile -->
-                    <button class="md:hidden text-gray-700 hover:text-primary" id="mobileMenuBtn">
-                        <i class="ri-menu-line text-2xl"></i>
-                    </button>
-                </div>
-            </div>
-            
-            <!-- Menu Mobile -->
-            <div class="md:hidden bg-white shadow-lg rounded-b-lg hidden" id="mobileMenu">
-                <div class="py-4 space-y-4">
-                    <a href="index.html" class="block px-4 py-2 text-gray-700 hover:text-primary hover:bg-gray-50 transition-colors" data-i18n="nav.home">Accueil</a>
-                    <a href="Apropos.html" class="block px-4 py-2 text-gray-700 hover:text-primary hover:bg-gray-50 transition-colors" data-i18n="nav.about">À propos</a>
-                    <a href="#" class="block px-4 py-2 text-primary font-semibold hover:bg-gray-50 transition-colors" data-i18n="nav.projects">Projets</a>
-                    <a href="galerie.html" class="block px-4 py-2 text-gray-700 hover:text-primary hover:bg-gray-50 transition-colors" data-i18n="nav.gallery">Galerie</a>
-                    <a href="article.html" class="block px-4 py-2 text-gray-700 hover:text-primary hover:bg-gray-50 transition-colors" data-i18n="nav.news">Actualités</a>
-                    <a href="contact.html" class="block px-4 py-2 text-gray-700 hover:text-primary hover:bg-gray-50 transition-colors" data-i18n="nav.contact">Contact</a>
-                    
-                    <!-- Sélecteur de langue mobile -->
-                    <div class="px-4 pt-4 border-t border-gray-100">
-                        <div class="flex items-center space-x-3">
-                            <span class="text-gray-600 text-sm" data-i18n="language">Langue :</span>
-                            <div class="flex space-x-2">
-                                <a href="#" class="px-3 py-1 text-sm bg-gray-100 text-gray-700 rounded lang-option" data-lang="fr">FR</a>
-                                <a href="#" class="px-3 py-1 text-sm text-gray-600 hover:text-gray-900 rounded lang-option" data-lang="en">EN</a>
-                                <a href="#" class="px-3 py-1 text-sm text-gray-600 hover:text-gray-900 rounded lang-option" data-lang="ar">AR</a>
+                    <!-- Navigation Desktop -->
+                    <nav class="hidden md:flex space-x-6 lg:space-x-8">
+                        <a href="#" class="text-primary font-semibold hover:text-primary transition-colors text-sm lg:text-base" data-i18n="nav.home">Accueil</a>
+                        <a href="Apropos.html" class="text-gray-700 hover:text-primary transition-colors text-sm lg:text-base" data-i18n="nav.about">À propos</a>
+                        <a href="projet.html" class="text-gray-700 hover:text-primary transition-colors text-sm lg:text-base" data-i18n="nav.projects">Projets</a>
+                        <a href="galerie.html" class="text-gray-700 hover:text-primary transition-colors text-sm lg:text-base" data-i18n="nav.gallery">Galerie</a>
+                        <a href="article.html" class="text-gray-700 hover:text-primary transition-colors text-sm lg:text-base" data-i18n="nav.news">Actualités</a>
+                        <a href="contact.html" class="text-gray-700 hover:text-primary transition-colors text-sm lg:text-base" data-i18n="nav.contact">Contact</a>
+                    </nav>
+                    <!-- Côté droit - Actions -->
+                    <div class="flex items-center space-x-3 md:space-x-4">
+                        <!-- Sélecteur de langue -->
+                        <div class="relative hidden sm:block">
+                            <button class="flex items-center space-x-1 text-gray-700 hover:text-primary" id="languageBtn">
+                                <span class="text-sm" id="currentLang">FR</span>
+                                <div class="w-4 h-4 flex items-center justify-center">
+                                    <i class="ri-arrow-down-s-line"></i>
+                                </div>
+                            </button>
+                            <div class="absolute right-0 mt-2 w-20 bg-white rounded shadow-lg hidden" id="languageMenu">
+                                <a href="#" class="block px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 lang-option" data-lang="fr">FR</a>
+                                <a href="#" class="block px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 lang-option" data-lang="en">EN</a>
+                                <a href="#" class="block px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 lang-option" data-lang="ar">AR</a>
                             </div>
                         </div>
+                        <!-- Bouton Don -->
+                        <button class="bg-primary text-white px-4 py-2 !rounded-button hover:bg-orange-600 transition-colors whitespace-nowrap text-sm md:px-6 md:text-base" onclick="openDonationModal()" data-i18n="header.donate">
+                            Faire un don
+                        </button>
+                        <!-- Menu Burger Mobile -->
+                        <button class="md:hidden text-gray-700 hover:text-primary" id="mobileMenuBtn">
+                            <i class="ri-menu-line text-2xl"></i>
+                        </button>
+                    </div>
+                </div>
+                <!-- Menu Mobile -->
+                <div class="md:hidden bg-white shadow-lg rounded-b-lg hidden" id="mobileMenu">
+                    <div class="py-4 space-y-4">
+                        <a href="index.html" class="block px-4 py-2 text-gray-700 hover:text-primary hover:bg-gray-50 transition-colors" data-i18n="nav.home">Accueil</a>
+                        <a href="Apropos.html" class="block px-4 py-2 text-gray-700 hover:text-primary hover:bg-gray-50 transition-colors" data-i18n="nav.about">À propos</a>
+                        <a href="#" class="block px-4 py-2 text-primary font-semibold hover:bg-gray-50 transition-colors" data-i18n="nav.projects">Projets</a>
+                        <a href="galerie.html" class="block px-4 py-2 text-gray-700 hover:text-primary hover:bg-gray-50 transition-colors" data-i18n="nav.gallery">Galerie</a>
+                        <a href="article.html" class="block px-4 py-2 text-gray-700 hover:text-primary hover:bg-gray-50 transition-colors" data-i18n="nav.news">Actualités</a>
+                        <a href="contact.html" class="block px-4 py-2 text-gray-700 hover:text-primary hover:bg-gray-50 transition-colors" data-i18n="nav.contact">Contact</a>
+                        <!-- Sélecteur de langue mobile -->
+                        <div class="px-4 pt-4 border-t border-gray-100">
+                            <div class="flex items-center space-x-3">
+                                <span class="text-gray-600 text-sm" data-i18n="language">Langue :</span>
+                                <div class="flex space-x-2">
+                                    <a href="#" class="px-3 py-1 text-sm bg-gray-100 text-gray-700 rounded lang-option" data-lang="fr">FR</a>
+                                    <a href="#" class="px-3 py-1 text-sm text-gray-600 hover:text-gray-900 rounded lang-option" data-lang="en">EN</a>
+                                    <a href="#" class="px-3 py-1 text-sm text-gray-600 hover:text-gray-900 rounded lang-option" data-lang="ar">AR</a>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </header>
-
-    <!-- Popup Donation -->
-    <div id="donationModal" class="modal" >
-        <div class="modal-content">
-            <div class="flex justify-between items-center mb-6">
-                <h3 class="text-2xl font-bold text-gray-900" data-i18n="donation.title">Faire un don</h3>
-                <button onclick="closeDonationModal()" class="text-gray-500 hover:text-gray-700">
-                    <i class="ri-close-line text-2xl"></i>
-                </button>
-            </div>
-            
-            <div class="space-y-6">
-                <div>
-                    <label class="block text-gray-700 mb-2" data-i18n="donation.amount">Montant du don</label>
-                    <div class="grid grid-cols-2 md:grid-cols-2 gap-3 mb-4">
-                        <div class="donation-amount" data-amount="10000">
-                            <div class="text-lg font-semibold">10 000 F</div>
-                            <div class="text-sm text-gray-500" data-i18n="donation.food">Nourriture 1 mois</div>
-                        </div>
-                        <div class="donation-amount" data-amount="25000">
-                            <div class="text-lg font-semibold">25 000 F</div>
-                            <div class="text-sm text-gray-500" data-i18n="donation.medical">Soins médicaux</div>
-                        </div>
-                        <div class="donation-amount" data-amount="50000">
-                            <div class="text-lg font-semibold">50 000 F</div>
-                            <div class="text-sm text-gray-500" data-i18n="donation.education">Éducation 1 enfant</div>
-                        </div>
-                        <div class="donation-amount" data-amount="100000">
-                            <div class="text-lg font-semibold">100 000 F</div>
-                            <div class="text-sm text-gray-500" data-i18n="donation.water">Accès à l'eau</div>
-                        </div>
-                    </div>
-                    
-                    <div class="relative">
-                        <input type="number" id="customAmount" placeholder="Autre montant" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
-                        <div class="absolute right-3 top-3 text-gray-500">FCFA</div>
-                    </div>
-                </div>
-                
-                <div>
-                    <label class="block text-gray-700 mb-2" data-i18n="donation.method">Méthode de paiement</label>
-                    <div class="grid grid-cols-2 md:grid-cols-3 gap-3">
-                        <button class="flex flex-col items-center justify-center p-4 border border-gray-300 rounded-lg hover:border-primary transition-colors">
-                            <i class="ri-smartphone-line text-2xl text-gray-700 mb-2"></i>
-                            <span class="text-sm">Wave</span>
-                        </button>
-                        <button class="flex flex-col items-center justify-center p-4 border border-gray-300 rounded-lg hover:border-primary transition-colors">
-                            <i class="ri-phone-line text-2xl text-gray-700 mb-2"></i>
-                            <span class="text-sm">Orange Money</span>
-                        </button>
-                        <button class="flex flex-col items-center justify-center p-4 border border-gray-300 rounded-lg hover:border-primary transition-colors">
-                            <i class="ri-bank-card-line text-2xl text-gray-700 mb-2"></i>
-                            <span class="text-sm">Carte bancaire</span>
-                        </button>
-                    </div>
-                </div>
-                
-                <div class="pt-4">
-                    <button class="w-full bg-primary text-white py-4 rounded-lg hover:bg-orange-600 transition-colors font-semibold" data-i18n="donation.submit">
-                        Effectuer le don
+        </header>
+        <!-- Popup Donation -->
+        <div id="donationModal" class="modal">
+            <div class="modal-content">
+                <div class="flex justify-between items-center mb-6">
+                    <h3 class="text-2xl font-bold text-gray-900" data-i18n="donation.title">Faire un don</h3>
+                    <button onclick="closeDonationModal()" class="text-gray-500 hover:text-gray-700">
+                        <i class="ri-close-line text-2xl"></i>
                     </button>
                 </div>
-                
-                <p class="text-sm text-gray-500 text-center" data-i18n="donation.security">
-                    Votre don est sécurisé. 98% des fonds sont directement alloués aux programmes.
-                </p>
-            </div>
-        </div>
-    </div>
-
-    <!-- Popup Volunteer -->
-    <div id="volunteerModal" class="modal">
-        <div class="modal-content">
-            <div class="flex justify-between items-center mb-6">
-                <h3 class="text-2xl font-bold text-gray-900" data-i18n="volunteer.title">Devenir bénévole</h3>
-                <button onclick="closeVolunteerModal()" class="text-gray-500 hover:text-gray-700">
-                    <i class="ri-close-line text-2xl"></i>
-                </button>
-            </div>
-            
-            <form class="space-y-4">
-                <div class="grid md:grid-cols-2 gap-4">
+                <div class="space-y-6">
                     <div>
-                        <label class="block text-gray-700 mb-2" data-i18n="form.firstName">Prénom</label>
-                        <input type="text" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
+                        <label class="block text-gray-700 mb-2" data-i18n="donation.amount">Montant du don</label>
+                        <div class="grid grid-cols-2 md:grid-cols-2 gap-3 mb-4">
+                            <div class="donation-amount" data-amount="10000">
+                                <div class="text-lg font-semibold">10 000 F</div>
+                                <div class="text-sm text-gray-500" data-i18n="donation.food">Nourriture 1 mois</div>
+                            </div>
+                            <div class="donation-amount" data-amount="25000">
+                                <div class="text-lg font-semibold">25 000 F</div>
+                                <div class="text-sm text-gray-500" data-i18n="donation.medical">Soins médicaux</div>
+                            </div>
+                            <div class="donation-amount" data-amount="50000">
+                                <div class="text-lg font-semibold">50 000 F</div>
+                                <div class="text-sm text-gray-500" data-i18n="donation.education">Éducation 1 enfant</div>
+                            </div>
+                            <div class="donation-amount" data-amount="100000">
+                                <div class="text-lg font-semibold">100 000 F</div>
+                                <div class="text-sm text-gray-500" data-i18n="donation.water">Accès à l'eau</div>
+                            </div>
+                        </div>
+                        <div class="relative">
+                            <input
+                                type="number"
+                                id="customAmount"
+                                placeholder="Autre montant"
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                            >
+                            <div class="absolute right-3 top-3 text-gray-500">FCFA</div>
+                        </div>
                     </div>
                     <div>
-                        <label class="block text-gray-700 mb-2" data-i18n="form.lastName">Nom</label>
-                        <input type="text" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
+                        <label class="block text-gray-700 mb-2" data-i18n="donation.method">Méthode de paiement</label>
+                        <div class="grid grid-cols-2 md:grid-cols-3 gap-3">
+                            <button class="flex flex-col items-center justify-center p-4 border border-gray-300 rounded-lg hover:border-primary transition-colors">
+                                <i class="ri-smartphone-line text-2xl text-gray-700 mb-2"></i>
+                                <span class="text-sm">Wave</span>
+                            </button>
+                            <button class="flex flex-col items-center justify-center p-4 border border-gray-300 rounded-lg hover:border-primary transition-colors">
+                                <i class="ri-phone-line text-2xl text-gray-700 mb-2"></i>
+                                <span class="text-sm">Orange Money</span>
+                            </button>
+                            <button class="flex flex-col items-center justify-center p-4 border border-gray-300 rounded-lg hover:border-primary transition-colors">
+                                <i class="ri-bank-card-line text-2xl text-gray-700 mb-2"></i>
+                                <span class="text-sm">Carte bancaire</span>
+                            </button>
+                        </div>
                     </div>
-                </div>
-                
-                <div>
-                    <label class="block text-gray-700 mb-2" data-i18n="form.email">Email</label>
-                    <input type="email" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
-                </div>
-                
-                <div>
-                    <label class="block text-gray-700 mb-2" data-i18n="form.phone">Téléphone</label>
-                    <input type="tel" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
-                </div>
-                
-                <div>
-                    <label class="block text-gray-700 mb-2" data-i18n="volunteer.skills">Compétences</label>
-                    <textarea class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" rows="3" placeholder="Médecine, enseignement, logistique, construction..."></textarea>
-                </div>
-                
-                <div>
-                    <label class="block text-gray-700 mb-2" data-i18n="volunteer.availability">Disponibilité</label>
-                    <div class="flex flex-wrap gap-2">
-                        <label class="inline-flex items-center">
-                            <input type="checkbox" class="rounded border-gray-300 text-primary focus:ring-primary">
-                            <span class="ml-2 text-gray-700" data-i18n="volunteer.weekend">Week-end</span>
-                        </label>
-                        <label class="inline-flex items-center">
-                            <input type="checkbox" class="rounded border-gray-300 text-primary focus:ring-primary">
-                            <span class="ml-2 text-gray-700" data-i18n="volunteer.evening">Soirée</span>
-                        </label>
-                        <label class="inline-flex items-center">
-                            <input type="checkbox" class="rounded border-gray-300 text-primary focus:ring-primary">
-                            <span class="ml-2 text-gray-700" data-i18n="volunteer.fulltime">Temps plein</span>
-                        </label>
+                    <div class="pt-4">
+                        <button class="w-full bg-primary text-white py-4 rounded-lg hover:bg-orange-600 transition-colors font-semibold" data-i18n="donation.submit">
+                            Effectuer le don
+                        </button>
                     </div>
+                    <p class="text-sm text-gray-500 text-center" data-i18n="donation.security">
+                        Votre don est sécurisé. 98% des fonds sont directement alloués aux programmes.
+                    </p>
                 </div>
-                
-                <div class="pt-4">
-                    <button type="submit" class="w-full bg-primary text-white py-4 rounded-lg hover:bg-orange-600 transition-colors font-semibold" data-i18n="volunteer.submit">
-                        Postuler comme bénévole
-                    </button>
-                </div>
-            </form>
+            </div>
         </div>
-    </div>
-
-    <!-- Hero Section -->
-    <section class="relative bg-cover bg-center min-h-screen flex items-center" style="background-image: url('banner.jpeg')">
-        <div class="absolute inset-0 bg-black bg-opacity-30"></div>
-        <div class="relative w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="max-w-2xl">
-                <h1 class="text-5xl md:text-6xl font-bold text-white mb-6 leading-tight" data-i18n="hero.title">
-                    Ensemble pour un monde plus solidaire
-                </h1>
-                <p class="text-xl text-white mb-8 leading-relaxed" data-i18n="hero.description">
-                    Nous œuvrons chaque jour pour apporter aide et espoir aux communautés les plus vulnérables. Rejoignez notre mission humanitaire et contribuez à construire un avenir meilleur.
-                </p>
-                <div class="flex flex-col sm:flex-row gap-4">
-                    <button class="bg-secondary text-white px-8 py-4 !rounded-button hover:bg-green-600 transition-colors text-lg whitespace-nowrap" data-i18n="hero.discover">
-                        Découvrir nos projets
+        <!-- Popup Volunteer -->
+        <div id="volunteerModal" class="modal">
+            <div class="modal-content">
+                <div class="flex justify-between items-center mb-6">
+                    <h3 class="text-2xl font-bold text-gray-900" data-i18n="volunteer.title">Devenir bénévole</h3>
+                    <button onclick="closeVolunteerModal()" class="text-gray-500 hover:text-gray-700">
+                        <i class="ri-close-line text-2xl"></i>
                     </button>
-                    <button class="bg-primary text-white px-8 py-4 !rounded-button hover:bg-orange-600 transition-colors text-lg whitespace-nowrap" onclick="openDonationModal()" data-i18n="hero.donate">
+                </div>
+                <form class="space-y-4">
+                    <div class="grid md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-gray-700 mb-2" data-i18n="form.firstName">Prénom</label>
+                            <input type="text" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
+                        </div>
+                        <div>
+                            <label class="block text-gray-700 mb-2" data-i18n="form.lastName">Nom</label>
+                            <input type="text" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-gray-700 mb-2" data-i18n="form.email">Email</label>
+                        <input type="email" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
+                    </div>
+                    <div>
+                        <label class="block text-gray-700 mb-2" data-i18n="form.phone">Téléphone</label>
+                        <input type="tel" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
+                    </div>
+                    <div>
+                        <label class="block text-gray-700 mb-2" data-i18n="volunteer.skills">Compétences</label>
+                        <textarea class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" rows="3" placeholder="Médecine, enseignement, logistique, construction..."></textarea>
+                    </div>
+                    <div>
+                        <label class="block text-gray-700 mb-2" data-i18n="volunteer.availability">Disponibilité</label>
+                        <div class="flex flex-wrap gap-2">
+                            <label class="inline-flex items-center">
+                                <input type="checkbox" class="rounded border-gray-300 text-primary focus:ring-primary">
+                                <span class="ml-2 text-gray-700" data-i18n="volunteer.weekend">Week-end</span>
+                            </label>
+                            <label class="inline-flex items-center">
+                                <input type="checkbox" class="rounded border-gray-300 text-primary focus:ring-primary">
+                                <span class="ml-2 text-gray-700" data-i18n="volunteer.evening">Soirée</span>
+                            </label>
+                            <label class="inline-flex items-center">
+                                <input type="checkbox" class="rounded border-gray-300 text-primary focus:ring-primary">
+                                <span class="ml-2 text-gray-700" data-i18n="volunteer.fulltime">Temps plein</span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="pt-4">
+                        <button type="submit" class="w-full bg-primary text-white py-4 rounded-lg hover:bg-orange-600 transition-colors font-semibold" data-i18n="volunteer.submit">
+                            Postuler comme bénévole
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- Hero Section -->
+        <section class="relative bg-cover bg-center min-h-screen flex items-center" style="background-image: url('banner.jpeg')">
+            <div class="absolute inset-0 bg-black bg-opacity-30"></div>
+            <div class="relative w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="max-w-2xl">
+                    <h1 class="text-5xl md:text-6xl font-bold text-white mb-6 leading-tight" data-i18n="hero.title">
+                        Ensemble pour un monde plus solidaire
+                    </h1>
+                    <p class="text-xl text-white mb-8 leading-relaxed" data-i18n="hero.description">
+                        L’Association ENTRAIDE POUR SERVIR L’HUMANITE est une organisation caritative opérant au Sénégal et au Niger. Elle œuvre pour le bien-être humain et la solidarité sociale à travers des projets humanitaires et de développement durable, avec le soutien de bienfaiteurs, notamment des Émirats Arabes Unis
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4">
+                        <button class="bg-secondary text-white px-8 py-4 !rounded-button hover:bg-green-600 transition-colors text-lg whitespace-nowrap" data-i18n="hero.discover">
+                            Découvrir nos projets
+                        </button>
+                        <button class="bg-primary text-white px-8 py-4 !rounded-button hover:bg-orange-600 transition-colors text-lg whitespace-nowrap" onclick="openDonationModal()" data-i18n="hero.donate">
+                            Faire un don
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Mission & Values -->
+        <section class="py-20 bg-gray-50">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-16">
+                    <h2 class="text-4xl font-bold text-gray-900 mb-4" data-i18n="mission.title">Notre engagement humanitaire</h2>
+                    <p class="text-xl text-gray-600 max-w-3xl mx-auto" data-i18n="mission.description">
+                        Guidés par nos valeurs de solidarité et de transparence, nous agissons concrètement pour améliorer les conditions de vie des plus démunis.
+                    </p>
+                </div>
+                <div class="grid md:grid-cols-3 gap-12">
+                    <div class="text-center">
+                        <div class="w-20 h-20 bg-primary rounded-full flex items-center justify-center mx-auto mb-6">
+                            <i class="ri-heart-line text-3xl text-white"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-gray-900 mb-4" data-i18n="mission.mission">Notre Mission</h3>
+                        <p class="text-gray-600 leading-relaxed" data-i18n="mission.missionText">
+                            Apporter une aide humanitaire durable aux populations en détresse, en privilégiant l'autonomisation et le développement local des communautés.
+                        </p>
+                    </div>
+                    <div class="text-center">
+                        <div class="w-20 h-20 bg-secondary rounded-full flex items-center justify-center mx-auto mb-6">
+                            <i class="ri-shield-check-line text-3xl text-white"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-gray-900 mb-4" data-i18n="mission.values">Nos Valeurs</h3>
+                        <p class="text-gray-600 leading-relaxed" data-i18n="mission.valuesText">
+                            Transparence, respect de la dignité humaine, solidarité internationale et engagement communautaire guident toutes nos actions sur le terrain.
+                        </p>
+                    </div>
+                    <div class="text-center">
+                        <div class="w-20 h-20 bg-primary rounded-full flex items-center justify-center mx-auto mb-6">
+                            <i class="ri-bar-chart-line text-3xl text-white"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-gray-900 mb-4" data-i18n="mission.impact">Notre Impact</h3>
+                        <p class="text-gray-600 leading-relaxed" data-i18n="mission.impactText">
+                            Plus de 15 000 bénéficiaires aidés, 25 projets réalisés dans 8 pays, avec 98% des fonds directement alloués aux programmes humanitaires.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Current Projects -->
+        <section class="py-20 bg-white">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-16">
+                    <h2 class="text-4xl font-bold text-gray-900 mb-4" data-i18n="projects.title">Projets en cours</h2>
+                    <p class="text-xl text-gray-600" data-i18n="projects.description">
+                        Découvrez nos initiatives actuelles et leur impact sur les communautés
+                    </p>
+                </div>
+                <div class="grid md:grid-cols-3 gap-8">
+                    <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+                        <img src="3.jpeg" alt="Projet eau potable" class="w-full h-48 object-cover object-top">
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold text-gray-900 mb-3" data-i18n="projects.water.title">Accès à l'eau potable - Kaolack</h3>
+                            <p class="text-gray-600 mb-4" data-i18n="projects.water.description">
+                                Construction de puits et installation de systèmes d'assainissement pour 5 villages ruraux, bénéficiant à plus de 2 000 habitants.
+                            </p>
+                            <div class="mb-4">
+                                <div class="flex justify-between text-sm text-gray-600 mb-2">
+                                    <span data-i18n="projects.funded">Financé à 75%</span>
+                                    <span>120 750f / 250 000f</span>
+                                </div>
+                                <div class="w-full bg-gray-200 rounded-full h-2">
+                                    <div class="bg-secondary h-2 rounded-full" style="width: 75%"></div>
+                                </div>
+                            </div>
+                            <button class="w-full bg-primary text-white py-3 !rounded-button hover:bg-orange-600 transition-colors whitespace-nowrap" data-i18n="projects.learnMore">
+                                En savoir plus
+                            </button>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+                        <img src="classe.jpeg" alt="Projet éducation" class="w-full h-48 object-cover object-top">
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold text-gray-900 mb-3" data-i18n="projects.education.title">Éducation pour tous - Sénégal</h3>
+                            <p class="text-gray-600 mb-4" data-i18n="projects.education.description">
+                                Programme d'alphabétisation et de formation professionnelle pour 300 jeunes et adultes dans la région de Mbour.
+                            </p>
+                            <div class="mb-4">
+                                <div class="flex justify-between text-sm text-gray-600 mb-2">
+                                    <span data-i18n="projects.funded">Financé à 60%</span>
+                                    <span>1 200 000f / 5 500 000f</span>
+                                </div>
+                                <div class="w-full bg-gray-200 rounded-full h-2">
+                                    <div class="bg-secondary h-2 rounded-full" style="width: 60%"></div>
+                                </div>
+                            </div>
+                            <button class="w-full bg-primary text-white py-3 !rounded-button hover:bg-orange-600 transition-colors whitespace-nowrap" data-i18n="projects.learnMore">
+                                En savoir plus
+                            </button>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+                        <img src="sante.jpg" alt="Projet santé" class="w-full h-48 object-cover object-top">
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold text-gray-900 mb-3" data-i18n="projects.health.title">Soins de santé - Keur Momar</h3>
+                            <p class="text-gray-600 mb-4" data-i18n="projects.health.description">
+                                Mise en place d'un centre de santé communautaire et formation d'agents de santé locaux pour améliorer l'accès aux soins.
+                            </p>
+                            <div class="mb-4">
+                                <div class="flex justify-between text-sm text-gray-600 mb-2">
+                                    <span data-i18n="projects.funded">Financé à 45%</span>
+                                    <span>367 000f / 1 500 000f</span>
+                                </div>
+                                <div class="w-full bg-gray-200 rounded-full h-2">
+                                    <div class="bg-secondary h-2 rounded-full" style="width: 45%"></div>
+                                </div>
+                            </div>
+                            <button class="w-full bg-primary text-white py-3 !rounded-button hover:bg-orange-600 transition-colors whitespace-nowrap" data-i18n="projects.learnMore">
+                                En savoir plus
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Testimonials -->
+        <section class="py-20 bg-gray-50">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-16">
+                    <h2 class="text-4xl font-bold text-gray-900 mb-4" data-i18n="testimonials.title">Témoignages</h2>
+                    <p class="text-xl text-gray-600" data-i18n="testimonials.description">
+                        Les voix de ceux que nous accompagnons
+                    </p>
+                </div>
+                <div class="relative">
+                    <div class="testimonial-container overflow-hidden">
+                        <div class="testimonial-slide flex transition-transform duration-500" id="testimonialSlider">
+                            <div class="w-full flex-shrink-0 px-4">
+                                <div class="max-w-4xl mx-auto text-center">
+                                    <img src="https://readdy.ai/api/search-image?query=Portrait%20of%20smiling%20African%20woman%20in%20traditional%20clothing%20showing%20gratitude%20and%20hope%2C%20natural%20lighting%2C%20dignified%20and%20authentic%20expression%2C%20warm%20background&width=150&height=150&seq=testimonial001&orientation=squarish" alt="Aminata Diallo" class="w-24 h-24 rounded-full mx-auto mb-6 object-cover">
+                                    <blockquote class="text-2xl text-gray-700 italic mb-6 leading-relaxed" data-i18n="testimonials.1.quote">
+                                        "Grâce à Entr'aide Humanitaire, notre village a maintenant accès à l'eau potable. Mes enfants n'ont plus à marcher des kilomètres pour chercher de l'eau et peuvent aller à l'école."
+                                    </blockquote>
+                                    <cite class="text-lg font-semibold text-gray-900" data-i18n="testimonials.1.name">Aminata Diallo</cite>
+                                    <p class="text-gray-600" data-i18n="testimonials.1.role">Bénéficiaire du projet eau potable, Mali</p>
+                                </div>
+                            </div>
+                            <div class="w-full flex-shrink-0 px-4">
+                                <div class="max-w-4xl mx-auto text-center">
+                                    <img src="https://readdy.ai/api/search-image?query=Portrait%20of%20young%20African%20man%20with%20confident%20smile%2C%20modern%20clothing%2C%20educational%20background%2C%20hope%20and%20determination%2C%20natural%20lighting%2C%20authentic%20expression&width=150&height=150&seq=testimonial002&orientation=squarish" alt="Moussa Traoré" class="w-24 h-24 rounded-full mx-auto mb-6 object-cover">
+                                    <blockquote class="text-2xl text-gray-700 italic mb-6 leading-relaxed" data-i18n="testimonials.2.quote">
+                                        "Le programme de formation m'a permis d'apprendre un métier. Aujourd'hui, je peux subvenir aux besoins de ma famille et contribuer au développement de ma communauté."
+                                    </blockquote>
+                                    <cite class="text-lg font-semibold text-gray-900" data-i18n="testimonials.2.name">Moussa Traoré</cite>
+                                    <p class="text-gray-600" data-i18n="testimonials.2.role">Bénéficiaire du programme éducation, Sénégal</p>
+                                </div>
+                            </div>
+                            <div class="w-full flex-shrink-0 px-4">
+                                <div class="max-w-4xl mx-auto text-center">
+                                    <img src="https://readdy.ai/api/search-image?query=Portrait%20of%20African%20healthcare%20worker%20in%20medical%20uniform%20showing%20pride%20and%20dedication%2C%20hospital%20background%2C%20professional%20and%20caring%20expression%2C%20natural%20lighting&width=150&height=150&seq=testimonial003&orientation=squarish" alt="Fatou Sankara" class="w-24 h-24 rounded-full mx-auto mb-6 object-cover">
+                                    <blockquote class="text-2xl text-gray-700 italic mb-6 leading-relaxed" data-i18n="testimonials.3.quote">
+                                        "En tant qu'agent de santé formée par l'association, je peux maintenant soigner les membres de ma communauté et sauver des vies. C'est un honneur immense."
+                                    </blockquote>
+                                    <cite class="text-lg font-semibold text-gray-900" data-i18n="testimonials.3.name">Fatou Sankara</cite>
+                                    <p class="text-gray-600" data-i18n="testimonials.3.role">Agent de santé, Burkina Faso</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex justify-center mt-8 space-x-2">
+                        <button class="w-3 h-3 rounded-full bg-primary testimonial-dot active" data-slide="0"></button>
+                        <button class="w-3 h-3 rounded-full bg-gray-300 testimonial-dot" data-slide="1"></button>
+                        <button class="w-3 h-3 rounded-full bg-gray-300 testimonial-dot" data-slide="2"></button>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Call to Action -->
+        <section class="py-20 bg-gradient-to-r from-primary to-secondary">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <h2 class="text-4xl font-bold text-white mb-6" data-i18n="cta.title">Rejoignez notre mission</h2>
+                <p class="text-xl text-white mb-8 max-w-3xl mx-auto" data-i18n="cta.description">
+                    Ensemble, nous avons déjà changé la vie de milliers de personnes. Votre soutien peut faire la différence pour encore plus de familles dans le besoin.
+                </p>
+                <div class="grid md:grid-cols-3 gap-8 mb-12">
+                    <div class="text-center">
+                        <div class="text-4xl font-bold text-white mb-2">1000+</div>
+                        <div class="text-white" data-i18n="cta.beneficiaries">Bénéficiaires aidés</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-4xl font-bold text-white mb-2">25</div>
+                        <div class="text-white" data-i18n="cta.projects">Projets réalisés</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-4xl font-bold text-white mb-2">8</div>
+                        <div class="text-white" data-i18n="cta.countries">Regions d'intervention</div>
+                    </div>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <button class="bg-white text-primary px-8 py-4 !rounded-button hover:bg-gray-100 transition-colors text-lg font-semibold whitespace-nowrap" onclick="openDonationModal()" data-i18n="cta.donate">
                         Faire un don
                     </button>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Mission & Values -->
-    <section class="py-20 bg-gray-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16">
-                <h2 class="text-4xl font-bold text-gray-900 mb-4" data-i18n="mission.title">Notre engagement humanitaire</h2>
-                <p class="text-xl text-gray-600 max-w-3xl mx-auto" data-i18n="mission.description">
-                    Guidés par nos valeurs de solidarité et de transparence, nous agissons concrètement pour améliorer les conditions de vie des plus démunis.
-                </p>
-            </div>
-            
-            <div class="grid md:grid-cols-3 gap-12">
-                <div class="text-center">
-                    <div class="w-20 h-20 bg-primary rounded-full flex items-center justify-center mx-auto mb-6">
-                        <i class="ri-heart-line text-3xl text-white"></i>
-                    </div>
-                    <h3 class="text-2xl font-bold text-gray-900 mb-4" data-i18n="mission.mission">Notre Mission</h3>
-                    <p class="text-gray-600 leading-relaxed" data-i18n="mission.missionText">
-                        Apporter une aide humanitaire durable aux populations en détresse, en privilégiant l'autonomisation et le développement local des communautés.
-                    </p>
-                </div>
-                
-                <div class="text-center">
-                    <div class="w-20 h-20 bg-secondary rounded-full flex items-center justify-center mx-auto mb-6">
-                        <i class="ri-shield-check-line text-3xl text-white"></i>
-                    </div>
-                    <h3 class="text-2xl font-bold text-gray-900 mb-4" data-i18n="mission.values">Nos Valeurs</h3>
-                    <p class="text-gray-600 leading-relaxed" data-i18n="mission.valuesText">
-                        Transparence, respect de la dignité humaine, solidarité internationale et engagement communautaire guident toutes nos actions sur le terrain.
-                    </p>
-                </div>
-                
-                <div class="text-center">
-                    <div class="w-20 h-20 bg-primary rounded-full flex items-center justify-center mx-auto mb-6">
-                        <i class="ri-bar-chart-line text-3xl text-white"></i>
-                    </div>
-                    <h3 class="text-2xl font-bold text-gray-900 mb-4" data-i18n="mission.impact">Notre Impact</h3>
-                    <p class="text-gray-600 leading-relaxed" data-i18n="mission.impactText">
-                        Plus de 15 000 bénéficiaires aidés, 25 projets réalisés dans 8 pays, avec 98% des fonds directement alloués aux programmes humanitaires.
-                    </p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Current Projects -->
-    <section class="py-20 bg-white">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16">
-                <h2 class="text-4xl font-bold text-gray-900 mb-4" data-i18n="projects.title">Projets en cours</h2>
-                <p class="text-xl text-gray-600" data-i18n="projects.description">
-                    Découvrez nos initiatives actuelles et leur impact sur les communautés
-                </p>
-            </div>
-            
-            <div class="grid md:grid-cols-3 gap-8">
-                <div class="bg-white rounded-lg shadow-lg overflow-hidden">
-                    <img src="3.jpeg" alt="Projet eau potable" class="w-full h-48 object-cover object-top">
-                    <div class="p-6">
-                        <h3 class="text-xl font-bold text-gray-900 mb-3" data-i18n="projects.water.title">Accès à l'eau potable - Kaolack</h3>
-                        <p class="text-gray-600 mb-4" data-i18n="projects.water.description">
-                            Construction de puits et installation de systèmes d'assainissement pour 5 villages ruraux, bénéficiant à plus de 2 000 habitants.
-                        </p>
-                        <div class="mb-4">
-                            <div class="flex justify-between text-sm text-gray-600 mb-2">
-                                <span data-i18n="projects.funded">Financé à 75%</span>
-                                <span>120 750f / 250 000f</span>
-                            </div>
-                            <div class="w-full bg-gray-200 rounded-full h-2">
-                                <div class="bg-secondary h-2 rounded-full" style="width: 75%"></div>
-                            </div>
-                        </div>
-                        <button class="w-full bg-primary text-white py-3 !rounded-button hover:bg-orange-600 transition-colors whitespace-nowrap" data-i18n="projects.learnMore">
-                            En savoir plus
-                        </button>
-                    </div>
-                </div>
-                
-                <div class="bg-white rounded-lg shadow-lg overflow-hidden">
-                    <img src="classe.jpeg" alt="Projet éducation" class="w-full h-48 object-cover object-top">
-                    <div class="p-6">
-                        <h3 class="text-xl font-bold text-gray-900 mb-3" data-i18n="projects.education.title">Éducation pour tous - Sénégal</h3>
-                        <p class="text-gray-600 mb-4" data-i18n="projects.education.description">
-                            Programme d'alphabétisation et de formation professionnelle pour 300 jeunes et adultes dans la région de Mbour.
-                        </p>
-                        <div class="mb-4">
-                            <div class="flex justify-between text-sm text-gray-600 mb-2">
-                                <span data-i18n="projects.funded">Financé à 60%</span>
-                                <span>1 200 000f / 5 500 000f</span>
-                            </div>
-                            <div class="w-full bg-gray-200 rounded-full h-2">
-                                <div class="bg-secondary h-2 rounded-full" style="width: 60%"></div>
-                            </div>
-                        </div>
-                        <button class="w-full bg-primary text-white py-3 !rounded-button hover:bg-orange-600 transition-colors whitespace-nowrap" data-i18n="projects.learnMore">
-                            En savoir plus
-                        </button>
-                    </div>
-                </div>
-                
-                <div class="bg-white rounded-lg shadow-lg overflow-hidden">
-                    <img src="sante.jpg" alt="Projet santé" class="w-full h-48 object-cover object-top">
-                    <div class="p-6">
-                        <h3 class="text-xl font-bold text-gray-900 mb-3" data-i18n="projects.health.title">Soins de santé - Keur Momar</h3>
-                        <p class="text-gray-600 mb-4" data-i18n="projects.health.description">
-                            Mise en place d'un centre de santé communautaire et formation d'agents de santé locaux pour améliorer l'accès aux soins.
-                        </p>
-                        <div class="mb-4">
-                            <div class="flex justify-between text-sm text-gray-600 mb-2">
-                                <span data-i18n="projects.funded">Financé à 45%</span>
-                                <span>367 000f / 1 500 000f</span>
-                            </div>
-                            <div class="w-full bg-gray-200 rounded-full h-2">
-                                <div class="bg-secondary h-2 rounded-full" style="width: 45%"></div>
-                            </div>
-                        </div>
-                        <button class="w-full bg-primary text-white py-3 !rounded-button hover:bg-orange-600 transition-colors whitespace-nowrap" data-i18n="projects.learnMore">
-                            En savoir plus
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Testimonials -->
-    <section class="py-20 bg-gray-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16">
-                <h2 class="text-4xl font-bold text-gray-900 mb-4" data-i18n="testimonials.title">Témoignages</h2>
-                <p class="text-xl text-gray-600" data-i18n="testimonials.description">
-                    Les voix de ceux que nous accompagnons
-                </p>
-            </div>
-            
-            <div class="relative">
-                <div class="testimonial-container overflow-hidden">
-                    <div class="testimonial-slide flex transition-transform duration-500" id="testimonialSlider">
-                        <div class="w-full flex-shrink-0 px-4">
-                            <div class="max-w-4xl mx-auto text-center">
-                                <img src="https://readdy.ai/api/search-image?query=Portrait%20of%20smiling%20African%20woman%20in%20traditional%20clothing%20showing%20gratitude%20and%20hope%2C%20natural%20lighting%2C%20dignified%20and%20authentic%20expression%2C%20warm%20background&width=150&height=150&seq=testimonial001&orientation=squarish" alt="Aminata Diallo" class="w-24 h-24 rounded-full mx-auto mb-6 object-cover">
-                                <blockquote class="text-2xl text-gray-700 italic mb-6 leading-relaxed" data-i18n="testimonials.1.quote">
-                                    "Grâce à Entr'aide Humanitaire, notre village a maintenant accès à l'eau potable. Mes enfants n'ont plus à marcher des kilomètres pour chercher de l'eau et peuvent aller à l'école."
-                                </blockquote>
-                                <cite class="text-lg font-semibold text-gray-900" data-i18n="testimonials.1.name">Aminata Diallo</cite>
-                                <p class="text-gray-600" data-i18n="testimonials.1.role">Bénéficiaire du projet eau potable, Mali</p>
-                            </div>
-                        </div>
-                        
-                        <div class="w-full flex-shrink-0 px-4">
-                            <div class="max-w-4xl mx-auto text-center">
-                                <img src="https://readdy.ai/api/search-image?query=Portrait%20of%20young%20African%20man%20with%20confident%20smile%2C%20modern%20clothing%2C%20educational%20background%2C%20hope%20and%20determination%2C%20natural%20lighting%2C%20authentic%20expression&width=150&height=150&seq=testimonial002&orientation=squarish" alt="Moussa Traoré" class="w-24 h-24 rounded-full mx-auto mb-6 object-cover">
-                                <blockquote class="text-2xl text-gray-700 italic mb-6 leading-relaxed" data-i18n="testimonials.2.quote">
-                                    "Le programme de formation m'a permis d'apprendre un métier. Aujourd'hui, je peux subvenir aux besoins de ma famille et contribuer au développement de ma communauté."
-                                </blockquote>
-                                <cite class="text-lg font-semibold text-gray-900" data-i18n="testimonials.2.name">Moussa Traoré</cite>
-                                <p class="text-gray-600" data-i18n="testimonials.2.role">Bénéficiaire du programme éducation, Sénégal</p>
-                            </div>
-                        </div>
-                        
-                        <div class="w-full flex-shrink-0 px-4">
-                            <div class="max-w-4xl mx-auto text-center">
-                                <img src="https://readdy.ai/api/search-image?query=Portrait%20of%20African%20healthcare%20worker%20in%20medical%20uniform%20showing%20pride%20and%20dedication%2C%20hospital%20background%2C%20professional%20and%20caring%20expression%2C%20natural%20lighting&width=150&height=150&seq=testimonial003&orientation=squarish" alt="Fatou Sankara" class="w-24 h-24 rounded-full mx-auto mb-6 object-cover">
-                                <blockquote class="text-2xl text-gray-700 italic mb-6 leading-relaxed" data-i18n="testimonials.3.quote">
-                                    "En tant qu'agent de santé formée par l'association, je peux maintenant soigner les membres de ma communauté et sauver des vies. C'est un honneur immense."
-                                </blockquote>
-                                <cite class="text-lg font-semibold text-gray-900" data-i18n="testimonials.3.name">Fatou Sankara</cite>
-                                <p class="text-gray-600" data-i18n="testimonials.3.role">Agent de santé, Burkina Faso</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="flex justify-center mt-8 space-x-2">
-                    <button class="w-3 h-3 rounded-full bg-primary testimonial-dot active" data-slide="0"></button>
-                    <button class="w-3 h-3 rounded-full bg-gray-300 testimonial-dot" data-slide="1"></button>
-                    <button class="w-3 h-3 rounded-full bg-gray-300 testimonial-dot" data-slide="2"></button>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Call to Action -->
-    <section class="py-20 bg-gradient-to-r from-primary to-secondary">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h2 class="text-4xl font-bold text-white mb-6" data-i18n="cta.title">Rejoignez notre mission</h2>
-            <p class="text-xl text-white mb-8 max-w-3xl mx-auto" data-i18n="cta.description">
-                Ensemble, nous avons déjà changé la vie de milliers de personnes. Votre soutien peut faire la différence pour encore plus de familles dans le besoin.
-            </p>
-            
-            <div class="grid md:grid-cols-3 gap-8 mb-12">
-                <div class="text-center">
-                    <div class="text-4xl font-bold text-white mb-2">1000+</div>
-                    <div class="text-white" data-i18n="cta.beneficiaries">Bénéficiaires aidés</div>
-                </div>
-                <div class="text-center">
-                    <div class="text-4xl font-bold text-white mb-2">25</div>
-                    <div class="text-white" data-i18n="cta.projects">Projets réalisés</div>
-                </div>
-                <div class="text-center">
-                    <div class="text-4xl font-bold text-white mb-2">8</div>
-                    <div class="text-white" data-i18n="cta.countries">Regions d'intervention</div>
-                </div>
-            </div>
-            
-            <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                <button class="bg-white text-primary px-8 py-4 !rounded-button hover:bg-gray-100 transition-colors text-lg font-semibold whitespace-nowrap" onclick="openDonationModal()" data-i18n="cta.donate">
-                    Faire un don
-                </button>
-                <button class="bg-transparent border-2 border-white text-white px-8 py-4 !rounded-button hover:bg-white hover:text-primary transition-colors text-lg font-semibold whitespace-nowrap" onclick="openVolunteerModal()" data-i18n="cta.volunteer">
-                    Devenir bénévole
-                </button>
-                <button class="bg-transparent border-2 border-white text-white px-8 py-4 !rounded-button hover:bg-white hover:text-primary transition-colors text-lg font-semibold whitespace-nowrap" data-i18n="cta.news">
-                    Suivre nos actualités
-                </button>
-            </div>
-        </div>
-    </section>
-
-    <section id="multimedia" class="py-20 bg-white">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16">
-                <h2 class="text-4xl font-bold text-gray-900 mb-4" data-i18n="gallery.title">Galerie</h2>
-                <p class="text-xl text-gray-600 max-w-2xl mx-auto" data-i18n="gallery.description">
-                    Suivez nos dernières actions et découvrez l'impact de votre soutien
-                </p>
-            </div>
-            <div class="grid md:grid-cols-2 gap-6 mb-8">
-                <div class="relative group overflow-hidden rounded-2xl">
-    <!-- Conteneur vidéo avec overlay -->
-    <div class="relative h-80 w-full overflow-hidden">
-        <video 
-            id="backgroundVideo"
-            class="absolute inset-0 w-full h-full object-cover"
-            autoplay 
-            muted 
-            loop 
-            playsinline
-            preload="auto"
-            poster="WhatsApp Image 2025-12-21 at 14.34.38.jpeg"
-        >
-            <source src="video1.mp4" type="video/mp4">
-            <source src="video1.webm" type="video/webm">
-            <!-- Message de fallback -->
-            Votre navigateur ne supporte pas les vidéos HTML5.
-        </video>
-        
-        <!-- Overlay de secours pour mobile (optionnel) -->
-        <div class="md:hidden absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
-    </div>
-    
-    <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-        <button class="bg-white text-gray-900 px-6 py-3 rounded-button font-semibold whitespace-nowrap !rounded-button hover:bg-gray-100 transition-colors">
-            <a href="galerie.html" data-i18n="gallery.viewPhotos" class="block">Voir la galerie photos</a>
-        </button>
-    </div>
-</div>
-                <div class="grid grid-cols-2 gap-4">
-                    <div class="relative group overflow-hidden rounded-2xl">
-                        <div class="h-36 bg-cover bg-center" style="background-image: url('1.jpeg');"></div>
-                    </div>
-                    <div class="relative group overflow-hidden rounded-2xl">
-                        <div class="h-36 bg-cover bg-center" style="background-image: url('whats.jpeg');"></div>
-                    </div>
-                    <div class="relative group overflow-hidden rounded-2xl">
-                        <div class="h-36 bg-cover bg-center" style="background-image: url('whats.jpeg');"></div>
-                    </div>
-                    <div class="relative group overflow-hidden rounded-2xl">
-                        <div class="h-36 bg-cover bg-center" style="background-image: url('classe.jpeg');"></div>
-                    </div>
-                </div>
-            </div>
-            <div class="text-center">
-                <button class="bg-primary text-white px-8 py-4 rounded-button text-lg font-semibold hover:bg-secondary transition-colors whitespace-nowrap !rounded-button">
-                    <a href="galerie.html" data-i18n="gallery.viewAll">Voir toute la galerie</a>
-                </button>
-            </div>
-        </div>
-    </section>
-
-    <!-- Newsletter -->
-    <section class="py-20 bg-gray-50">
-        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h2 class="text-4xl font-bold text-gray-900 mb-4" data-i18n="newsletter.title">Restez informés</h2>
-            <p class="text-xl text-gray-600 mb-8" data-i18n="newsletter.description">
-                Recevez nos actualités et découvrez l'impact concret de nos actions humanitaires
-            </p>
-            
-            <div class="max-w-md mx-auto">
-                <div class="flex gap-4">
-                    <input type="email" placeholder="Votre adresse email" class="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" data-i18n-placeholder="newsletter.placeholder">
-                    <button class="bg-primary text-white px-6 py-3 !rounded-button hover:bg-orange-600 transition-colors whitespace-nowrap" data-i18n="newsletter.subscribe">
-                        S'abonner
+                    <button class="bg-transparent border-2 border-white text-white px-8 py-4 !rounded-button hover:bg-white hover:text-primary transition-colors text-lg font-semibold whitespace-nowrap" onclick="openVolunteerModal()" data-i18n="cta.volunteer">
+                        Devenir bénévole
+                    </button>
+                    <button class="bg-transparent border-2 border-white text-white px-8 py-4 !rounded-button hover:bg-white hover:text-primary transition-colors text-lg font-semibold whitespace-nowrap" data-i18n="cta.news">
+                        Suivre nos actualités
                     </button>
                 </div>
-                <p class="text-sm text-gray-500 mt-4" data-i18n="newsletter.privacy">
-                    Nous respectons votre vie privée. Désabonnement possible à tout moment.
-                </p>
             </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="bg-gray-900 text-white py-16">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid md:grid-cols-4 gap-8">
-                <div>
-                    <img src="logo.png" style="width: 70px;" alt="Logo" class="w-12 md:w-16 lg:w-20">
-                    <p class="text-gray-300 mb-6" data-i18n="footer.description">
-                        Association humanitaire œuvrant pour un monde plus solidaire et équitable.
+        </section>
+        <section id="multimedia" class="py-20 bg-white">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-16">
+                    <h2 class="text-4xl font-bold text-gray-900 mb-4" data-i18n="gallery.title">Galerie</h2>
+                    <p class="text-xl text-gray-600 max-w-2xl mx-auto" data-i18n="gallery.description">
+                        Suivez nos dernières actions et découvrez l'impact de votre soutien
                     </p>
-                    <div class="space-y-2 text-sm text-gray-300">
-                        <div class="flex items-center">
-                            <div class="w-4 h-4 flex items-center justify-center mr-3">
-                                <i class="ri-map-pin-line"></i>
-                            </div>
-                            <span data-i18n="footer.address">123 Avenue de la Solidarité, Dakar, Sénégal</span>
+                </div>
+                <div class="grid md:grid-cols-2 gap-6 mb-8">
+                    <div class="relative group overflow-hidden rounded-2xl">
+                        <!-- Conteneur vidéo avec overlay -->
+                        <div class="relative h-80 w-full overflow-hidden">
+                            <video
+                                id="backgroundVideo"
+                                class="absolute inset-0 w-full h-full object-cover"
+                                autoplay
+                                muted
+                                loop
+                                playsinline
+                                preload="auto"
+                                poster="WhatsApp Image 2025-12-21 at 14.34.38.jpeg"
+                            >
+                                <source src="video1.mp4" type="video/mp4">
+                                <source src="video1.webm" type="video/webm">
+                                <!-- Message de fallback -->
+                                Votre navigateur ne supporte pas les vidéos HTML5.
+                            </video>
+                            <!-- Overlay de secours pour mobile (optionnel) -->
+                            <div class="md:hidden absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
                         </div>
-                        <div class="flex items-center">
-                            <div class="w-4 h-4 flex items-center justify-center mr-3">
-                                <i class="ri-phone-line"></i>
-                            </div>
-                            <span>+221 33 123 45 67</span>
+                        <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                            <button class="bg-white text-gray-900 px-6 py-3 rounded-button font-semibold whitespace-nowrap !rounded-button hover:bg-gray-100 transition-colors">
+                                <a href="galerie.html" data-i18n="gallery.viewPhotos" class="block">Voir la galerie photos</a>
+                            </button>
                         </div>
-                        <div class="flex items-center">
-                            <div class="w-4 h-4 flex items-center justify-center mr-3">
-                                <i class="ri-mail-line"></i>
-                            </div>
-                            <span>contact@entraidehumanitaire.org</span>
+                    </div>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="relative group overflow-hidden rounded-2xl">
+                            <div class="h-36 bg-cover bg-center" style="background-image: url('1.jpeg');"></div>
+                        </div>
+                        <div class="relative group overflow-hidden rounded-2xl">
+                            <div class="h-36 bg-cover bg-center" style="background-image: url('whats.jpeg');"></div>
+                        </div>
+                        <div class="relative group overflow-hidden rounded-2xl">
+                            <div class="h-36 bg-cover bg-center" style="background-image: url('whats.jpeg');"></div>
+                        </div>
+                        <div class="relative group overflow-hidden rounded-2xl">
+                            <div class="h-36 bg-cover bg-center" style="background-image: url('classe.jpeg');"></div>
                         </div>
                     </div>
                 </div>
-                
-                <div>
-                    <h3 class="text-lg font-semibold mb-4" data-i18n="footer.links">Liens utiles</h3>
-                    <ul class="space-y-2 text-gray-300">
-                        <li><a href="#" class="hover:text-primary transition-colors" data-i18n="nav.about">À propos</a></li>
-                        <li><a href="#" class="hover:text-primary transition-colors" data-i18n="nav.projects">Nos projets</a></li>
-                        <li><a href="#" class="hover:text-primary transition-colors" data-i18n="header.donate">Faire un don</a></li>
-                        <li><a href="#" class="hover:text-primary transition-colors" data-i18n="cta.volunteer">Devenir bénévole</a></li>
-                        <li><a href="#" class="hover:text-primary transition-colors" data-i18n="nav.news">Actualités</a></li>
-                        <li><a href="#" class="hover:text-primary transition-colors" data-i18n="nav.contact">Contact</a></li>
-                    </ul>
-                </div>
-                
-                <div>
-                    <h3 class="text-lg font-semibold mb-4" data-i18n="footer.follow">Suivez-nous</h3>
-                    <div class="flex space-x-4 mb-6">
-                        <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-primary transition-colors">
-                            <i class="ri-facebook-line"></i>
-                        </a>
-                        <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-primary transition-colors">
-                            <i class="ri-twitter-line"></i>
-                        </a>
-                        <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-primary transition-colors">
-                            <i class="ri-instagram-line"></i>
-                        </a>
-                        <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-primary transition-colors">
-                            <i class="ri-linkedin-line"></i>
-                        </a>
-                    </div>
-                    <div class="text-sm text-gray-300">
-                        <p class="mb-2" data-i18n="footer.payment">Modes de paiement acceptés :</p>
-                        <div class="flex space-x-3">
-                            <div class="w-6 h-6 flex items-center justify-center">
-                                <i class="ri-smartphone-line"></i>
-                            </div>
-                            <span class="text-xs">Wave</span>
-                            <div class="w-6 h-6 flex items-center justify-center">
-                                <i class="ri-phone-line"></i>
-                            </div>
-                            <span class="text-xs">Orange Money</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <div>
-                    <h3 class="text-lg font-semibold mb-4" data-i18n="footer.legal">Informations légales</h3>
-                    <ul class="space-y-2 text-gray-300 text-sm">
-                        <li><a href="#" class="hover:text-primary transition-colors" data-i18n="footer.legalNotice">Mentions légales</a></li>
-                        <li><a href="#" class="hover:text-primary transition-colors" data-i18n="footer.privacyPolicy">Politique de confidentialité</a></li>
-                        <li><a href="#" class="hover:text-primary transition-colors" data-i18n="footer.terms">Conditions d'utilisation</a></li>
-                        <li><a href="#" class="hover:text-primary transition-colors" data-i18n="footer.financialReport">Rapport financier</a></li>
-                    </ul>
+                <div class="text-center">
+                    <button class="bg-primary text-white px-8 py-4 rounded-button text-lg font-semibold hover:bg-secondary transition-colors whitespace-nowrap !rounded-button">
+                        <a href="galerie.html" data-i18n="gallery.viewAll">Voir toute la galerie</a>
+                    </button>
                 </div>
             </div>
-            
-            <div class="border-t border-gray-800 mt-12 pt-8 text-center text-gray-400 text-sm">
-                <p data-i18n="footer.copyright">&copy; 2025 Entr'aide Humanitaire. Tous droits réservés.</p>
+        </section>
+        <!-- Newsletter -->
+        <section class="py-20 bg-gray-50">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <h2 class="text-4xl font-bold text-gray-900 mb-4" data-i18n="newsletter.title">Restez informés</h2>
+                <p class="text-xl text-gray-600 mb-8" data-i18n="newsletter.description">
+                    Recevez nos actualités et découvrez l'impact concret de nos actions humanitaires
+                </p>
+                <div class="max-w-md mx-auto">
+                    <div class="flex gap-4">
+                        <input
+                            type="email"
+                            placeholder="Votre adresse email"
+                            class="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                            data-i18n-placeholder="newsletter.placeholder"
+                        >
+                        <button class="bg-primary text-white px-6 py-3 !rounded-button hover:bg-orange-600 transition-colors whitespace-nowrap" data-i18n="newsletter.subscribe">
+                            S'abonner
+                        </button>
+                    </div>
+                    <p class="text-sm text-gray-500 mt-4" data-i18n="newsletter.privacy">
+                        Nous respectons votre vie privée. Désabonnement possible à tout moment.
+                    </p>
+                </div>
             </div>
-        </div>
-    </footer>
-
-    <!-- Scripts -->
-    <script>
+        </section>
+        <!-- Footer -->
+        <footer class="bg-gray-900 text-white py-16">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid md:grid-cols-4 gap-8">
+                    <div>
+                        <img
+                            src="logo.png"
+                            style="width: 70px;"
+                            alt="Logo"
+                            class="w-12 md:w-16 lg:w-20"
+                        >
+                        <p class="text-gray-300 mb-6" data-i18n="footer.description">
+                            Association humanitaire œuvrant pour un monde plus solidaire et équitable.
+                        </p>
+                        <div class="space-y-2 text-sm text-gray-300">
+                            <div class="flex items-center">
+                                <div class="w-4 h-4 flex items-center justify-center mr-3">
+                                    <i class="ri-map-pin-line"></i>
+                                </div>
+                                <span data-i18n="footer.address">123 Avenue de la Solidarité, Dakar, Sénégal</span>
+                            </div>
+                            <div class="flex items-center">
+                                <div class="w-4 h-4 flex items-center justify-center mr-3">
+                                    <i class="ri-phone-line"></i>
+                                </div>
+                                <span>+221 33 123 45 67</span>
+                            </div>
+                            <div class="flex items-center">
+                                <div class="w-4 h-4 flex items-center justify-center mr-3">
+                                    <i class="ri-mail-line"></i>
+                                </div>
+                                <span>contact@entraidehumanitaire.org</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-semibold mb-4" data-i18n="footer.links">Liens utiles</h3>
+                        <ul class="space-y-2 text-gray-300">
+                            <li>
+                                <a href="#" class="hover:text-primary transition-colors" data-i18n="nav.about">À propos</a>
+                            </li>
+                            <li>
+                                <a href="#" class="hover:text-primary transition-colors" data-i18n="nav.projects">Nos projets</a>
+                            </li>
+                            <li>
+                                <a href="#" class="hover:text-primary transition-colors" data-i18n="header.donate">Faire un don</a>
+                            </li>
+                            <li>
+                                <a href="#" class="hover:text-primary transition-colors" data-i18n="cta.volunteer">Devenir bénévole</a>
+                            </li>
+                            <li>
+                                <a href="#" class="hover:text-primary transition-colors" data-i18n="nav.news">Actualités</a>
+                            </li>
+                            <li>
+                                <a href="#" class="hover:text-primary transition-colors" data-i18n="nav.contact">Contact</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-semibold mb-4" data-i18n="footer.follow">Suivez-nous</h3>
+                        <div class="flex space-x-4 mb-6">
+                            <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-primary transition-colors">
+                                <i class="ri-facebook-line"></i>
+                            </a>
+                            <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-primary transition-colors">
+                                <i class="ri-twitter-line"></i>
+                            </a>
+                            <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-primary transition-colors">
+                                <i class="ri-instagram-line"></i>
+                            </a>
+                            <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-primary transition-colors">
+                                <i class="ri-linkedin-line"></i>
+                            </a>
+                        </div>
+                        <div class="text-sm text-gray-300">
+                            <p class="mb-2" data-i18n="footer.payment">Modes de paiement acceptés :</p>
+                            <div class="flex space-x-3">
+                                <div class="w-6 h-6 flex items-center justify-center">
+                                    <i class="ri-smartphone-line"></i>
+                                </div>
+                                <span class="text-xs">Wave</span>
+                                <div class="w-6 h-6 flex items-center justify-center">
+                                    <i class="ri-phone-line"></i>
+                                </div>
+                                <span class="text-xs">Orange Money</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-semibold mb-4" data-i18n="footer.legal">Informations légales</h3>
+                        <ul class="space-y-2 text-gray-300 text-sm">
+                            <li>
+                                <a href="#" class="hover:text-primary transition-colors" data-i18n="footer.legalNotice">Mentions légales</a>
+                            </li>
+                            <li>
+                                <a href="#" class="hover:text-primary transition-colors" data-i18n="footer.privacyPolicy">Politique de confidentialité</a>
+                            </li>
+                            <li>
+                                <a href="#" class="hover:text-primary transition-colors" data-i18n="footer.terms">Conditions d'utilisation</a>
+                            </li>
+                            <li>
+                                <a href="#" class="hover:text-primary transition-colors" data-i18n="footer.financialReport">Rapport financier</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="border-t border-gray-800 mt-12 pt-8 text-center text-gray-400 text-sm">
+                    <p data-i18n="footer.copyright">&copy; 2025 Entr'aide Humanitaire. Tous droits réservés.</p>
+                </div>
+            </div>
+        </footer>
+        <!-- Scripts -->
+        <script>
         // Dictionnaire de traduction
         const translations = {
             fr: {
@@ -713,7 +706,7 @@
                 
                 // Hero Section
                 "hero.title": "Ensemble pour un monde plus solidaire",
-                "hero.description": "Nous œuvrons chaque jour pour apporter aide et espoir aux communautés les plus vulnérables. Rejoignez notre mission humanitaire et contribuez à construire un avenir meilleur.",
+                "hero.description": "L’Association ENTRAIDE POUR SERVIR L’HUMANITE est une organisation caritative opérant au Sénégal et au Niger. Elle œuvre pour le bien-être humain et la solidarité sociale à travers des projets humanitaires et de développement durable, avec le soutien de bienfaiteurs, notamment des Émirats Arabes Unis.",
                 "hero.discover": "Découvrir nos projets",
                 "hero.donate": "Faire un don",
                 
@@ -825,7 +818,7 @@
                 
                 // Hero Section
                 "hero.title": "Together for a more supportive world",
-                "hero.description": "We work every day to bring help and hope to the most vulnerable communities. Join our humanitarian mission and help build a better future.",
+                "hero.description": "Al-Taawoun Association for Humanitarian Services is a charitable organization working in Senegal and Niger. It aims to serve humanity and promote social solidarity through sustainable humanitarian and development projects, with the support of generous donors, mainly from the United Arab Emirates.",
                 "hero.discover": "Discover our projects",
                 "hero.donate": "Make a donation",
                 
@@ -937,7 +930,7 @@
                 
                 // Hero Section
                 "hero.title": "معًا من أجل عالم أكثر تضامنًا",
-                "hero.description": "نعمل يوميًا لتقديم المساعدة والأمل للمجتمعات الأكثر ضعفًا. انضم إلى مهمتنا الإنسانية وساعد في بناء مستقبل أفضل.",
+                "hero.description": `جمعية التعاون للخدمات الإنسانية هي منظمة خيرية تعمل في السنغال والنيجر، تهدف إلى خدمة الإنسان وتعزيز التضامن الاجتماعي من خلال مشاريع تنموية وإغاثية مستدامة، بدعم من محسنين كرام، خصوصًا من دولة الإمارات العربية المتحدة.`,
                 "hero.discover": "اكتشف مشاريعنا",
                 "hero.donate": "التبرع",
                 
@@ -1204,6 +1197,6 @@
                 }, 5000);
             }
         });
-    </script>
-</body>
+        </script>
+    </body>
 </html>
