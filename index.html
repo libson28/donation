@@ -81,27 +81,80 @@
             transform: translateX(calc(-100% / 2));
         }
     }
+
+    /* Animation d'entrée du modal */
+@keyframes modalFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+#projectModal > div {
+    animation: modalFadeIn 0.3s ease-out;
+}
+
+#projectModal > div::-webkit-scrollbar {
+    width: 8px;
+}
+
+#projectModal > div::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+}
+
+#projectModal > div::-webkit-scrollbar-thumb {
+    background: #EF9221;
+    border-radius: 4px;
+}
+
+#projectModal > div::-webkit-scrollbar-thumb:hover {
+    background: #d17a1a;
+}
+
+@media (max-width: 640px) {
+    #projectModal > div {
+        margin: 1rem;
+        max-height: 85vh;
+    }
     
-    /* Container pour le défilement horizontal */
+    .px-8 {
+        padding-left: 1.5rem;
+        padding-right: 1.5rem;
+    }
+    
+    .p-8 {
+        padding: 1.5rem;
+    }
+    
+    .flex.items-center.gap-6 {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+}
+    
     .horizontal-scroll-container {
         overflow-x: auto;
-        scrollbar-width: none; /* Firefox */
-        -ms-overflow-style: none; /* IE/Edge */
+        scrollbar-width: none; 
+        -ms-overflow-style: none; 
         scroll-behavior: smooth;
     }
     
     .horizontal-scroll-container::-webkit-scrollbar {
-        display: none; /* Chrome/Safari */
+        display: none; 
     }
     
-    /* Track pour le défilement horizontal */
     .horizontal-scroll-track {
         display: flex;
         gap: 1.5rem;
         min-width: min-content;
     }
     
-    /* Animation automatique */
     .auto-scroll-track {
         display: flex;
         animation: scrollHorizontal 30s linear infinite;
@@ -112,14 +165,13 @@
         animation-play-state: paused;
     }
     
-    /* Masque de dégradé pour les bords */
     .scroll-fade::before,
     .scroll-fade::after {
         content: '';
         position: absolute;
         top: 0;
         bottom: 0;
-        width: 100px;
+        width: 70px;
         pointer-events: none;
         z-index: 10;
     }
@@ -134,7 +186,6 @@
         background: linear-gradient(to left, white, transparent);
     }
     
-    /* Carte de réalisation */
     .achievement-card {
         flex: 0 0 auto;
         width: 300px;
@@ -145,7 +196,6 @@
         transform: translateY(-5px);
     }
     
-    /* Pour mobile */
     @media (max-width: 768px) {
         .achievement-card {
             width: 280px;
@@ -380,7 +430,7 @@
                         Ensemble pour un monde plus solidaire
                     </h1>
                     <p class="text-xl text-white mb-8 leading-relaxed" data-i18n="hero.description">
-                        L’Association ENTRAIDE POUR SERVIR L’HUMANITE est une organisation caritative opérant au Sénégal et au Niger. Elle œuvre pour le bien-être humain et la solidarité sociale à travers des projets humanitaires et de développement durable, avec le soutien de bienfaiteurs, notamment des Émirats Arabes Unis
+                        L'Association ENTRAIDE POUR SERVIR L'HUMANITE est une organisation caritative opérant au Sénégal et au Niger. Elle œuvre pour le bien-être humain et la solidarité sociale à travers des projets humanitaires et de développement durable, avec le soutien de bienfaiteurs, notamment des Émirats Arabes Unis
                     </p>
                     <div class="flex flex-col sm:flex-row gap-4">
                         <a href="projet.html" class="text-center bg-secondary text-white px-8 py-4 !rounded-button hover:bg-green-600 transition-colors text-lg whitespace-nowrap" data-i18n="hero.discover">
@@ -435,7 +485,7 @@
                 </div>
             </div>
         </section>
-        <!-- Current Projects -->
+        <!-- Section Projets en cours avec Popups -->
         <section class="py-20 bg-white">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center mb-16">
@@ -444,8 +494,10 @@
                         Découvrez nos initiatives actuelles et leur impact sur les communautés
                     </p>
                 </div>
+                <!-- Grille des projets -->
                 <div class="grid md:grid-cols-3 gap-8">
-                    <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+                    <!-- Projet 1 : Eau potable -->
+                    <div class="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
                         <img src="3.jpeg" alt="Projet eau potable" class="w-full h-48 object-cover object-top">
                         <div class="p-6">
                             <h3 class="text-xl font-bold text-gray-900 mb-3" data-i18n="projects.water.title">Accès à l'eau potable - Kaolack</h3>
@@ -461,12 +513,13 @@
                                     <div class="bg-secondary h-2 rounded-full" style="width: 75%"></div>
                                 </div>
                             </div>
-                            <button class="w-full bg-primary text-white py-3 !rounded-button hover:bg-orange-600 transition-colors whitespace-nowrap" data-i18n="projects.learnMore">
+                            <button onclick="openProjectModal('water')" class="w-full bg-primary text-white py-3 rounded-lg hover:bg-orange-600 transition-colors" data-i18n="button.learnMore">
                                 En savoir plus
                             </button>
                         </div>
                     </div>
-                    <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+                    <!-- Projet 2 : Éducation -->
+                    <div class="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
                         <img src="classe.jpeg" alt="Projet éducation" class="w-full h-48 object-cover object-top">
                         <div class="p-6">
                             <h3 class="text-xl font-bold text-gray-900 mb-3" data-i18n="projects.education.title">Éducation pour tous - Sénégal</h3>
@@ -482,13 +535,14 @@
                                     <div class="bg-secondary h-2 rounded-full" style="width: 60%"></div>
                                 </div>
                             </div>
-                            <button class="w-full bg-primary text-white py-3 !rounded-button hover:bg-orange-600 transition-colors whitespace-nowrap" data-i18n="projects.learnMore">
+                            <button onclick="openProjectModal('education')" class="w-full bg-primary text-white py-3 rounded-lg hover:bg-orange-600 transition-colors" data-i18n="button.learnMore">
                                 En savoir plus
                             </button>
                         </div>
                     </div>
-                    <div class="bg-white rounded-lg shadow-lg overflow-hidden">
-                        <img src="sante.jpg" alt="Projet santé" class="w-full h-48 object-cover object-top">
+                    <!-- Projet 3 : Santé -->
+                    <div class="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
+                        <img src="santee.jpg" alt="Projet santé" class="w-full h-48 object-cover object-top">
                         <div class="p-6">
                             <h3 class="text-xl font-bold text-gray-900 mb-3" data-i18n="projects.health.title">Soins de santé - Keur Momar</h3>
                             <p class="text-gray-600 mb-4" data-i18n="projects.health.description">
@@ -503,7 +557,7 @@
                                     <div class="bg-secondary h-2 rounded-full" style="width: 45%"></div>
                                 </div>
                             </div>
-                            <button class="w-full bg-primary text-white py-3 !rounded-button hover:bg-orange-600 transition-colors whitespace-nowrap" data-i18n="projects.learnMore">
+                            <button onclick="openProjectModal('health')" class="w-full bg-primary text-white py-3 rounded-lg hover:bg-orange-600 transition-colors" data-i18n="button.learnMore">
                                 En savoir plus
                             </button>
                         </div>
@@ -511,6 +565,95 @@
                 </div>
             </div>
         </section>
+        <!-- Modal pour les détails des projets -->
+        <div id="projectModal" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
+            <div class="bg-white rounded-2xl w-full max-w-4xl max-h-[90vh] overflow-y-auto">
+                <!-- En-tête du modal -->
+                <div class="sticky top-0 bg-white border-b border-gray-200 px-8 py-6 flex justify-between items-center z-10">
+                    <div>
+                        <h3 id="projectModalTitle" class="text-2xl font-bold text-gray-900"></h3>
+                        <p id="projectModalSubtitle" class="text-gray-600"></p>
+                    </div>
+                    <button onclick="closeProjectModal()" class="text-gray-500 hover:text-gray-700 text-2xl">
+                        <i class="ri-close-line"></i>
+                    </button>
+                </div>
+                <!-- Contenu du modal -->
+                <div class="p-8">
+                    <!-- Image et description -->
+                    <div class="mb-8">
+                        <img id="projectModalImage" class="w-full h-64 md:h-80 object-cover rounded-xl mb-6" alt="">
+                        <div class="flex items-center gap-6 mb-6">
+                            <div class="flex items-center gap-2">
+                                <div class="w-10 h-10 bg-primary bg-opacity-10 rounded-full flex items-center justify-center">
+                                    <i class="ri-money-euro-circle-line text-primary"></i>
+                                </div>
+                                <div>
+                                    <p class="text-sm text-gray-500" data-i18n="project.totalBudget">Budget total</p>
+                                    <p id="projectModalBudget" class="font-bold text-gray-900"></p>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <div class="w-10 h-10 bg-secondary bg-opacity-10 rounded-full flex items-center justify-center">
+                                    <i class="ri-calendar-todo-line text-secondary"></i>
+                                </div>
+                                <div>
+                                    <p class="text-sm text-gray-500" data-i18n="project.progress">Progression</p>
+                                    <p id="projectModalProgress" class="font-bold text-gray-900"></p>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <div class="w-10 h-10 bg-primary bg-opacity-10 rounded-full flex items-center justify-center">
+                                    <i class="ri-user-line text-primary"></i>
+                                </div>
+                                <div>
+                                    <p class="text-sm text-gray-500" data-i18n="project.beneficiaries">Bénéficiaires</p>
+                                    <p id="projectModalBeneficiaries" class="font-bold text-gray-900"></p>
+                                </div>
+                            </div>
+                        </div>
+                        <p id="projectModalDescription" class="text-gray-700 leading-relaxed"></p>
+                    </div>
+                    <!-- Objectifs détaillés -->
+                    <div class="mb-8">
+                        <h4 class="text-xl font-bold text-gray-900 mb-6 flex items-center gap-2">
+                            <i class="ri-target-line text-primary"></i>
+                            <span data-i18n="project.goals">Objectifs spécifiques</span>
+                        </h4>
+                        <div id="projectModalGoals" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
+                    </div>
+                    <!-- Impacts attendus -->
+                    <div class="mb-8">
+                        <h4 class="text-xl font-bold text-gray-900 mb-6 flex items-center gap-2">
+                            <i class="ri-line-chart-line text-secondary"></i>
+                            <span data-i18n="project.impacts">Impacts attendus</span>
+                        </h4>
+                        <div id="projectModalImpacts" class="space-y-4"></div>
+                    </div>
+                    <!-- Localisation -->
+                    <div class="mb-8">
+                        <h4 class="text-xl font-bold text-gray-900 mb-6 flex items-center gap-2">
+                            <i class="ri-map-pin-line text-primary"></i>
+                            <span data-i18n="project.location">Zone d'intervention</span>
+                        </h4>
+                        <div class="flex flex-wrap gap-2">
+                            <div id="projectModalLocations"></div>
+                        </div>
+                    </div>
+                    <!-- Boutons d'action -->
+                    <div class="pt-8 border-t border-gray-200 grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <button onclick="openDonationModal()" class="bg-primary text-white py-4 rounded-xl hover:bg-orange-600 transition-colors font-semibold flex items-center justify-center gap-2">
+                            <i class="ri-heart-line"></i>
+                            <span data-i18n="button.support">Soutenir ce projet</span>
+                        </button>
+                        <button onclick="closeProjectModal()" class="bg-gray-100 text-gray-700 py-4 rounded-xl hover:bg-gray-200 transition-colors font-semibold flex items-center justify-center gap-2">
+                            <i class="ri-arrow-left-line"></i>
+                            <span data-i18n="button.back">Retour aux projets</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
         <!-- Section Nos Réalisations -->
         <section class="py-12 md:py-20 bg-white">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -521,15 +664,15 @@
                             <i class="ri-trophy-line text-primary text-xl md:text-2xl"></i>
                         </div>
                     </div>
-                    <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-3 md:mb-4">Nos Réalisations</h2>
-                    <p class="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto px-4">
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-3 md:mb-4" data-i18n="achievements.title">Nos Réalisations</h2>
+                    <p class="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto px-4" data-i18n="achievements.description">
                         Découvrez nos actions concrètes et leur impact sur le terrain
                     </p>
                 </div>
                 <!-- Galerie 1 : Défilement horizontal avec animation -->
                 <div class="mb-12 md:mb-16">
                     <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-6 gap-4">
-                        <h3 class="text-xl md:text-2xl font-bold text-gray-900">Réalisations marquantes</h3>
+                        <h3 class="text-xl md:text-2xl font-bold text-gray-900" data-i18n="achievements.highlights">Réalisations marquantes</h3>
                     </div>
                     <div class="relative scroll-fade">
                         <div class="auto-scroll-container overflow-hidden">
@@ -541,15 +684,15 @@
                                         <div class="relative h-48 md:h-56 overflow-hidden">
                                             <img src="bouffe.jpeg" alt="Distribution alimentaire" class="w-full h-full object-cover">
                                             <div class="absolute top-4 left-4">
-                                                <span class="px-3 py-1 bg-primary text-white text-sm rounded-full">Aide alimentaire</span>
+                                                <span class="px-3 py-1 bg-primary text-white text-sm rounded-full" data-i18n="achievements.food.category">Aide alimentaire</span>
                                             </div>
                                         </div>
                                         <div class="p-5 md:p-6">
-                                            <h4 class="font-bold text-gray-900 text-lg md:text-xl mb-2">750K+ repas distribués</h4>
-                                            <p class="text-gray-600 text-sm md:text-base mb-4">Distribution quotidienne dans 15 centres à travers le Sénégal</p>
+                                            <h4 class="font-bold text-gray-900 text-lg md:text-xl mb-2" data-i18n="achievements.food.title">750K+ repas distribués</h4>
+                                            <p class="text-gray-600 text-sm md:text-base mb-4" data-i18n="achievements.food.description">Distribution quotidienne dans 15 centres à travers le Sénégal</p>
                                             <div class="flex items-center text-gray-500 text-sm">
                                                 <i class="ri-calendar-line mr-2"></i>
-                                                <span>Depuis 2020</span>
+                                                <span data-i18n="achievements.food.since">Depuis 2020</span>
                                             </div>
                                         </div>
                                     </div>
@@ -557,17 +700,17 @@
                                 <div class="achievement-card">
                                     <div class="bg-white rounded-xl overflow-hidden shadow-lg border border-gray-100 h-full">
                                         <div class="relative h-48 md:h-56 overflow-hidden">
-                                            <img src="education.jpeg" alt="Soutien scolaire" class="w-full h-full object-cover">
+                                            <img src="educationn.jpeg" alt="Soutien scolaire" class="w-full h-full object-cover">
                                             <div class="absolute top-4 left-4">
-                                                <span class="px-3 py-1 bg-secondary text-white text-sm rounded-full">Éducation</span>
+                                                <span class="px-3 py-1 bg-secondary text-white text-sm rounded-full" data-i18n="achievements.education.category">Éducation</span>
                                             </div>
                                         </div>
                                         <div class="p-5 md:p-6">
-                                            <h4 class="font-bold text-gray-900 text-lg md:text-xl mb-2">1,800 élèves soutenus</h4>
-                                            <p class="text-gray-600 text-sm md:text-base mb-4">Programme de tutorat et distribution de kits scolaires</p>
+                                            <h4 class="font-bold text-gray-900 text-lg md:text-xl mb-2" data-i18n="achievements.education.title">1,800 élèves soutenus</h4>
+                                            <p class="text-gray-600 text-sm md:text-base mb-4" data-i18n="achievements.education.description">Programme de tutorat et distribution de kits scolaires</p>
                                             <div class="flex items-center text-gray-500 text-sm">
                                                 <i class="ri-graduation-cap-line mr-2"></i>
-                                                <span>92% de réussite</span>
+                                                <span data-i18n="achievements.education.rate">92% de réussite</span>
                                             </div>
                                         </div>
                                     </div>
@@ -577,15 +720,15 @@
                                         <div class="relative h-48 md:h-56 overflow-hidden">
                                             <img src="logement.jpeg" alt="Logement décent" class="w-full h-full object-cover">
                                             <div class="absolute top-4 left-4">
-                                                <span class="px-3 py-1 bg-primary text-white text-sm rounded-full">Logement</span>
+                                                <span class="px-3 py-1 bg-primary text-white text-sm rounded-full" data-i18n="achievements.housing.category">Logement</span>
                                             </div>
                                         </div>
                                         <div class="p-5 md:p-6">
-                                            <h4 class="font-bold text-gray-900 text-lg md:text-xl mb-2">450 familles relogées</h4>
-                                            <p class="text-gray-600 text-sm md:text-base mb-4">Hébergement et accompagnement vers l'autonomie</p>
+                                            <h4 class="font-bold text-gray-900 text-lg md:text-xl mb-2" data-i18n="achievements.housing.title">450 familles relogées</h4>
+                                            <p class="text-gray-600 text-sm md:text-base mb-4" data-i18n="achievements.housing.description">Hébergement et accompagnement vers l'autonomie</p>
                                             <div class="flex items-center text-gray-500 text-sm">
                                                 <i class="ri-home-3-line mr-2"></i>
-                                                <span>85% d'autonomie</span>
+                                                <span data-i18n="achievements.housing.autonomy">85% d'autonomie</span>
                                             </div>
                                         </div>
                                     </div>
@@ -595,15 +738,15 @@
                                         <div class="relative h-48 md:h-56 overflow-hidden">
                                             <img src="chantier.png" alt="Construction" class="w-full h-full object-cover">
                                             <div class="absolute top-4 left-4">
-                                                <span class="px-3 py-1 bg-secondary text-white text-sm rounded-full">Infrastructure</span>
+                                                <span class="px-3 py-1 bg-secondary text-white text-sm rounded-full" data-i18n="achievements.infrastructure.category">Infrastructure</span>
                                             </div>
                                         </div>
                                         <div class="p-5 md:p-6">
-                                            <h4 class="font-bold text-gray-900 text-lg md:text-xl mb-2">12 centres rénovés</h4>
-                                            <p class="text-gray-600 text-sm md:text-base mb-4">Amélioration des conditions d'accueil et d'hébergement</p>
+                                            <h4 class="font-bold text-gray-900 text-lg md:text-xl mb-2" data-i18n="achievements.infrastructure.title">12 centres rénovés</h4>
+                                            <p class="text-gray-600 text-sm md:text-base mb-4" data-i18n="achievements.infrastructure.description">Amélioration des conditions d'accueil et d'hébergement</p>
                                             <div class="flex items-center text-gray-500 text-sm">
                                                 <i class="ri-building-line mr-2"></i>
-                                                <span>75% terminés</span>
+                                                <span data-i18n="achievements.infrastructure.completed">75% terminés</span>
                                             </div>
                                         </div>
                                     </div>
@@ -614,15 +757,15 @@
                                         <div class="relative h-48 md:h-56 overflow-hidden">
                                             <img src="bouffe.jpeg" alt="Distribution alimentaire" class="w-full h-full object-cover">
                                             <div class="absolute top-4 left-4">
-                                                <span class="px-3 py-1 bg-primary text-white text-sm rounded-full">Aide alimentaire</span>
+                                                <span class="px-3 py-1 bg-primary text-white text-sm rounded-full" data-i18n="achievements.food.category">Aide alimentaire</span>
                                             </div>
                                         </div>
                                         <div class="p-5 md:p-6">
-                                            <h4 class="font-bold text-gray-900 text-lg md:text-xl mb-2">750K+ repas distribués</h4>
-                                            <p class="text-gray-600 text-sm md:text-base mb-4">Distribution quotidienne dans 15 centres à travers le Sénégal</p>
+                                            <h4 class="font-bold text-gray-900 text-lg md:text-xl mb-2" data-i18n="achievements.food.title">750K+ repas distribués</h4>
+                                            <p class="text-gray-600 text-sm md:text-base mb-4" data-i18n="achievements.food.description">Distribution quotidienne dans 15 centres à travers le Sénégal</p>
                                             <div class="flex items-center text-gray-500 text-sm">
                                                 <i class="ri-calendar-line mr-2"></i>
-                                                <span>Depuis 2020</span>
+                                                <span data-i18n="achievements.food.since">Depuis 2020</span>
                                             </div>
                                         </div>
                                     </div>
@@ -630,17 +773,17 @@
                                 <div class="achievement-card">
                                     <div class="bg-white rounded-xl overflow-hidden shadow-lg border border-gray-100 h-full">
                                         <div class="relative h-48 md:h-56 overflow-hidden">
-                                            <img src="education.jpeg" alt="Soutien scolaire" class="w-full h-full object-cover">
+                                            <img src="educationn.jpeg" alt="Soutien scolaire" class="w-full h-full object-cover">
                                             <div class="absolute top-4 left-4">
-                                                <span class="px-3 py-1 bg-secondary text-white text-sm rounded-full">Éducation</span>
+                                                <span class="px-3 py-1 bg-secondary text-white text-sm rounded-full" data-i18n="achievements.education.category">Éducation</span>
                                             </div>
                                         </div>
                                         <div class="p-5 md:p-6">
-                                            <h4 class="font-bold text-gray-900 text-lg md:text-xl mb-2">1,800 élèves soutenus</h4>
-                                            <p class="text-gray-600 text-sm md:text-base mb-4">Programme de tutorat et distribution de kits scolaires</p>
+                                            <h4 class="font-bold text-gray-900 text-lg md:text-xl mb-2" data-i18n="achievements.education.title">1,800 élèves soutenus</h4>
+                                            <p class="text-gray-600 text-sm md:text-base mb-4" data-i18n="achievements.education.description">Programme de tutorat et distribution de kits scolaires</p>
                                             <div class="flex items-center text-gray-500 text-sm">
                                                 <i class="ri-graduation-cap-line mr-2"></i>
-                                                <span>92% de réussite</span>
+                                                <span data-i18n="achievements.education.rate">92% de réussite</span>
                                             </div>
                                         </div>
                                     </div>
@@ -650,15 +793,15 @@
                                         <div class="relative h-48 md:h-56 overflow-hidden">
                                             <img src="logement.jpeg" alt="Logement décent" class="w-full h-full object-cover">
                                             <div class="absolute top-4 left-4">
-                                                <span class="px-3 py-1 bg-primary text-white text-sm rounded-full">Logement</span>
+                                                <span class="px-3 py-1 bg-primary text-white text-sm rounded-full" data-i18n="achievements.housing.category">Logement</span>
                                             </div>
                                         </div>
                                         <div class="p-5 md:p-6">
-                                            <h4 class="font-bold text-gray-900 text-lg md:text-xl mb-2">450 familles relogées</h4>
-                                            <p class="text-gray-600 text-sm md:text-base mb-4">Hébergement et accompagnement vers l'autonomie</p>
+                                            <h4 class="font-bold text-gray-900 text-lg md:text-xl mb-2" data-i18n="achievements.housing.title">450 familles relogées</h4>
+                                            <p class="text-gray-600 text-sm md:text-base mb-4" data-i18n="achievements.housing.description">Hébergement et accompagnement vers l'autonomie</p>
                                             <div class="flex items-center text-gray-500 text-sm">
                                                 <i class="ri-home-3-line mr-2"></i>
-                                                <span>85% d'autonomie</span>
+                                                <span data-i18n="achievements.housing.autonomy">85% d'autonomie</span>
                                             </div>
                                         </div>
                                     </div>
@@ -668,15 +811,15 @@
                                         <div class="relative h-48 md:h-56 overflow-hidden">
                                             <img src="chantier.png" alt="Construction" class="w-full h-full object-cover">
                                             <div class="absolute top-4 left-4">
-                                                <span class="px-3 py-1 bg-secondary text-white text-sm rounded-full">Infrastructure</span>
+                                                <span class="px-3 py-1 bg-secondary text-white text-sm rounded-full" data-i18n="achievements.infrastructure.category">Infrastructure</span>
                                             </div>
                                         </div>
                                         <div class="p-5 md:p-6">
-                                            <h4 class="font-bold text-gray-900 text-lg md:text-xl mb-2">12 centres rénovés</h4>
-                                            <p class="text-gray-600 text-sm md:text-base mb-4">Amélioration des conditions d'accueil et d'hébergement</p>
+                                            <h4 class="font-bold text-gray-900 text-lg md:text-xl mb-2" data-i18n="achievements.infrastructure.title">12 centres rénovés</h4>
+                                            <p class="text-gray-600 text-sm md:text-base mb-4" data-i18n="achievements.infrastructure.description">Amélioration des conditions d'accueil et d'hébergement</p>
                                             <div class="flex items-center text-gray-500 text-sm">
                                                 <i class="ri-building-line mr-2"></i>
-                                                <span>75% terminés</span>
+                                                <span data-i18n="achievements.infrastructure.completed">75% terminés</span>
                                             </div>
                                         </div>
                                     </div>
@@ -688,7 +831,7 @@
                 <!-- Galerie 2 : Défilement horizontal manuel -->
                 <div class="mb-12 md:mb-16">
                     <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-6 gap-4">
-                        <h3 class="text-xl md:text-2xl font-bold text-gray-900">Notre impact en chiffres</h3>
+                        <h3 class="text-xl md:text-2xl font-bold text-gray-900" data-i18n="achievements.impact">Notre impact en chiffres</h3>
                     </div>
                     <div class="relative scroll-fade">
                         <div class="horizontal-scroll-container">
@@ -701,27 +844,27 @@
                                                 <i class="ri-restaurant-line text-primary text-xl md:text-2xl"></i>
                                             </div>
                                             <div>
-                                                <h4 class="font-bold text-gray-900 text-lg">Alimentaire</h4>
-                                                <p class="text-gray-600 text-sm">Impact 2023-2024</p>
+                                                <h4 class="font-bold text-gray-900 text-lg" data-i18n="impact.food.title">Alimentaire</h4>
+                                                <p class="text-gray-600 text-sm" data-i18n="impact.food.subtitle">Impact 2023-2024</p>
                                             </div>
                                         </div>
                                         <div class="space-y-3 mb-5">
                                             <div class="flex justify-between items-center">
-                                                <span class="text-gray-600 text-sm md:text-base">Centres actifs</span>
+                                                <span class="text-gray-600 text-sm md:text-base" data-i18n="impact.food.centers">Centres actifs</span>
                                                 <span class="font-bold text-primary text-lg md:text-xl">15</span>
                                             </div>
                                             <div class="flex justify-between items-center">
-                                                <span class="text-gray-600 text-sm md:text-base">Familles/mois</span>
+                                                <span class="text-gray-600 text-sm md:text-base" data-i18n="impact.food.families">Familles/mois</span>
                                                 <span class="font-bold text-secondary text-lg md:text-xl">2,500</span>
                                             </div>
                                             <div class="flex justify-between items-center">
-                                                <span class="text-gray-600 text-sm md:text-base">Bénévoles</span>
+                                                <span class="text-gray-600 text-sm md:text-base" data-i18n="impact.food.volunteers">Bénévoles</span>
                                                 <span class="font-bold text-primary text-lg md:text-xl">120</span>
                                             </div>
                                         </div>
                                         <div class="text-center">
                                             <span class="text-2xl md:text-3xl font-bold text-primary">90%</span>
-                                            <div class="text-gray-600 text-sm">Objectif atteint</div>
+                                            <div class="text-gray-600 text-sm" data-i18n="impact.food.goal">Objectif atteint</div>
                                         </div>
                                     </div>
                                 </div>
@@ -733,27 +876,27 @@
                                                 <i class="ri-book-open-line text-secondary text-xl md:text-2xl"></i>
                                             </div>
                                             <div>
-                                                <h4 class="font-bold text-gray-900 text-lg">Éducation</h4>
-                                                <p class="text-gray-600 text-sm">Impact 2023-2024</p>
+                                                <h4 class="font-bold text-gray-900 text-lg" data-i18n="impact.education.title">Éducation</h4>
+                                                <p class="text-gray-600 text-sm" data-i18n="impact.education.subtitle">Impact 2023-2024</p>
                                             </div>
                                         </div>
                                         <div class="space-y-3 mb-5">
                                             <div class="flex justify-between items-center">
-                                                <span class="text-gray-600 text-sm md:text-base">Écoles</span>
+                                                <span class="text-gray-600 text-sm md:text-base" data-i18n="impact.education.schools">Écoles</span>
                                                 <span class="font-bold text-primary text-lg md:text-xl">8</span>
                                             </div>
                                             <div class="flex justify-between items-center">
-                                                <span class="text-gray-600 text-sm md:text-base">Kits scolaires</span>
+                                                <span class="text-gray-600 text-sm md:text-base" data-i18n="impact.education.kits">Kits scolaires</span>
                                                 <span class="font-bold text-secondary text-lg md:text-xl">2,500</span>
                                             </div>
                                             <div class="flex justify-between items-center">
-                                                <span class="text-gray-600 text-sm md:text-base">Élèves</span>
+                                                <span class="text-gray-600 text-sm md:text-base" data-i18n="impact.education.students">Élèves</span>
                                                 <span class="font-bold text-primary text-lg md:text-xl">1,800</span>
                                             </div>
                                         </div>
                                         <div class="text-center">
                                             <span class="text-2xl md:text-3xl font-bold text-secondary">92%</span>
-                                            <div class="text-gray-600 text-sm">Taux de réussite</div>
+                                            <div class="text-gray-600 text-sm" data-i18n="impact.education.success">Taux de réussite</div>
                                         </div>
                                     </div>
                                 </div>
@@ -765,27 +908,27 @@
                                                 <i class="ri-home-heart-line text-primary text-xl md:text-2xl"></i>
                                             </div>
                                             <div>
-                                                <h4 class="font-bold text-gray-900 text-lg">Logement</h4>
-                                                <p class="text-gray-600 text-sm">Impact 2023-2024</p>
+                                                <h4 class="font-bold text-gray-900 text-lg" data-i18n="impact.housing.title">Logement</h4>
+                                                <p class="text-gray-600 text-sm" data-i18n="impact.housing.subtitle">Impact 2023-2024</p>
                                             </div>
                                         </div>
                                         <div class="space-y-3 mb-5">
                                             <div class="flex justify-between items-center">
-                                                <span class="text-gray-600 text-sm md:text-base">Familles</span>
+                                                <span class="text-gray-600 text-sm md:text-base" data-i18n="impact.housing.families">Familles</span>
                                                 <span class="font-bold text-primary text-lg md:text-xl">450</span>
                                             </div>
                                             <div class="flex justify-between items-center">
-                                                <span class="text-gray-600 text-sm md:text-base">Logements</span>
+                                                <span class="text-gray-600 text-sm md:text-base" data-i18n="impact.housing.homes">Logements</span>
                                                 <span class="font-bold text-secondary text-lg md:text-xl">120</span>
                                             </div>
                                             <div class="flex justify-between items-center">
-                                                <span class="text-gray-600 text-sm md:text-base">Autonomie</span>
+                                                <span class="text-gray-600 text-sm md:text-base" data-i18n="impact.housing.autonomy">Autonomie</span>
                                                 <span class="font-bold text-primary text-lg md:text-xl">85%</span>
                                             </div>
                                         </div>
                                         <div class="text-center">
                                             <span class="text-2xl md:text-3xl font-bold text-primary">85%</span>
-                                            <div class="text-gray-600 text-sm">Projets achevés</div>
+                                            <div class="text-gray-600 text-sm" data-i18n="impact.housing.projects">Projets achevés</div>
                                         </div>
                                     </div>
                                 </div>
@@ -797,27 +940,27 @@
                                                 <i class="ri-heart-pulse-line text-secondary text-xl md:text-2xl"></i>
                                             </div>
                                             <div>
-                                                <h4 class="font-bold text-gray-900 text-lg">Santé</h4>
-                                                <p class="text-gray-600 text-sm">Impact 2023-2024</p>
+                                                <h4 class="font-bold text-gray-900 text-lg" data-i18n="impact.health.title">Santé</h4>
+                                                <p class="text-gray-600 text-sm" data-i18n="impact.health.subtitle">Impact 2023-2024</p>
                                             </div>
                                         </div>
                                         <div class="space-y-3 mb-5">
                                             <div class="flex justify-between items-center">
-                                                <span class="text-gray-600 text-sm md:text-base">Consultations</span>
+                                                <span class="text-gray-600 text-sm md:text-base" data-i18n="impact.health.consultations">Consultations</span>
                                                 <span class="font-bold text-primary text-lg md:text-xl">5,000</span>
                                             </div>
                                             <div class="flex justify-between items-center">
-                                                <span class="text-gray-600 text-sm md:text-base">Campagnes</span>
+                                                <span class="text-gray-600 text-sm md:text-base" data-i18n="impact.health.campaigns">Campagnes</span>
                                                 <span class="font-bold text-secondary text-lg md:text-xl">15</span>
                                             </div>
                                             <div class="flex justify-between items-center">
-                                                <span class="text-gray-600 text-sm md:text-base">Villages</span>
+                                                <span class="text-gray-600 text-sm md:text-base" data-i18n="impact.health.villages">Villages</span>
                                                 <span class="font-bold text-primary text-lg md:text-xl">25</span>
                                             </div>
                                         </div>
                                         <div class="text-center">
                                             <span class="text-2xl md:text-3xl font-bold text-secondary">70%</span>
-                                            <div class="text-gray-600 text-sm">Couverture nationale</div>
+                                            <div class="text-gray-600 text-sm" data-i18n="impact.health.coverage">Couverture nationale</div>
                                         </div>
                                     </div>
                                 </div>
@@ -829,27 +972,27 @@
                                                 <i class="ri-water-flash-line text-primary text-xl md:text-2xl"></i>
                                             </div>
                                             <div>
-                                                <h4 class="font-bold text-gray-900 text-lg">Eau potable</h4>
-                                                <p class="text-gray-600 text-sm">Impact 2023-2024</p>
+                                                <h4 class="font-bold text-gray-900 text-lg" data-i18n="impact.water.title">Eau potable</h4>
+                                                <p class="text-gray-600 text-sm" data-i18n="impact.water.subtitle">Impact 2023-2024</p>
                                             </div>
                                         </div>
                                         <div class="space-y-3 mb-5">
                                             <div class="flex justify-between items-center">
-                                                <span class="text-gray-600 text-sm md:text-base">Forages</span>
+                                                <span class="text-gray-600 text-sm md:text-base" data-i18n="impact.water.wells">Forages</span>
                                                 <span class="font-bold text-primary text-lg md:text-xl">8</span>
                                             </div>
                                             <div class="flex justify-between items-center">
-                                                <span class="text-gray-600 text-sm md:text-base">Bénéficiaires</span>
+                                                <span class="text-gray-600 text-sm md:text-base" data-i18n="impact.water.beneficiaries">Bénéficiaires</span>
                                                 <span class="font-bold text-secondary text-lg md:text-xl">10,000</span>
                                             </div>
                                             <div class="flex justify-between items-center">
-                                                <span class="text-gray-600 text-sm md:text-base">Villages</span>
+                                                <span class="text-gray-600 text-sm md:text-base" data-i18n="impact.water.villages">Villages</span>
                                                 <span class="font-bold text-primary text-lg md:text-xl">12</span>
                                             </div>
                                         </div>
                                         <div class="text-center">
                                             <span class="text-2xl md:text-3xl font-bold text-primary">80%</span>
-                                            <div class="text-gray-600 text-sm">Objectif atteint</div>
+                                            <div class="text-gray-600 text-sm" data-i18n="impact.water.goal">Objectif atteint</div>
                                         </div>
                                     </div>
                                 </div>
@@ -859,22 +1002,22 @@
                 </div>
                 <!-- Indicateurs de performance - Grille responsive -->
                 <div class="mt-12 md:mt-16">
-                    <h3 class="text-xl md:text-2xl font-bold text-gray-900 mb-6 md:mb-8 text-center">Notre performance globale</h3>
+                    <h3 class="text-xl md:text-2xl font-bold text-gray-900 mb-6 md:mb-8 text-center" data-i18n="achievements.performance">Notre performance globale</h3>
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
                         <div class="bg-gradient-to-br from-primary/5 to-transparent rounded-xl md:rounded-2xl p-5 md:p-6 text-center">
                             <div class="text-3xl md:text-4xl font-bold text-primary mb-2 md:mb-3">75%</div>
-                            <div class="text-gray-900 font-semibold text-sm md:text-base mb-1">Projets achevés</div>
+                            <div class="text-gray-900 font-semibold text-sm md:text-base mb-1" data-i18n="achievements.completed">Projets achevés</div>
                             <div class="text-gray-600 text-xs md:text-sm">Sur nos objectifs annuels</div>
                         </div>
                         <div class="bg-gradient-to-br from-secondary/5 to-transparent rounded-xl md:rounded-2xl p-5 md:p-6 text-center">
                             <div class="text-3xl md:text-4xl font-bold text-secondary mb-2 md:mb-3">98%</div>
-                            <div class="text-gray-900 font-semibold text-sm md:text-base mb-1">Fonds utilisés</div>
-                            <div class="text-gray-600 text-xs md:text-sm">Directement sur le terrain</div>
+                            <div class="text-gray-900 font-semibold text-sm md:text-base mb-1" data-i18n="achievements.funds">Fonds utilisés</div>
+                            <div class="text-gray-600 text-xs md:text-sm" data-i18n="achievements.onField">Directement sur le terrain</div>
                         </div>
                         <div class="bg-gradient-to-br from-secondary/5 to-transparent rounded-xl md:rounded-2xl p-5 md:p-6 text-center">
                             <div class="text-3xl md:text-4xl font-bold text-secondary mb-2 md:mb-3">250+</div>
-                            <div class="text-gray-900 font-semibold text-sm md:text-base mb-1">Bénévoles actifs</div>
-                            <div class="text-gray-600 text-xs md:text-sm">Engagés quotidiennement</div>
+                            <div class="text-gray-900 font-semibold text-sm md:text-base mb-1" data-i18n="achievements.volunteers">Bénévoles actifs</div>
+                            <div class="text-gray-600 text-xs md:text-sm" data-i18n="achievements.daily">Engagés quotidiennement</div>
                         </div>
                     </div>
                 </div>
@@ -981,8 +1124,8 @@
                             <i class="ri-mail-line text-primary text-xl md:text-2xl"></i>
                         </div>
                     </div>
-                    <h2 class="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-900 mb-3 md:mb-4">Restez informés</h2>
-                    <p class="text-base md:text-lg lg:text-xl text-gray-600 mb-6 md:mb-8 max-w-2xl mx-auto px-4">
+                    <h2 class="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-900 mb-3 md:mb-4" data-i18n="newsletter.title">Restez informés</h2>
+                    <p class="text-base md:text-lg lg:text-xl text-gray-600 mb-6 md:mb-8 max-w-2xl mx-auto px-4" data-i18n="newsletter.description">
                         Recevez nos actualités et découvrez l'impact concret de nos actions humanitaires
                     </p>
                 </div>
@@ -996,10 +1139,11 @@
                                 required
                                 placeholder="Votre adresse email"
                                 class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-base"
+                                data-i18n-placeholder="newsletter.placeholder"
                             >
                             <button type="submit" class="w-full sm:w-auto bg-primary text-white px-4 md:px-6 py-3 rounded-lg hover:bg-orange-600 transition-colors font-semibold whitespace-nowrap text-base flex items-center justify-center gap-2">
                                 <i class="ri-send-plane-line"></i>
-                                <span>S'abonner</span>
+                                <span data-i18n="newsletter.subscribe">S'abonner</span>
                             </button>
                         </div>
                         <!-- Checkbox de consentement -->
@@ -1011,12 +1155,12 @@
                                 class="w-4 h-4 mt-1 text-primary border-gray-300 rounded focus:ring-primary"
                             >
                             <label for="newsletterConsent" class="ml-2 text-sm text-gray-600">
-                                J'accepte de recevoir les newsletters et confirme avoir pris connaissance de la
-                                <a href="#" class="text-primary hover:text-orange-600 underline">politique de confidentialité</a>
+                                <span data-i18n="newsletter.consent">J'accepte de recevoir les newsletters et confirme avoir pris connaissance de la</span>
+                                <a href="#" class="text-primary hover:text-orange-600 underline" data-i18n="newsletter.policy">politique de confidentialité</a>
                             </label>
                         </div>
                         <!-- Message de confidentialité -->
-                        <p class="text-xs md:text-sm text-gray-500 text-center">
+                        <p class="text-xs md:text-sm text-gray-500 text-center" data-i18n="newsletter.privacy">
                             Nous respectons votre vie privée. Désabonnement possible à tout moment.
                         </p>
                     </form>
@@ -1027,8 +1171,8 @@
                                 <i class="ri-check-line text-green-600"></i>
                             </div>
                             <div>
-                                <p class="font-medium text-green-800">Merci pour votre inscription !</p>
-                                <p class="text-sm text-green-600">Vous recevrez bientôt notre première newsletter.</p>
+                                <p class="font-medium text-green-800" data-i18n="newsletter.success.title">Merci pour votre inscription !</p>
+                                <p class="text-sm text-green-600" data-i18n="newsletter.success.message">Vous recevrez bientôt notre première newsletter.</p>
                             </div>
                         </div>
                     </div>
@@ -1039,25 +1183,25 @@
                         <div class="w-10 h-10 bg-primary bg-opacity-10 rounded-full flex items-center justify-center mx-auto mb-3">
                             <i class="ri-newspaper-line text-primary"></i>
                         </div>
-                        <p class="text-sm text-gray-600">Actualités exclusives</p>
+                        <p class="text-sm text-gray-600" data-i18n="newsletter.exclusive">Actualités exclusives</p>
                     </div>
                     <div class="text-center p-4">
                         <div class="w-10 h-10 bg-secondary bg-opacity-10 rounded-full flex items-center justify-center mx-auto mb-3">
                             <i class="ri-heart-line text-secondary"></i>
                         </div>
-                        <p class="text-sm text-gray-600">Témoignages inspirants</p>
+                        <p class="text-sm text-gray-600" data-i18n="newsletter.stories">Témoignages inspirants</p>
                     </div>
                     <div class="text-center p-4">
                         <div class="w-10 h-10 bg-primary bg-opacity-10 rounded-full flex items-center justify-center mx-auto mb-3">
                             <i class="ri-chart-line text-primary"></i>
                         </div>
-                        <p class="text-sm text-gray-600">Rapports d'impact détaillés</p>
+                        <p class="text-sm text-gray-600" data-i18n="newsletter.reports">Rapports d'impact détaillés</p>
                     </div>
                 </div>
             </div>
         </section>
         <!-- Footer -->
-        <footer class="bg-gray-900 text-white py-16">
+       <footer class="bg-gray-900 text-white py-16">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="grid md:grid-cols-4 gap-8">
                     <div>
@@ -1081,13 +1225,16 @@
                                 <div class="w-4 h-4 flex items-center justify-center mr-3">
                                     <i class="ri-phone-line"></i>
                                 </div>
-                                <span>+221 33 123 45 67</span>
+                                <span>
+                                    +221 33 123 45 67 <br>+221 77 987 65 43
+                                </span>
+                               
                             </div>
                             <div class="flex items-center">
                                 <div class="w-4 h-4 flex items-center justify-center mr-3">
                                     <i class="ri-mail-line"></i>
                                 </div>
-                                <span>contact@entraidehumanitaire.org</span>
+                                <span>toleye2@gmail.com <br> eapsh1@outlook.com</span>
                             </div>
                         </div>
                     </div>
@@ -1095,22 +1242,27 @@
                         <h3 class="text-lg font-semibold mb-4" data-i18n="footer.links">Liens utiles</h3>
                         <ul class="space-y-2 text-gray-300">
                             <li>
-                                <a href="#" class="hover:text-primary transition-colors" data-i18n="nav.about">À propos</a>
+                                <a href="apropos.html" class="hover:text-primary transition-colors" data-i18n="nav.about">À propos</a>
                             </li>
                             <li>
-                                <a href="#" class="hover:text-primary transition-colors" data-i18n="nav.projects">Nos projets</a>
+                                <a href="projets.html" class="hover:text-primary transition-colors" data-i18n="nav.projects">Nos projets</a>
                             </li>
                             <li>
-                                <a href="#" class="hover:text-primary transition-colors" data-i18n="header.donate">Faire un don</a>
+                                <a
+                                    href="#"
+                                    class="hover:text-primary transition-colors"
+                                    onclick="openDonationModal()"
+                                    data-i18n="header.donate"
+                                >Faire un don</a>
                             </li>
                             <li>
-                                <a href="#" class="hover:text-primary transition-colors" data-i18n="cta.volunteer">Devenir bénévole</a>
+                                <a href="galerie.html" class="hover:text-primary transition-colors" data-i18n="nav.gallery">Galerie</a>
                             </li>
                             <li>
-                                <a href="#" class="hover:text-primary transition-colors" data-i18n="nav.news">Actualités</a>
+                                <a href="articles.html" class="hover:text-primary transition-colors" data-i18n="nav.news">Actualités</a>
                             </li>
                             <li>
-                                <a href="#" class="hover:text-primary transition-colors" data-i18n="nav.contact">Contact</a>
+                                <a href="contact.html" class="hover:text-primary transition-colors" data-i18n="nav.contact">Contact</a>
                             </li>
                         </ul>
                     </div>
@@ -1169,7 +1321,7 @@
         </footer>
         <!-- Scripts -->
         <script>
-        // Dictionnaire de traduction
+        // Dictionnaire de traduction complet
         const translations = {
             fr: {
                 // Header & Navigation
@@ -1184,7 +1336,7 @@
                 
                 // Hero Section
                 "hero.title": "Ensemble pour un monde plus solidaire",
-                "hero.description": "L’Association ENTRAIDE POUR SERVIR L’HUMANITE est une organisation caritative opérant au Sénégal et au Niger. Elle œuvre pour le bien-être humain et la solidarité sociale à travers des projets humanitaires et de développement durable, avec le soutien de bienfaiteurs, notamment des Émirats Arabes Unis.",
+                "hero.description": "L'Association ENTRAIDE POUR SERVIR L'HUMANITE est une organisation caritative opérant au Sénégal et au Niger. Elle œuvre pour le bien-être humain et la solidarité sociale à travers des projets humanitaires et de développement durable, avec le soutien de bienfaiteurs, notamment des Émirats Arabes Unis.",
                 "hero.discover": "Découvrir nos projets",
                 "hero.donate": "Faire un don",
                 
@@ -1208,7 +1360,75 @@
                 "projects.health.title": "Soins de santé - Keur Momar",
                 "projects.health.description": "Mise en place d'un centre de santé communautaire et formation d'agents de santé locaux pour améliorer l'accès aux soins.",
                 "projects.funded": "Financé à",
-                "projects.learnMore": "En savoir plus",
+                
+                // Achievements Section
+                "achievements.title": "Nos Réalisations",
+                "achievements.description": "Découvrez nos actions concrètes et leur impact sur le terrain",
+                "achievements.highlights": "Réalisations marquantes",
+                "achievements.impact": "Notre impact en chiffres",
+                "achievements.performance": "Notre performance globale",
+                "achievements.completed": "Projets achevés",
+                "achievements.funds": "Fonds utilisés",
+                "achievements.onField": "Directement sur le terrain",
+                "achievements.volunteers": "Bénévoles actifs",
+                "achievements.daily": "Engagés quotidiennement",
+
+                // Achievement Cards
+                "achievements.food.title": "750K+ repas distribués",
+                "achievements.food.description": "Distribution quotidienne dans 15 centres à travers le Sénégal",
+                "achievements.food.since": "Depuis 2020",
+                "achievements.food.category": "Aide alimentaire",
+
+                "achievements.education.title": "1,800 élèves soutenus",
+                "achievements.education.description": "Programme de tutorat et distribution de kits scolaires",
+                "achievements.education.rate": "92% de réussite",
+                "achievements.education.category": "Éducation",
+
+                "achievements.housing.title": "450 familles relogées",
+                "achievements.housing.description": "Hébergement et accompagnement vers l'autonomie",
+                "achievements.housing.autonomy": "85% d'autonomie",
+                "achievements.housing.category": "Logement",
+
+                "achievements.infrastructure.title": "12 centres rénovés",
+                "achievements.infrastructure.description": "Amélioration des conditions d'accueil et d'hébergement",
+                "achievements.infrastructure.completed": "75% terminés",
+                "achievements.infrastructure.category": "Infrastructure",
+
+                // Impact Cards
+                "impact.food.title": "Alimentaire",
+                "impact.food.subtitle": "Impact 2023-2024",
+                "impact.food.centers": "Centres actifs",
+                "impact.food.families": "Familles/mois",
+                "impact.food.volunteers": "Bénévoles",
+                "impact.food.goal": "Objectif atteint",
+
+                "impact.education.title": "Éducation",
+                "impact.education.subtitle": "Impact 2023-2024",
+                "impact.education.schools": "Écoles",
+                "impact.education.kits": "Kits scolaires",
+                "impact.education.students": "Élèves",
+                "impact.education.success": "Taux de réussite",
+
+                "impact.housing.title": "Logement",
+                "impact.housing.subtitle": "Impact 2023-2024",
+                "impact.housing.families": "Familles",
+                "impact.housing.homes": "Logements",
+                "impact.housing.autonomy": "Autonomie",
+                "impact.housing.projects": "Projets achevés",
+
+                "impact.health.title": "Santé",
+                "impact.health.subtitle": "Impact 2023-2024",
+                "impact.health.consultations": "Consultations",
+                "impact.health.campaigns": "Campagnes",
+                "impact.health.villages": "Villages",
+                "impact.health.coverage": "Couverture nationale",
+
+                "impact.water.title": "Eau potable",
+                "impact.water.subtitle": "Impact 2023-2024",
+                "impact.water.wells": "Forages",
+                "impact.water.beneficiaries": "Bénéficiaires",
+                "impact.water.villages": "Villages",
+                "impact.water.goal": "Objectif atteint",
                 
                 // Testimonials
                 "testimonials.title": "Témoignages",
@@ -1245,10 +1465,17 @@
                 "newsletter.placeholder": "Votre adresse email",
                 "newsletter.subscribe": "S'abonner",
                 "newsletter.privacy": "Nous respectons votre vie privée. Désabonnement possible à tout moment.",
+                "newsletter.exclusive": "Actualités exclusives",
+                "newsletter.stories": "Témoignages inspirants",
+                "newsletter.reports": "Rapports d'impact détaillés",
+                "newsletter.consent": "J'accepte de recevoir les newsletters et confirme avoir pris connaissance de la",
+                "newsletter.policy": "politique de confidentialité",
+                "newsletter.success.title": "Merci pour votre inscription !",
+                "newsletter.success.message": "Vous recevrez bientôt notre première newsletter.",
                 
                 // Footer
                 "footer.description": "Association humanitaire œuvrant pour un monde plus solidaire et équitable.",
-                "footer.address": "123 Avenue de la Solidarité, Dakar, Sénégal",
+                "footer.address": "Medine  N 260, Mbour, Sénégal",
                 "footer.links": "Liens utiles",
                 "footer.follow": "Suivez-nous",
                 "footer.payment": "Modes de paiement acceptés :",
@@ -1281,7 +1508,20 @@
                 "volunteer.weekend": "Week-end",
                 "volunteer.evening": "Soirée",
                 "volunteer.fulltime": "Temps plein",
-                "volunteer.submit": "Postuler comme bénévole"
+                "volunteer.submit": "Postuler comme bénévole",
+                
+                // Buttons
+                "button.learnMore": "En savoir plus",
+                "button.support": "Soutenir ce projet",
+                "button.back": "Retour aux projets",
+                
+                // Project Modal
+                "project.totalBudget": "Budget total",
+                "project.progress": "Progression",
+                "project.beneficiaries": "Bénéficiaires",
+                "project.goals": "Objectifs spécifiques",
+                "project.impacts": "Impacts attendus",
+                "project.location": "Zone d'intervention"
             },
             en: {
                 // Header & Navigation
@@ -1320,7 +1560,75 @@
                 "projects.health.title": "Healthcare - Keur Momar",
                 "projects.health.description": "Establishment of a community health center and training of local health workers to improve access to care.",
                 "projects.funded": "Funded at",
-                "projects.learnMore": "Learn more",
+                
+                // Achievements Section
+                "achievements.title": "Our Achievements",
+                "achievements.description": "Discover our concrete actions and their impact on the ground",
+                "achievements.highlights": "Key Achievements",
+                "achievements.impact": "Our impact in numbers",
+                "achievements.performance": "Our overall performance",
+                "achievements.completed": "Projects completed",
+                "achievements.funds": "Funds used",
+                "achievements.onField": "Directly on the field",
+                "achievements.volunteers": "Active volunteers",
+                "achievements.daily": "Engaged daily",
+
+                // Achievement Cards
+                "achievements.food.title": "750K+ meals distributed",
+                "achievements.food.description": "Daily distribution in 15 centers across Senegal",
+                "achievements.food.since": "Since 2020",
+                "achievements.food.category": "Food aid",
+
+                "achievements.education.title": "1,800 students supported",
+                "achievements.education.description": "Tutoring program and distribution of school kits",
+                "achievements.education.rate": "92% success rate",
+                "achievements.education.category": "Education",
+
+                "achievements.housing.title": "450 families rehoused",
+                "achievements.housing.description": "Housing and support towards autonomy",
+                "achievements.housing.autonomy": "85% autonomy",
+                "achievements.housing.category": "Housing",
+
+                "achievements.infrastructure.title": "12 centers renovated",
+                "achievements.infrastructure.description": "Improvement of reception and accommodation conditions",
+                "achievements.infrastructure.completed": "75% completed",
+                "achievements.infrastructure.category": "Infrastructure",
+
+                // Impact Cards
+                "impact.food.title": "Food",
+                "impact.food.subtitle": "Impact 2023-2024",
+                "impact.food.centers": "Active centers",
+                "impact.food.families": "Families/month",
+                "impact.food.volunteers": "Volunteers",
+                "impact.food.goal": "Goal achieved",
+
+                "impact.education.title": "Education",
+                "impact.education.subtitle": "Impact 2023-2024",
+                "impact.education.schools": "Schools",
+                "impact.education.kits": "School kits",
+                "impact.education.students": "Students",
+                "impact.education.success": "Success rate",
+
+                "impact.housing.title": "Housing",
+                "impact.housing.subtitle": "Impact 2023-2024",
+                "impact.housing.families": "Families",
+                "impact.housing.homes": "Homes",
+                "impact.housing.autonomy": "Autonomy",
+                "impact.housing.projects": "Projects completed",
+
+                "impact.health.title": "Health",
+                "impact.health.subtitle": "Impact 2023-2024",
+                "impact.health.consultations": "Consultations",
+                "impact.health.campaigns": "Campaigns",
+                "impact.health.villages": "Villages",
+                "impact.health.coverage": "National coverage",
+
+                "impact.water.title": "Drinking water",
+                "impact.water.subtitle": "Impact 2023-2024",
+                "impact.water.wells": "Wells",
+                "impact.water.beneficiaries": "Beneficiaries",
+                "impact.water.villages": "Villages",
+                "impact.water.goal": "Goal achieved",
                 
                 // Testimonials
                 "testimonials.title": "Testimonials",
@@ -1357,10 +1665,17 @@
                 "newsletter.placeholder": "Your email address",
                 "newsletter.subscribe": "Subscribe",
                 "newsletter.privacy": "We respect your privacy. Unsubscribe at any time.",
+                "newsletter.exclusive": "Exclusive news",
+                "newsletter.stories": "Inspiring testimonials",
+                "newsletter.reports": "Detailed impact reports",
+                "newsletter.consent": "I agree to receive newsletters and confirm that I have read the",
+                "newsletter.policy": "privacy policy",
+                "newsletter.success.title": "Thank you for your subscription!",
+                "newsletter.success.message": "You will receive our first newsletter soon.",
                 
                 // Footer
                 "footer.description": "Humanitarian association working for a more supportive and equitable world.",
-                "footer.address": "123 Solidarity Avenue, Dakar, Senegal",
+                "footer.address": "Medine  260, Mbour, Senegal",
                 "footer.links": "Useful links",
                 "footer.follow": "Follow us",
                 "footer.payment": "Accepted payment methods:",
@@ -1393,7 +1708,20 @@
                 "volunteer.weekend": "Weekend",
                 "volunteer.evening": "Evening",
                 "volunteer.fulltime": "Full time",
-                "volunteer.submit": "Apply as volunteer"
+                "volunteer.submit": "Apply as volunteer",
+                
+                // Buttons
+                "button.learnMore": "Learn more",
+                "button.support": "Support this project",
+                "button.back": "Back to projects",
+                
+                // Project Modal
+                "project.totalBudget": "Total budget",
+                "project.progress": "Progress",
+                "project.beneficiaries": "Beneficiaries",
+                "project.goals": "Specific objectives",
+                "project.impacts": "Expected impacts",
+                "project.location": "Intervention area"
             },
             ar: {
                 // Header & Navigation
@@ -1432,7 +1760,75 @@
                 "projects.health.title": "الرعاية الصحية - كيور مومار",
                 "projects.health.description": "إنشاء مركز صحي مجتمعي وتدريب عمال صحيين محليين لتحسين الوصول إلى الرعاية.",
                 "projects.funded": "تم تمويله بنسبة",
-                "projects.learnMore": "المزيد",
+                
+                // Achievements Section
+                "achievements.title": "إنجازاتنا",
+                "achievements.description": "اكتشف أعمالنا الملموسة وتأثيرها على الأرض",
+                "achievements.highlights": "إنجازات بارزة",
+                "achievements.impact": "تأثيرنا بالأرقام",
+                "achievements.performance": "أدائنا العام",
+                "achievements.completed": "المشاريع المكتملة",
+                "achievements.funds": "الأموال المستخدمة",
+                "achievements.onField": "مباشرة على الأرض",
+                "achievements.volunteers": "متطوعون نشطون",
+                "achievements.daily": "منخرطون يوميًا",
+
+                // Achievement Cards
+                "achievements.food.title": "+750 ألف وجبة موزعة",
+                "achievements.food.description": "توزيع يومي في 15 مركزًا عبر السنغال",
+                "achievements.food.since": "منذ 2020",
+                "achievements.food.category": "المساعدات الغذائية",
+
+                "achievements.education.title": "1800 طالب مدعوم",
+                "achievements.education.description": "برنامج الدروس الخصوصية وتوزيع الحقائب المدرسية",
+                "achievements.education.rate": "نسبة نجاح 92%",
+                "achievements.education.category": "التعليم",
+
+                "achievements.housing.title": "450 عائلة أعيد إسكانها",
+                "achievements.housing.description": "السكن والدعم نحو الاستقلالية",
+                "achievements.housing.autonomy": "استقلالية 85%",
+                "achievements.housing.category": "الإسكان",
+
+                "achievements.infrastructure.title": "12 مركزًا تم تجديده",
+                "achievements.infrastructure.description": "تحسين ظروف الاستقبال والإيواء",
+                "achievements.infrastructure.completed": "75% مكتمل",
+                "achievements.infrastructure.category": "البنية التحتية",
+
+                // Impact Cards
+                "impact.food.title": "الغذاء",
+                "impact.food.subtitle": "تأثير 2023-2024",
+                "impact.food.centers": "مراكز نشطة",
+                "impact.food.families": "عائلات/شهر",
+                "impact.food.volunteers": "متطوعون",
+                "impact.food.goal": "الهدف المحقق",
+
+                "impact.education.title": "التعليم",
+                "impact.education.subtitle": "تأثير 2023-2024",
+                "impact.education.schools": "مدارس",
+                "impact.education.kits": "حقائب مدرسية",
+                "impact.education.students": "طلاب",
+                "impact.education.success": "معدل النجاح",
+
+                "impact.housing.title": "الإسكان",
+                "impact.housing.subtitle": "تأثير 2023-2024",
+                "impact.housing.families": "عائلات",
+                "impact.housing.homes": "مساكن",
+                "impact.housing.autonomy": "استقلالية",
+                "impact.housing.projects": "مشاريع مكتملة",
+
+                "impact.health.title": "الصحة",
+                "impact.health.subtitle": "تأثير 2023-2024",
+                "impact.health.consultations": "استشارات",
+                "impact.health.campaigns": "حملات",
+                "impact.health.villages": "قرى",
+                "impact.health.coverage": "تغطية وطنية",
+
+                "impact.water.title": "مياه الشرب",
+                "impact.water.subtitle": "تأثير 2023-2024",
+                "impact.water.wells": "آبار",
+                "impact.water.beneficiaries": "مستفيدون",
+                "impact.water.villages": "قرى",
+                "impact.water.goal": "الهدف المحقق",
                 
                 // Testimonials
                 "testimonials.title": "الشهادات",
@@ -1469,10 +1865,17 @@
                 "newsletter.placeholder": "عنوان بريدك الإلكتروني",
                 "newsletter.subscribe": "اشتراك",
                 "newsletter.privacy": "نحن نحترم خصوصيتك. يمكنك إلغاء الاشتراك في أي وقت.",
+                "newsletter.exclusive": "أخبار حصرية",
+                "newsletter.stories": "شهادات ملهمة",
+                "newsletter.reports": "تقارير تأثير مفصلة",
+                "newsletter.consent": "أوافق على تلقي النشرات الإخبارية وأؤكد أنني قد اطلعت على",
+                "newsletter.policy": "سياسة الخصوصية",
+                "newsletter.success.title": "شكرًا لتسجيلك!",
+                "newsletter.success.message": "ستتلقى نشرتنا الإخبارية الأولى قريبًا.",
                 
                 // Footer
                 "footer.description": "جمعية إنسانية تعمل من أجل عالم أكثر تضامنًا وعدالة.",
-                "footer.address": "123 شارع التضامن، داكار، السنغال",
+                "footer.address": "المدينة رقم 260، مبور، السنغال",
                 "footer.links": "روابط مفيدة",
                 "footer.follow": "تابعنا",
                 "footer.payment": "طرق الدفع المقبولة:",
@@ -1505,7 +1908,20 @@
                 "volunteer.weekend": "عطلة نهاية الأسبوع",
                 "volunteer.evening": "المساء",
                 "volunteer.fulltime": "دوام كامل",
-                "volunteer.submit": "التقديم كمتطوع"
+                "volunteer.submit": "التقديم كمتطوع",
+                
+                // Buttons
+                "button.learnMore": "المزيد",
+                "button.support": "ادعم هذا المشروع",
+                "button.back": "العودة للمشاريع",
+                
+                // Project Modal
+                "project.totalBudget": "الميزانية الكلية",
+                "project.progress": "التقدم",
+                "project.beneficiaries": "المستفيدون",
+                "project.goals": "أهداف محددة",
+                "project.impacts": "التأثيرات المتوقعة",
+                "project.location": "منطقة التدخل"
             }
         };
 
@@ -1641,40 +2057,384 @@
                 changeLanguage(savedLang);
             }
             
-            // Testimonial slider
-            const slider = document.getElementById('testimonialSlider');
-            const dots = document.querySelectorAll('.testimonial-dot');
-            let currentSlide = 0;
-            
-            function showSlide(index) {
-                if (slider) {
-                    slider.style.transform = `translateX(-${index * 100}%)`;
-                    dots.forEach((dot, i) => {
-                        if (i === index) {
-                            dot.classList.remove('bg-gray-300');
-                            dot.classList.add('bg-primary');
-                        } else {
-                            dot.classList.remove('bg-primary');
-                            dot.classList.add('bg-gray-300');
-                        }
-                    });
-                    currentSlide = index;
-                }
-            }
-            
-            if (dots.length > 0) {
-                dots.forEach((dot, index) => {
-                    dot.addEventListener('click', () => showSlide(index));
-                });
-                
-                setInterval(() => {
-                    if (dots.length > 0) {
-                        currentSlide = (currentSlide + 1) % dots.length;
-                        showSlide(currentSlide);
+            // Newsletter form submission
+            const newsletterForm = document.getElementById('newsletterForm');
+            if (newsletterForm) {
+                newsletterForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    const successMessage = document.getElementById('successMessage');
+                    if (successMessage) {
+                        successMessage.classList.remove('hidden');
+                        newsletterForm.reset();
+                        setTimeout(() => {
+                            successMessage.classList.add('hidden');
+                        }, 5000);
                     }
-                }, 5000);
+                });
             }
         });
+        </script>
+        <script>
+// Données des projets
+const projectsData = {
+    water: {
+        title: {
+            fr: "Accès à l'eau potable",
+            en: "Access to drinking water",
+            ar: "الوصول إلى المياه الصالحة للشرب"
+        },
+        subtitle: {
+            fr: "Kaolack, Sénégal",
+            en: "Kaolack, Senegal",
+            ar: "كاولاك، السنغال"
+        },
+        image: "3.jpeg",
+        budget: {
+            fr: "250 000 FCFA",
+            en: "250 000 FCFA",
+            ar: "250 ألف فرنك أفريقي"
+        },
+        progress: {
+            fr: "75% financé",
+            en: "75% funded",
+            ar: "تمويل 75%"
+        },
+        beneficiaries: {
+            fr: "2 000+ habitants",
+            en: "2,000+ inhabitants",
+            ar: "+2000 نسمة"
+        },
+        description: {
+            fr: "Ce projet vise à fournir un accès durable à l'eau potable dans 5 villages ruraux de la région de Kaolack. La situation actuelle oblige les habitants, particulièrement les femmes et les enfants, à parcourir plusieurs kilomètres chaque jour pour s'approvisionner en eau souvent impropre à la consommation, entraînant des problèmes de santé et une perte de temps considérable pour les activités éducatives et économiques.",
+            en: "This project aims to provide sustainable access to drinking water in 5 rural villages in the Kaolack region. The current situation forces residents, particularly women and children, to travel several kilometers each day to fetch water that is often unfit for consumption, leading to health problems and significant loss of time for educational and economic activities.",
+            ar: "يهدف هذا المشروع إلى توفير وصول مستدام لمياه الشرب في 5 قرى ريفية في منطقة كاولاك. الوضع الحالي يجبر السكان، وخاصة النساء والأطفال، على قطع عدة كيلومترات كل يوم لجلب المياه التي غالبًا ما تكون غير صالحة للشرب، مما يؤدي إلى مشاكل صحية وفقدان كبير في الوقت للأنشطة التعليمية والاقتصادية."
+        },
+        
+        goals: [
+            {
+                fr: '<div class="bg-blue-50 border-l-4 border-blue-500 p-4"><p class="font-semibold text-gray-800">Construction de 5 puits</p><p class="text-gray-600 text-sm">Équipés de pompes manuelles et de systèmes de filtration</p></div>',
+                en: '<div class="bg-blue-50 border-l-4 border-blue-500 p-4"><p class="font-semibold text-gray-800">Construction of 5 wells</p><p class="text-gray-600 text-sm">Equipped with manual pumps and filtration systems</p></div>',
+                ar: '<div class="bg-blue-50 border-l-4 border-blue-500 p-4"><p class="font-semibold text-gray-800">بناء 5 آبار</p><p class="text-gray-600 text-sm">مجهزة بمضخات يدوية وأنظمة ترشيح</p></div>'
+            },
+            {
+                fr: '<div class="bg-blue-50 border-l-4 border-blue-500 p-4"><p class="font-semibold text-gray-800">Formation des comités de gestion</p><p class="text-gray-600 text-sm">15 personnes formées à l\'entretien et à la gestion des points d\'eau</p></div>',
+                en: '<div class="bg-blue-50 border-l-4 border-blue-500 p-4"><p class="font-semibold text-gray-800">Training of management committees</p><p class="text-gray-600 text-sm">15 people trained in maintenance and water point management</p></div>',
+                ar: '<div class="bg-blue-50 border-l-4 border-blue-500 p-4"><p class="font-semibold text-gray-800">تدريب لجان الإدارة</p><p class="text-gray-600 text-sm">15 شخصًا تم تدريبهم على الصيانة وإدارة نقاط المياه</p></div>'
+            },
+            {
+                fr: '<div class="bg-blue-50 border-l-4 border-blue-500 p-4"><p class="font-semibold text-gray-800">Sensibilisation à l\'hygiène</p><p class="text-gray-600 text-sm">Campagnes dans les écoles et les communautés sur l\'eau et l\'assainissement</p></div>',
+                en: '<div class="bg-blue-50 border-l-4 border-blue-500 p-4"><p class="font-semibold text-gray-800">Hygiene awareness</p><p class="text-gray-600 text-sm">Campaigns in schools and communities on water and sanitation</p></div>',
+                ar: '<div class="bg-blue-50 border-l-4 border-blue-500 p-4"><p class="font-semibold text-gray-800">التوعية بالنظافة</p><p class="text-gray-600 text-sm">حملات في المدارس والمجتمعات حول المياه والصرف الصحي</p></div>'
+            },
+            {
+                fr: '<div class="bg-blue-50 border-l-4 border-blue-500 p-4"><p class="font-semibold text-gray-800">Systèmes d\'assainissement</p><p class="text-gray-600 text-sm">Installation de latrines dans les écoles et lieux publics</p></div>',
+                en: '<div class="bg-blue-50 border-l-4 border-blue-500 p-4"><p class="font-semibold text-gray-800">Sanitation systems</p><p class="text-gray-600 text-sm">Installation of latrines in schools and public places</p></div>',
+                ar: '<div class="bg-blue-50 border-l-4 border-blue-500 p-4"><p class="font-semibold text-gray-800">أنظمة الصرف الصحي</p><p class="text-gray-600 text-sm">تركيب مراحيض في المدارس والأماكن العامة</p></div>'
+            }
+        ],
+        
+        impacts: [
+            {
+                fr: '<div class="flex items-start gap-3"><div class="w-6 h-6 bg-blue-100 rounded-full flex items-center justify-center mt-1 flex-shrink-0"><i class="ri-check-line text-blue-600"></i></div><div><p class="font-semibold text-gray-800">Réduction des maladies hydriques</p><p class="text-gray-600 text-sm">Diminution de 70% des cas de diarrhée chez les enfants de moins de 5 ans</p></div></div>',
+                en: '<div class="flex items-start gap-3"><div class="w-6 h-6 bg-blue-100 rounded-full flex items-center justify-center mt-1 flex-shrink-0"><i class="ri-check-line text-blue-600"></i></div><div><p class="font-semibold text-gray-800">Reduction of waterborne diseases</p><p class="text-gray-600 text-sm">70% decrease in diarrhea cases in children under 5</p></div></div>',
+                ar: '<div class="flex items-start gap-3"><div class="w-6 h-6 bg-blue-100 rounded-full flex items-center justify-center mt-1 flex-shrink-0"><i class="ri-check-line text-blue-600"></i></div><div><p class="font-semibold text-gray-800">تقليل الأمراض المنقولة بالمياه</p><p class="text-gray-600 text-sm">انخفاض بنسبة 70% في حالات الإسهال لدى الأطفال دون سن الخامسة</p></div></div>'
+            },
+            {
+                fr: '<div class="flex items-start gap-3"><div class="w-6 h-6 bg-blue-100 rounded-full flex items-center justify-center mt-1 flex-shrink-0"><i class="ri-check-line text-blue-600"></i></div><div><p class="font-semibold text-gray-800">Gain de temps pour les femmes</p><p class="text-gray-600 text-sm">Jusqu\'à 3 heures par jour économisées pour les activités productives</p></div></div>',
+                en: '<div class="flex items-start gap-3"><div class="w-6 h-6 bg-blue-100 rounded-full flex items-center justify-center mt-1 flex-shrink-0"><i class="ri-check-line text-blue-600"></i></div><div><p class="font-semibold text-gray-800">Time savings for women</p><p class="text-gray-600 text-sm">Up to 3 hours per day saved for productive activities</p></div></div>',
+                ar: '<div class="flex items-start gap-3"><div class="w-6 h-6 bg-blue-100 rounded-full flex items-center justify-center mt-1 flex-shrink-0"><i class="ri-check-line text-blue-600"></i></div><div><p class="font-semibold text-gray-800">توفير الوقت للنساء</p><p class="text-gray-600 text-sm">توفير ما يصل إلى 3 ساعات يوميًا للأنشطة الإنتاجية</p></div></div>'
+            },
+            {
+                fr: '<div class="flex items-start gap-3"><div class="w-6 h-6 bg-blue-100 rounded-full flex items-center justify-center mt-1 flex-shrink-0"><i class="ri-check-line text-blue-600"></i></div><div><p class="font-semibold text-gray-800">Amélioration scolaire</p><p class="text-gray-600 text-sm">Augmentation de la fréquentation scolaire, notamment des filles</p></div></div>',
+                en: '<div class="flex items-start gap-3"><div class="w-6 h-6 bg-blue-100 rounded-full flex items-center justify-center mt-1 flex-shrink-0"><i class="ri-check-line text-blue-600"></i></div><div><p class="font-semibold text-gray-800">School improvement</p><p class="text-gray-600 text-sm">Increased school attendance, especially for girls</p></div></div>',
+                ar: '<div class="flex items-start gap-3"><div class="w-6 h-6 bg-blue-100 rounded-full flex items-center justify-center mt-1 flex-shrink-0"><i class="ri-check-line text-blue-600"></i></div><div><p class="font-semibold text-gray-800">تحسن مدرسي</p><p class="text-gray-600 text-sm">زيادة الحضور المدرسي، خاصة للفتيات</p></div></div>'
+            }
+        ],
+        
+        locations: [
+            {
+                fr: '<span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">Village de Ndiaffate</span>',
+                en: '<span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">Ndiaffate Village</span>',
+                ar: '<span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">قرية نديفات</span>'
+            },
+            {
+                fr: '<span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">Communauté de Ndoffane</span>',
+                en: '<span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">Ndoffane Community</span>',
+                ar: '<span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">مجتمع ندوفان</span>'
+            },
+            {
+                fr: '<span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">Hameau de Thiare</span>',
+                en: '<span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">Thiare Hamlet</span>',
+                ar: '<span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">نجع تيار</span>'
+            },
+            {
+                fr: '<span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">Village de Gandiaye</span>',
+                en: '<span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">Gandiaye Village</span>',
+                ar: '<span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">قرية غاندياي</span>'
+            },
+            {
+                fr: '<span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">Communauté de Ndiago</span>',
+                en: '<span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">Ndiago Community</span>',
+                ar: '<span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">مجتمع ندياغو</span>'
+            }
+        ]
+    },
+    
+    education: {
+        title: {
+            fr: "Éducation pour tous",
+            en: "Education for all",
+            ar: "التعليم للجميع"
+        },
+        subtitle: {
+            fr: "Mbour, Sénégal",
+            en: "Mbour, Senegal",
+            ar: "مبور، السنغال"
+        },
+        image: "classe.jpeg",
+        budget: {
+            fr: "5 500 000 FCFA",
+            en: "5,500,000 FCFA",
+            ar: "5.5 مليون فرنك أفريقي"
+        },
+        progress: {
+            fr: "60% financé",
+            en: "60% funded",
+            ar: "تمويل 60%"
+        },
+        beneficiaries: {
+            fr: "300 jeunes et adultes",
+            en: "300 youth and adults",
+            ar: "300 شاب وبالغ"
+        },
+        description: {
+            fr: "Ce programme éducatif innovant cible les jeunes déscolarisés et les adultes analphabètes de la région de Mbour. Il combine alphabétisation de base, formation professionnelle et accompagnement vers l'emploi, avec une attention particulière portée aux femmes et aux jeunes filles souvent exclues du système éducatif traditionnel.",
+            en: "This innovative educational program targets out-of-school youth and illiterate adults in the Mbour region. It combines basic literacy, vocational training and job support, with particular attention to women and girls who are often excluded from the traditional education system.",
+            ar: "يستهدف هذا البرنامج التعليمي المبتكر الشباب غير الملتحقين بالمدارس والبالغين الأميين في منطقة مبور. يجمع بين محو الأمية الأساسي، والتدريب المهني، ودعم الوظائف، مع اهتمام خاص بالنساء والفتيات اللواتي غالبًا ما يتم استبعادهن من نظام التعليم التقليدي."
+        },
+        
+        goals: [
+            {
+                fr: '<div class="bg-green-50 border-l-4 border-green-500 p-4"><p class="font-semibold text-gray-800">Alphabétisation de base</p><p class="text-gray-600 text-sm">300 personnes formées à la lecture, écriture et calcul de base</p></div>',
+                en: '<div class="bg-green-50 border-l-4 border-green-500 p-4"><p class="font-semibold text-gray-800">Basic literacy</p><p class="text-gray-600 text-sm">300 people trained in basic reading, writing and arithmetic</p></div>',
+                ar: '<div class="bg-green-50 border-l-4 border-green-500 p-4"><p class="font-semibold text-gray-800">محو الأمية الأساسي</p><p class="text-gray-600 text-sm">300 شخص تم تدريبهم على القراءة والكتابة والحساب الأساسي</p></div>'
+            },
+            {
+                fr: '<div class="bg-green-50 border-l-4 border-green-500 p-4"><p class="font-semibold text-gray-800">Formation professionnelle</p><p class="text-gray-600 text-sm">Ateliers en couture, menuiserie, agriculture et informatique</p></div>',
+                en: '<div class="bg-green-50 border-l-4 border-green-500 p-4"><p class="font-semibold text-gray-800">Vocational training</p><p class="text-gray-600 text-sm">Workshops in sewing, carpentry, agriculture and IT</p></div>',
+                ar: '<div class="bg-green-50 border-l-4 border-green-500 p-4"><p class="font-semibold text-gray-800">التدريب المهني</p><p class="text-gray-600 text-sm">ورش عمل في الخياطة، النجارة، الزراعة وتكنولوجيا المعلومات</p></div>'
+            },
+            {
+                fr: '<div class="bg-green-50 border-l-4 border-green-500 p-4"><p class="font-semibold text-gray-800">Équipement des centres</p><p class="text-gray-600 text-sm">Fourniture de matériel pédagogique et d\'équipements de formation</p></div>',
+                en: '<div class="bg-green-50 border-l-4 border-green-500 p-4"><p class="font-semibold text-gray-800">Center equipment</p><p class="text-gray-600 text-sm">Provision of educational materials and training equipment</p></div>',
+                ar: '<div class="bg-green-50 border-l-4 border-green-500 p-4"><p class="font-semibold text-gray-800">تجهيز المراكز</p><p class="text-gray-600 text-sm">توفير المواد التعليمية ومعدات التدريب</p></div>'
+            },
+            {
+                fr: '<div class="bg-green-50 border-l-4 border-green-500 p-4"><p class="font-semibold text-gray-800">Sensibilisation communautaire</p><p class="text-gray-600 text-sm">Campagnes pour l\'importance de l\'éducation, notamment des filles</p></div>',
+                en: '<div class="bg-green-50 border-l-4 border-green-500 p-4"><p class="font-semibold text-gray-800">Community awareness</p><p class="text-gray-600 text-sm">Campaigns for the importance of education, especially for girls</p></div>',
+                ar: '<div class="bg-green-50 border-l-4 border-green-500 p-4"><p class="font-semibold text-gray-800">التوعية المجتمعية</p><p class="text-gray-600 text-sm">حملات لأهمية التعليم، خاصة للفتيات</p></div>'
+            }
+        ],
+        
+        impacts: [
+            {
+                fr: '<div class="flex items-start gap-3"><div class="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center mt-1 flex-shrink-0"><i class="ri-check-line text-green-600"></i></div><div><p class="font-semibold text-gray-800">Insertion professionnelle</p><p class="text-gray-600 text-sm">65% des participants trouvent un emploi ou créent une activité</p></div></div>',
+                en: '<div class="flex items-start gap-3"><div class="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center mt-1 flex-shrink-0"><i class="ri-check-line text-green-600"></i></div><div><p class="font-semibold text-gray-800">Professional integration</p><p class="text-gray-600 text-sm">65% of participants find a job or create a business</p></div></div>',
+                ar: '<div class="flex items-start gap-3"><div class="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center mt-1 flex-shrink-0"><i class="ri-check-line text-green-600"></i></div><div><p class="font-semibold text-gray-800">الإدماج المهني</p><p class="text-gray-600 text-sm">65% من المشاركين يجدون وظيفة أو ينشئون نشاطًا تجاريًا</p></div></div>'
+            },
+            {
+                fr: '<div class="flex items-start gap-3"><div class="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center mt-1 flex-shrink-0"><i class="ri-check-line text-green-600"></i></div><div><p class="font-semibold text-gray-800">Autonomisation des femmes</p><p class="text-gray-600 text-sm">70% des participantes sont des femmes qui acquièrent une indépendance économique</p></div></div>',
+                en: '<div class="flex items-start gap-3"><div class="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center mt-1 flex-shrink-0"><i class="ri-check-line text-green-600"></i></div><div><p class="font-semibold text-gray-800">Women empowerment</p><p class="text-gray-600 text-sm">70% of participants are women who gain economic independence</p></div></div>',
+                ar: '<div class="flex items-start gap-3"><div class="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center mt-1 flex-shrink-0"><i class="ri-check-line text-green-600"></i></div><div><p class="font-semibold text-gray-800">تمكين المرأة</p><p class="text-gray-600 text-sm">70% من المشاركات نساء يكتسبن استقلالية اقتصادية</p></div></div>'
+            },
+            {
+                fr: '<div class="flex items-start gap-3"><div class="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center mt-1 flex-shrink-0"><i class="ri-check-line text-green-600"></i></div><div><p class="font-semibold text-gray-800">Amélioration des revenus</p><p class="text-gray-600 text-sm">Augmentation moyenne de 40% du revenu des familles participantes</p></div></div>',
+                en: '<div class="flex items-start gap-3"><div class="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center mt-1 flex-shrink-0"><i class="ri-check-line text-green-600"></i></div><div><p class="font-semibold text-gray-800">Income improvement</p><p class="text-gray-600 text-sm">Average 40% increase in income of participating families</p></div></div>',
+                ar: '<div class="flex items-start gap-3"><div class="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center mt-1 flex-shrink-0"><i class="ri-check-line text-green-600"></i></div><div><p class="font-semibold text-gray-800">تحسين الدخل</p><p class="text-gray-600 text-sm">زيادة متوسطة بنسبة 40% في دخل العائلات المشاركة</p></div></div>'
+            }
+        ],
+        
+        locations: [
+            {
+                fr: '<span class="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm">Centre de Mbour Ville</span>',
+                en: '<span class="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm">Mbour City Center</span>',
+                ar: '<span class="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm">مركز مدينة مبور</span>'
+            },
+            {
+                fr: '<span class="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm">Quartier de Saly Portudal</span>',
+                en: '<span class="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm">Saly Portudal District</span>',
+                ar: '<span class="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm">حي سالي بورتودال</span>'
+            },
+            {
+                fr: '<span class="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm">Communauté de Ngaparou</span>',
+                en: '<span class="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm">Ngaparou Community</span>',
+                ar: '<span class="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm">مجتمع نغابارو</span>'
+            },
+            {
+                fr: '<span class="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm">Village de Somone</span>',
+                en: '<span class="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm">Somone Village</span>',
+                ar: '<span class="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm">قرية سومون</span>'
+            }
+        ]
+    },
+    
+    health: {
+        title: {
+            fr: "Soins de santé communautaire",
+            en: "Community healthcare",
+            ar: "الرعاية الصحية المجتمعية"
+        },
+        subtitle: {
+            fr: "Keur Momar, Sénégal",
+            en: "Keur Momar, Senegal",
+            ar: "كيور مومار، السنغال"
+        },
+        image: "sante.jpg",
+        budget: {
+            fr: "1 500 000 FCFA",
+            en: "1,500,000 FCFA",
+            ar: "1.5 مليون فرنك أفريقي"
+        },
+        progress: {
+            fr: "45% financé",
+            en: "45% funded",
+            ar: "تمويل 45%"
+        },
+        beneficiaries: {
+            fr: "5 000 personnes",
+            en: "5,000 people",
+            ar: "5000 شخص"
+        },
+        description: {
+            fr: "Ce projet de santé vise à améliorer l'accès aux soins de santé primaires dans la zone rurale de Keur Momar, où la distance aux centres de santé et le manque de personnel qualifié constituent des obstacles majeurs. Le projet comprend la mise en place d'un centre de santé communautaire et la formation d'agents de santé locaux.",
+            en: "This health project aims to improve access to primary healthcare in the rural area of Keur Momar, where distance to health centers and lack of qualified personnel are major obstacles. The project includes the establishment of a community health center and training of local health workers.",
+            ar: "يهدف هذا المشروع الصحي إلى تحسين الوصول إلى الرعاية الصحية الأولية في المنطقة الريفية في كيور مومار، حيث تشكل المسافة إلى المراكز الصحية ونقص الكوادر المؤهلة عقبات كبيرة. يتضمن المشروع إنشاء مركز صحي مجتمعي وتدريب عمال صحيين محليين."
+        },
+        
+        goals: [
+            {
+                fr: '<div class="bg-red-50 border-l-4 border-red-500 p-4"><p class="font-semibold text-gray-800">Centre de santé communautaire</p><p class="text-gray-600 text-sm">Construction et équipement d\'un centre de santé de proximité</p></div>',
+                en: '<div class="bg-red-50 border-l-4 border-red-500 p-4"><p class="font-semibold text-gray-800">Community health center</p><p class="text-gray-600 text-sm">Construction and equipment of a local health center</p></div>',
+                ar: '<div class="bg-red-50 border-l-4 border-red-500 p-4"><p class="font-semibold text-gray-800">مركز صحي مجتمعي</p><p class="text-gray-600 text-sm">بناء وتجهيز مركز صحي محلي</p></div>'
+            },
+            {
+                fr: '<div class="bg-red-50 border-l-4 border-red-500 p-4"><p class="font-semibold text-gray-800">Formation d\'agents de santé</p><p class="text-gray-600 text-sm">20 agents formés aux soins de santé primaire et à la prévention</p></div>',
+                en: '<div class="bg-red-50 border-l-4 border-red-500 p-4"><p class="font-semibold text-gray-800">Health worker training</p><p class="text-gray-600 text-sm">20 workers trained in primary healthcare and prevention</p></div>',
+                ar: '<div class="bg-red-50 border-l-4 border-red-500 p-4"><p class="font-semibold text-gray-800">تدريب العاملين الصحيين</p><p class="text-gray-600 text-sm">20 عاملاً تم تدريبهم على الرعاية الصحية الأولية والوقاية</p></div>'
+            },
+            {
+                fr: '<div class="bg-red-50 border-l-4 border-red-500 p-4"><p class="font-semibold text-gray-800">Campagnes de sensibilisation</p><p class="text-gray-600 text-sm">Sur la nutrition, l\'hygiène, la vaccination et la santé maternelle</p></div>',
+                en: '<div class="bg-red-50 border-l-4 border-red-500 p-4"><p class="font-semibold text-gray-800">Awareness campaigns</p><p class="text-gray-600 text-sm">On nutrition, hygiene, vaccination and maternal health</p></div>',
+                ar: '<div class="bg-red-50 border-l-4 border-red-500 p-4"><p class="font-semibold text-gray-800">حملات التوعية</p><p class="text-gray-600 text-sm">عن التغذية، النظافة، التطعيم والصحة الأمومية</p></div>'
+            },
+            {
+                fr: '<div class="bg-red-50 border-l-4 border-red-500 p-4"><p class="font-semibold text-gray-800">Pharmacie communautaire</p><p class="text-gray-600 text-sm">Approvisionnement en médicaments essentiels à prix réduits</p></div>',
+                en: '<div class="bg-red-50 border-l-4 border-red-500 p-4"><p class="font-semibold text-gray-800">Community pharmacy</p><p class="text-gray-600 text-sm">Supply of essential medicines at reduced prices</p></div>',
+                ar: '<div class="bg-red-50 border-l-4 border-red-500 p-4"><p class="font-semibold text-gray-800">صيدلية مجتمعية</p><p class="text-gray-600 text-sm">تزويد بالأدوية الأساسية بأسعار مخفضة</p></div>'
+            }
+        ],
+        
+        impacts: [
+            {
+                fr: '<div class="flex items-start gap-3"><div class="w-6 h-6 bg-red-100 rounded-full flex items-center justify-center mt-1 flex-shrink-0"><i class="ri-check-line text-red-600"></i></div><div><p class="font-semibold text-gray-800">Accès aux soins</p><p class="text-gray-600 text-sm">Réduction de 80% de la distance pour accéder aux soins de santé</p></div></div>',
+                en: '<div class="flex items-start gap-3"><div class="w-6 h-6 bg-red-100 rounded-full flex items-center justify-center mt-1 flex-shrink-0"><i class="ri-check-line text-red-600"></i></div><div><p class="font-semibold text-gray-800">Access to care</p><p class="text-gray-600 text-sm">80% reduction in distance to access healthcare</p></div></div>',
+                ar: '<div class="flex items-start gap-3"><div class="w-6 h-6 bg-red-100 rounded-full flex items-center justify-center mt-1 flex-shrink-0"><i class="ri-check-line text-red-600"></i></div><div><p class="font-semibold text-gray-800">الوصول إلى الرعاية</p><p class="text-gray-600 text-sm">انخفاض بنسبة 80% في المسافة للوصول إلى الرعاية الصحية</p></div></div>'
+            },
+            {
+                fr: '<div class="flex items-start gap-3"><div class="w-6 h-6 bg-red-100 rounded-full flex items-center justify-center mt-1 flex-shrink-0"><i class="ri-check-line text-red-600"></i></div><div><p class="font-semibold text-gray-800">Santé maternelle</p><p class="text-gray-600 text-sm">Accompagnement de 200 femmes enceintes avec suivi prénatal</p></div></div>',
+                en: '<div class="flex items-start gap-3"><div class="w-6 h-6 bg-red-100 rounded-full flex items-center justify-center mt-1 flex-shrink-0"><i class="ri-check-line text-red-600"></i></div><div><p class="font-semibold text-gray-800">Maternal health</p><p class="text-gray-600 text-sm">Support for 200 pregnant women with prenatal follow-up</p></div></div>',
+                ar: '<div class="flex items-start gap-3"><div class="w-6 h-6 bg-red-100 rounded-full flex items-center justify-center mt-1 flex-shrink-0"><i class="ri-check-line text-red-600"></i></div><div><p class="font-semibold text-gray-800">صحة الأمومة</p><p class="text-gray-600 text-sm">دعم 200 امرأة حامل مع متابعة ما قبل الولادة</p></div></div>'
+            },
+            {
+                fr: '<div class="flex items-start gap-3"><div class="w-6 h-6 bg-red-100 rounded-full flex items-center justify-center mt-1 flex-shrink-0"><i class="ri-check-line text-red-600"></i></div><div><p class="font-semibold text-gray-800">Prévention des maladies</p><p class="text-gray-600 text-sm">Vaccination et dépistage pour 1 500 enfants de moins de 5 ans</p></div></div>',
+                en: '<div class="flex items-start gap-3"><div class="w-6 h-6 bg-red-100 rounded-full flex items-center justify-center mt-1 flex-shrink-0"><i class="ri-check-line text-red-600"></i></div><div><p class="font-semibold text-gray-800">Disease prevention</p><p class="text-gray-600 text-sm">Vaccination and screening for 1,500 children under 5</p></div></div>',
+                ar: '<div class="flex items-start gap-3"><div class="w-6 h-6 bg-red-100 rounded-full flex items-center justify-center mt-1 flex-shrink-0"><i class="ri-check-line text-red-600"></i></div><div><p class="font-semibold text-gray-800">الوقاية من الأمراض</p><p class="text-gray-600 text-sm">تطعيم وفحص لـ 1500 طفل دون سن الخامسة</p></div></div>'
+            }
+        ],
+        
+        locations: [
+            {
+                fr: '<span class="px-3 py-1 bg-red-100 text-red-800 rounded-full text-sm">Village de Keur Momar</span>',
+                en: '<span class="px-3 py-1 bg-red-100 text-red-800 rounded-full text-sm">Keur Momar Village</span>',
+                ar: '<span class="px-3 py-1 bg-red-100 text-red-800 rounded-full text-sm">قرية كيور مومار</span>'
+            },
+            {
+                fr: '<span class="px-3 py-1 bg-red-100 text-red-800 rounded-full text-sm">Communauté de Lougré</span>',
+                en: '<span class="px-3 py-1 bg-red-100 text-red-800 rounded-full text-sm">Lougré Community</span>',
+                ar: '<span class="px-3 py-1 bg-red-100 text-red-800 rounded-full text-sm">مجتمع لوغري</span>'
+            },
+            {
+                fr: '<span class="px-3 py-1 bg-red-100 text-red-800 rounded-full text-sm">Hameau de Thiognane</span>',
+                en: '<span class="px-3 py-1 bg-red-100 text-red-800 rounded-full text-sm">Thiognane Hamlet</span>',
+                ar: '<span class="px-3 py-1 bg-red-100 text-red-800 rounded-full text-sm">نجع تيوجنان</span>'
+            },
+            {
+                fr: '<span class="px-3 py-1 bg-red-100 text-red-800 rounded-full text-sm">Village de Ndialakhar</span>',
+                en: '<span class="px-3 py-1 bg-red-100 text-red-800 rounded-full text-sm">Ndialakhar Village</span>',
+                ar: '<span class="px-3 py-1 bg-red-100 text-red-800 rounded-full text-sm">قرية نديالاخار</span>'
+            },
+            {
+                fr: '<span class="px-3 py-1 bg-red-100 text-red-800 rounded-full text-sm">Communauté de Touba Fall</span>',
+                en: '<span class="px-3 py-1 bg-red-100 text-red-800 rounded-full text-sm">Touba Fall Community</span>',
+                ar: '<span class="px-3 py-1 bg-red-100 text-red-800 rounded-full text-sm">مجتمع توبا فول</span>'
+            }
+        ]
+    }
+};
+
+// Fonction pour ouvrir le modal
+function openProjectModal(projectId) {
+    const project = projectsData[projectId];
+    if (!project) return;
+    
+    // Get current language
+    const lang = currentLang;
+    
+    // Remplir les informations du modal avec la langue actuelle
+    document.getElementById('projectModalTitle').textContent = project.title[lang];
+    document.getElementById('projectModalSubtitle').textContent = project.subtitle[lang];
+    document.getElementById('projectModalImage').src = project.image;
+    document.getElementById('projectModalImage').alt = project.title[lang];
+    document.getElementById('projectModalBudget').textContent = project.budget[lang];
+    document.getElementById('projectModalProgress').textContent = project.progress[lang];
+    document.getElementById('projectModalBeneficiaries').textContent = project.beneficiaries[lang];
+    document.getElementById('projectModalDescription').textContent = project.description[lang];
+    
+    // Objectifs
+    const goalsContainer = document.getElementById('projectModalGoals');
+    goalsContainer.innerHTML = project.goals.map(goal => goal[lang]).join('');
+    
+    // Impacts
+    const impactsContainer = document.getElementById('projectModalImpacts');
+    impactsContainer.innerHTML = project.impacts.map(impact => impact[lang]).join('');
+    
+    // Localisations
+    const locationsContainer = document.getElementById('projectModalLocations');
+    locationsContainer.innerHTML = project.locations.map(location => location[lang]).join('');
+    
+    // Afficher le modal
+    document.getElementById('projectModal').classList.remove('hidden');
+    document.body.classList.add('overflow-hidden');
+}
+
+// Fonction pour fermer le modal
+function closeProjectModal() {
+    document.getElementById('projectModal').classList.add('hidden');
+    document.body.classList.remove('overflow-hidden');
+}
+
+// Gestion des événements
+document.getElementById('projectModal').addEventListener('click', function(e) {
+    if (e.target === this) {
+        closeProjectModal();
+    }
+});
+
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+        closeProjectModal();
+    }
+});
         </script>
     </body>
 </html>

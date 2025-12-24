@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact - DonSolidaire</title>
-    <script src="https://cdn.tailwindcss.com/3.4.16"></script>
-    <script>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Contact - DonSolidaire</title>
+        <script src="https://cdn.tailwindcss.com/3.4.16"></script>
+        <script>
         tailwind.config = {
             theme: {
                 extend: {
@@ -19,13 +19,13 @@
                 }
             }
         }
-    </script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="icon" type="image/png" href="favicon.png">
-    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css">
-    <style>
+        </script>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="icon" type="image/png" href="favicon.png">
+        <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css">
+        <style>
         :where([class^="ri-"])::before {
             content: "\f3c2";
         }
@@ -71,519 +71,521 @@
             border-radius: 12px;
             overflow: hidden;
         }
-    </style>
-    <!-- Leaflet CSS & JS pour la carte -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-</head>
-<body class="bg-white">
-    <!-- Header -->
-    <header class="bg-white shadow-sm sticky top-0 z-50" style="padding: 5px 0;">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-17">
-                <!-- Logo -->
-                <div class="flex items-center">
-                    <img src="logo.png" style="width: 70px;" alt="Logo" class="w-12 md:w-16 lg:w-20">
-                </div>
-                
-                <!-- Navigation Desktop -->
-                <nav class="hidden md:flex space-x-6 lg:space-x-8">
-                    <a href="index.html" class="text-gray-700 hover:text-primary transition-colors text-sm lg:text-base" data-i18n="nav.home">Accueil</a>
-                    <a href="Apropos.html" class="text-gray-700 hover:text-primary transition-colors text-sm lg:text-base" data-i18n="nav.about">À propos</a>
-                    <a href="projet.html" class="text-gray-700 hover:text-primary transition-colors text-sm lg:text-base" data-i18n="nav.projects">Projets</a>
-                    <a href="galerie.html" class="text-gray-700 hover:text-primary transition-colors text-sm lg:text-base" data-i18n="nav.gallery">Galerie</a>
-                    <a href="article.html" class="text-gray-700 hover:text-primary transition-colors text-sm lg:text-base" data-i18n="nav.news">Actualités</a>
-                    <a href="#" class="text-primary font-semibold transition-colors text-sm lg:text-base" data-i18n="nav.contact">Contact</a>
-                </nav>
-
-                <!-- Côté droit - Actions -->
-                <div class="flex items-center space-x-3 md:space-x-4">
-                    <!-- Sélecteur de langue -->
-                    <div class="relative hidden sm:block">
-                        <button class="flex items-center space-x-1 text-gray-700 hover:text-primary" id="languageBtn">
-                            <span class="text-sm" id="currentLang">FR</span>
-                            <div class="w-4 h-4 flex items-center justify-center">
-                                <i class="ri-arrow-down-s-line"></i>
-                            </div>
-                        </button>
-                        <div class="absolute right-0 mt-2 w-20 bg-white rounded shadow-lg hidden" id="languageMenu">
-                            <a href="#" class="block px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 lang-option" data-lang="fr">FR</a>
-                            <a href="#" class="block px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 lang-option" data-lang="en">EN</a>
-                            <a href="#" class="block px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 lang-option" data-lang="ar">AR</a>
-                        </div>
+        </style>
+        <!-- Leaflet CSS & JS pour la carte -->
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+        <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    </head>
+    <body class="bg-white">
+        <!-- Header -->
+        <header class="bg-white shadow-sm sticky top-0 z-50" style="padding: 5px 0;">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex justify-between items-center h-17">
+                    <!-- Logo -->
+                    <div class="flex items-center">
+                        <img
+                            src="logo.png"
+                            style="width: 70px;"
+                            alt="Logo"
+                            class="w-12 md:w-16 lg:w-20"
+                        >
                     </div>
-                    
-                    <!-- Bouton Don -->
-                    <button class="bg-primary text-white px-4 py-2 !rounded-button hover:bg-orange-600 transition-colors whitespace-nowrap text-sm md:px-6 md:text-base" onclick="openDonationModal()" data-i18n="header.donate">
-                        Faire un don
-                    </button>
-                    
-                    <!-- Menu Burger Mobile -->
-                    <button class="md:hidden text-gray-700 hover:text-primary" id="mobileMenuBtn">
-                        <i class="ri-menu-line text-2xl"></i>
-                    </button>
-                </div>
-            </div>
-            
-            <!-- Menu Mobile -->
-            <div class="md:hidden bg-white shadow-lg rounded-b-lg hidden" id="mobileMenu">
-                <div class="py-4 space-y-4">
-                    <a href="index.html" class="block px-4 py-2 text-gray-700 hover:text-primary hover:bg-gray-50 transition-colors" data-i18n="nav.home">Accueil</a>
-                    <a href="Apropos.html" class="block px-4 py-2 text-gray-700 hover:text-primary hover:bg-gray-50 transition-colors" data-i18n="nav.about">À propos</a>
-                    <a href="projet.html" class="block px-4 py-2 text-gray-700 hover:text-primary hover:bg-gray-50 transition-colors" data-i18n="nav.projects">Projets</a>
-                    <a href="galerie.html" class="block px-4 py-2 text-gray-700 hover:text-primary hover:bg-gray-50 transition-colors" data-i18n="nav.gallery">Galerie</a>
-                    <a href="article.html" class="block px-4 py-2 text-gray-700 hover:text-primary hover:bg-gray-50 transition-colors" data-i18n="nav.news">Actualités</a>
-                    <a href="#" class="block px-4 py-2 text-primary font-semibold hover:bg-gray-50 transition-colors" data-i18n="nav.contact">Contact</a>
-                    
-                    <!-- Sélecteur de langue mobile -->
-                    <div class="px-4 pt-4 border-t border-gray-100">
-                        <div class="flex items-center space-x-3">
-                            <span class="text-gray-600 text-sm" data-i18n="language">Langue :</span>
-                            <div class="flex space-x-2">
-                                <a href="#" class="px-3 py-1 text-sm bg-gray-100 text-gray-700 rounded lang-option" data-lang="fr">FR</a>
-                                <a href="#" class="px-3 py-1 text-sm text-gray-600 hover:text-gray-900 rounded lang-option" data-lang="en">EN</a>
-                                <a href="#" class="px-3 py-1 text-sm text-gray-600 hover:text-gray-900 rounded lang-option" data-lang="ar">AR</a>
+                    <!-- Navigation Desktop -->
+                    <nav class="hidden md:flex space-x-6 lg:space-x-8">
+                        <a href="index.html" class="text-gray-700 hover:text-primary transition-colors text-sm lg:text-base" data-i18n="nav.home">Accueil</a>
+                        <a href="Apropos.html" class="text-gray-700 hover:text-primary transition-colors text-sm lg:text-base" data-i18n="nav.about">À propos</a>
+                        <a href="projet.html" class="text-gray-700 hover:text-primary transition-colors text-sm lg:text-base" data-i18n="nav.projects">Projets</a>
+                        <a href="galerie.html" class="text-gray-700 hover:text-primary transition-colors text-sm lg:text-base" data-i18n="nav.gallery">Galerie</a>
+                        <a href="article.html" class="text-gray-700 hover:text-primary transition-colors text-sm lg:text-base" data-i18n="nav.news">Actualités</a>
+                        <a href="#" class="text-primary font-semibold transition-colors text-sm lg:text-base" data-i18n="nav.contact">Contact</a>
+                    </nav>
+                    <!-- Côté droit - Actions -->
+                    <div class="flex items-center space-x-3 md:space-x-4">
+                        <!-- Sélecteur de langue -->
+                        <div class="relative hidden sm:block">
+                            <button class="flex items-center space-x-1 text-gray-700 hover:text-primary" id="languageBtn">
+                                <span class="text-sm" id="currentLang">FR</span>
+                                <div class="w-4 h-4 flex items-center justify-center">
+                                    <i class="ri-arrow-down-s-line"></i>
+                                </div>
+                            </button>
+                            <div class="absolute right-0 mt-2 w-20 bg-white rounded shadow-lg hidden" id="languageMenu">
+                                <a href="#" class="block px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 lang-option" data-lang="fr">FR</a>
+                                <a href="#" class="block px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 lang-option" data-lang="en">EN</a>
+                                <a href="#" class="block px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 lang-option" data-lang="ar">AR</a>
                             </div>
                         </div>
+                        <!-- Bouton Don -->
+                        <button class="bg-primary text-white px-4 py-2 !rounded-button hover:bg-orange-600 transition-colors whitespace-nowrap text-sm md:px-6 md:text-base" onclick="openDonationModal()" data-i18n="header.donate">
+                            Faire un don
+                        </button>
+                        <!-- Menu Burger Mobile -->
+                        <button class="md:hidden text-gray-700 hover:text-primary" id="mobileMenuBtn">
+                            <i class="ri-menu-line text-2xl"></i>
+                        </button>
+                    </div>
+                </div>
+                <!-- Menu Mobile -->
+                <div class="md:hidden bg-white shadow-lg rounded-b-lg hidden" id="mobileMenu">
+                    <div class="py-4 space-y-4">
+                        <a href="index.html" class="block px-4 py-2 text-gray-700 hover:text-primary hover:bg-gray-50 transition-colors" data-i18n="nav.home">Accueil</a>
+                        <a href="Apropos.html" class="block px-4 py-2 text-gray-700 hover:text-primary hover:bg-gray-50 transition-colors" data-i18n="nav.about">À propos</a>
+                        <a href="projet.html" class="block px-4 py-2 text-gray-700 hover:text-primary hover:bg-gray-50 transition-colors" data-i18n="nav.projects">Projets</a>
+                        <a href="galerie.html" class="block px-4 py-2 text-gray-700 hover:text-primary hover:bg-gray-50 transition-colors" data-i18n="nav.gallery">Galerie</a>
+                        <a href="article.html" class="block px-4 py-2 text-gray-700 hover:text-primary hover:bg-gray-50 transition-colors" data-i18n="nav.news">Actualités</a>
+                        <a href="#" class="block px-4 py-2 text-primary font-semibold hover:bg-gray-50 transition-colors" data-i18n="nav.contact">Contact</a>
+                        <!-- Sélecteur de langue mobile -->
+                        <div class="px-4 pt-4 border-t border-gray-100">
+                            <div class="flex items-center space-x-3">
+                                <span class="text-gray-600 text-sm" data-i18n="language">Langue :</span>
+                                <div class="flex space-x-2">
+                                    <a href="#" class="px-3 py-1 text-sm bg-gray-100 text-gray-700 rounded lang-option" data-lang="fr">FR</a>
+                                    <a href="#" class="px-3 py-1 text-sm text-gray-600 hover:text-gray-900 rounded lang-option" data-lang="en">EN</a>
+                                    <a href="#" class="px-3 py-1 text-sm text-gray-600 hover:text-gray-900 rounded lang-option" data-lang="ar">AR</a>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </header>
-
-    <!-- Popup Donation -->
-    <div id="donationModal" class="modal">
-        <div class="modal-content">
-            <div class="flex justify-between items-center mb-6">
-                <h3 class="text-2xl font-bold text-gray-900" data-i18n="donation.title">Faire un don</h3>
-                <button onclick="closeDonationModal()" class="text-gray-500 hover:text-gray-700">
-                    <i class="ri-close-line text-2xl"></i>
-                </button>
-            </div>
-            
-            <div class="space-y-6">
-                <div>
-                    <label class="block text-gray-700 mb-2" data-i18n="donation.amount">Montant du don</label>
-                    <div class="grid grid-cols-2 md:grid-cols-2 gap-3 mb-4">
-                        <div class="donation-amount" data-amount="10000">
-                            <div class="text-lg font-semibold">10 000 F</div>
-                            <div class="text-sm text-gray-500" data-i18n="donation.food">Nourriture 1 mois</div>
-                        </div>
-                        <div class="donation-amount" data-amount="25000">
-                            <div class="text-lg font-semibold">25 000 F</div>
-                            <div class="text-sm text-gray-500" data-i18n="donation.medical">Soins médicaux</div>
-                        </div>
-                        <div class="donation-amount" data-amount="50000">
-                            <div class="text-lg font-semibold">50 000 F</div>
-                            <div class="text-sm text-gray-500" data-i18n="donation.education">Éducation 1 enfant</div>
-                        </div>
-                        <div class="donation-amount" data-amount="100000">
-                            <div class="text-lg font-semibold">100 000 F</div>
-                            <div class="text-sm text-gray-500" data-i18n="donation.water">Accès à l'eau</div>
-                        </div>
-                    </div>
-                    
-                    <div class="relative">
-                        <input type="number" id="customAmount" placeholder="Autre montant" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" data-i18n-placeholder="donation.custom">
-                        <div class="absolute right-3 top-3 text-gray-500">FCFA</div>
-                    </div>
-                </div>
-                
-                <div>
-                    <label class="block text-gray-700 mb-2" data-i18n="donation.method">Méthode de paiement</label>
-                    <div class="grid grid-cols-2 md:grid-cols-3 gap-3">
-                        <button class="flex flex-col items-center justify-center p-4 border border-gray-300 rounded-lg hover:border-primary transition-colors">
-                            <i class="ri-smartphone-line text-2xl text-gray-700 mb-2"></i>
-                            <span class="text-sm">Wave</span>
-                        </button>
-                        <button class="flex flex-col items-center justify-center p-4 border border-gray-300 rounded-lg hover:border-primary transition-colors">
-                            <i class="ri-phone-line text-2xl text-gray-700 mb-2"></i>
-                            <span class="text-sm">Orange Money</span>
-                        </button>
-                        <button class="flex flex-col items-center justify-center p-4 border border-gray-300 rounded-lg hover:border-primary transition-colors">
-                            <i class="ri-bank-card-line text-2xl text-gray-700 mb-2"></i>
-                            <span class="text-sm">Carte bancaire</span>
-                        </button>
-                    </div>
-                </div>
-                
-                <div class="pt-4">
-                    <button class="w-full bg-primary text-white py-4 rounded-lg hover:bg-orange-600 transition-colors font-semibold" data-i18n="donation.submit">
-                        Effectuer le don
+        </header>
+        <!-- Popup Donation -->
+        <div id="donationModal" class="modal">
+            <div class="modal-content">
+                <div class="flex justify-between items-center mb-6">
+                    <h3 class="text-2xl font-bold text-gray-900" data-i18n="donation.title">Faire un don</h3>
+                    <button onclick="closeDonationModal()" class="text-gray-500 hover:text-gray-700">
+                        <i class="ri-close-line text-2xl"></i>
                     </button>
                 </div>
-                
-                <p class="text-sm text-gray-500 text-center" data-i18n="donation.security">
-                    Votre don est sécurisé. 98% des fonds sont directement alloués aux programmes.
-                </p>
-            </div>
-        </div>
-    </div>
-
-    <!-- Hero Section -->
-    <section class="relative py-24" style="background-image: url('https://readdy.ai/api/search-image?query=Professional%20contact%20center%20with%20multicultural%20team%20helping%20people%2C%20modern%20office%20environment%2C%20communication%20and%20support%20concept%2C%20bright%20and%20welcoming%20atmosphere%2C%20diverse%20team%20working%20together%2C%20customer%20service%20excellence&width=1920&height=600&seq=contact1&orientation=landscape'); background-size: cover; background-position: center;">
-        <div class="absolute inset-0 bg-black bg-opacity-50"></div>
-        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="max-w-3xl">
-                <h1 class="text-5xl font-bold text-white mb-6" data-i18n="contact.title">Contactez-nous</h1>
-                <p class="text-xl text-white leading-relaxed" data-i18n="contact.description">
-                    Nous sommes à votre écoute pour répondre à vos questions et échanger sur nos projets humanitaires.
-                </p>
-            </div>
-        </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section class="py-20 bg-white">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16">
-                <!-- Formulaire de contact -->
-                <div>
-                    <h2 class="text-3xl font-bold text-gray-900 mb-8" data-i18n="contact.form.title">Envoyez-nous un message</h2>
-                    <form class="space-y-6">
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div>
-                                <label class="block text-gray-700 mb-2" data-i18n="contact.form.firstName">Prénom</label>
-                                <input type="text" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-colors" data-i18n-placeholder="contact.form.firstNamePlaceholder">
-                            </div>
-                            <div>
-                                <label class="block text-gray-700 mb-2" data-i18n="contact.form.lastName">Nom</label>
-                                <input type="text" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-colors" data-i18n-placeholder="contact.form.lastNamePlaceholder">
-                            </div>
-                        </div>
-                        
-                        <div>
-                            <label class="block text-gray-700 mb-2" data-i18n="contact.form.email">Email</label>
-                            <input type="email" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-colors" data-i18n-placeholder="contact.form.emailPlaceholder">
-                        </div>
-                        
-                        <div>
-                            <label class="block text-gray-700 mb-2" data-i18n="contact.form.phone">Téléphone</label>
-                            <input type="tel" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-colors" data-i18n-placeholder="contact.form.phonePlaceholder">
-                        </div>
-                        
-                        <div>
-                            <label class="block text-gray-700 mb-2" data-i18n="contact.form.subject">Sujet</label>
-                            <select class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-colors">
-                                <option value="" data-i18n="contact.form.subjectSelect">Sélectionnez un sujet</option>
-                                <option value="donation" data-i18n="contact.form.subjectDonation">Informations sur les dons</option>
-                                <option value="volunteer" data-i18n="contact.form.subjectVolunteer">Devenir bénévole</option>
-                                <option value="partnership" data-i18n="contact.form.subjectPartnership">Partenariat</option>
-                                <option value="information" data-i18n="contact.form.subjectInformation">Demande d'information</option>
-                                <option value="other" data-i18n="contact.form.subjectOther">Autre</option>
-                            </select>
-                        </div>
-                        
-                        <div>
-                            <label class="block text-gray-700 mb-2" data-i18n="contact.form.message">Message</label>
-                            <textarea rows="6" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-colors resize-none" data-i18n-placeholder="contact.form.messagePlaceholder"></textarea>
-                        </div>
-                        
-                        <button type="submit" class="w-full bg-primary text-white py-4 rounded-lg hover:bg-orange-600 transition-colors font-semibold" data-i18n="contact.form.submit">
-                            Envoyer le message
-                        </button>
-                    </form>
-                </div>
-                
-                <!-- Informations de contact -->
-                <div>
-                    <h2 class="text-3xl font-bold text-gray-900 mb-8" data-i18n="contact.info.title">Nos coordonnées</h2>
-                    
-                    <div class="space-y-8">
-                        <!-- Adresse -->
-                        <div class="flex items-start">
-                            <div class="w-12 h-12 bg-primary bg-opacity-10 rounded-full flex items-center justify-center mr-6 mt-1">
-                                <div class="w-6 h-6 flex items-center justify-center">
-                                    <i class="ri-map-pin-line text-primary text-xl"></i>
-                                </div>
-                            </div>
-                            <div>
-                                <h3 class="text-xl font-semibold text-gray-900 mb-2" data-i18n="contact.info.addressTitle">Adresse</h3>
-                                <p class="text-gray-600" data-i18n="contact.info.address">123 Avenue de la Solidarité<br>Dakar, Sénégal</p>
-                            </div>
-                        </div>
-                        
-                        <!-- Téléphone -->
-                        <div class="flex items-start">
-                            <div class="w-12 h-12 bg-secondary bg-opacity-10 rounded-full flex items-center justify-center mr-6 mt-1">
-                                <div class="w-6 h-6 flex items-center justify-center">
-                                    <i class="ri-phone-line text-secondary text-xl"></i>
-                                </div>
-                            </div>
-                            <div>
-                                <h3 class="text-xl font-semibold text-gray-900 mb-2" data-i18n="contact.info.phoneTitle">Téléphone</h3>
-                                <p class="text-gray-600">+221 33 123 45 67</p>
-                                <p class="text-gray-600">+221 77 987 65 43</p>
-                            </div>
-                        </div>
-                        
-                        <!-- Email -->
-                        <div class="flex items-start">
-                            <div class="w-12 h-12 bg-primary bg-opacity-10 rounded-full flex items-center justify-center mr-6 mt-1">
-                                <div class="w-6 h-6 flex items-center justify-center">
-                                    <i class="ri-mail-line text-primary text-xl"></i>
-                                </div>
-                            </div>
-                            <div>
-                                <h3 class="text-xl font-semibold text-gray-900 mb-2" data-i18n="contact.info.emailTitle">Email</h3>
-                                <p class="text-gray-600">contact@entraidehumanitaire.org</p>
-                                <p class="text-gray-600">info@entraidehumanitaire.org</p>
-                            </div>
-                        </div>
-                        
-                        <!-- Horaires -->
-                        <div class="flex items-start">
-                            <div class="w-12 h-12 bg-secondary bg-opacity-10 rounded-full flex items-center justify-center mr-6 mt-1">
-                                <div class="w-6 h-6 flex items-center justify-center">
-                                    <i class="ri-time-line text-secondary text-xl"></i>
-                                </div>
-                            </div>
-                            <div>
-                                <h3 class="text-xl font-semibold text-gray-900 mb-2" data-i18n="contact.info.hoursTitle">Horaires d'ouverture</h3>
-                                <p class="text-gray-600" data-i18n="contact.info.hoursWeek">Lundi - Vendredi : 8h00 - 18h00</p>
-                                <p class="text-gray-600" data-i18n="contact.info.hoursWeekend">Samedi : 9h00 - 13h00</p>
-                                <p class="text-gray-600" data-i18n="contact.info.hoursSunday">Dimanche : Fermé</p>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Réseaux sociaux -->
-                    <div class="mt-12">
-                        <h3 class="text-xl font-semibold text-gray-900 mb-6" data-i18n="contact.social.title">Suivez-nous</h3>
-                        <div class="flex space-x-4">
-                            <a href="#" class="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center hover:bg-primary hover:text-white transition-colors">
-                                <i class="ri-facebook-fill text-xl"></i>
-                            </a>
-                            <a href="#" class="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center hover:bg-primary hover:text-white transition-colors">
-                                <i class="ri-twitter-fill text-xl"></i>
-                            </a>
-                            <a href="#" class="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center hover:bg-primary hover:text-white transition-colors">
-                                <i class="ri-instagram-fill text-xl"></i>
-                            </a>
-                            <a href="#" class="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center hover:bg-primary hover:text-white transition-colors">
-                                <i class="ri-linkedin-fill text-xl"></i>
-                            </a>
-                            <a href="#" class="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center hover:bg-primary hover:text-white transition-colors">
-                                <i class="ri-youtube-fill text-xl"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Carte -->
-    <section class="py-20 bg-gray-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-12">
-                <h2 class="text-4xl font-bold text-gray-900 mb-4" data-i18n="contact.map.title">Nous trouver</h2>
-                <p class="text-xl text-gray-600 max-w-3xl mx-auto" data-i18n="contact.map.description">
-                    Visitez notre siège social à Dakar ou contactez-nous pour planifier une rencontre.
-                </p>
-            </div>
-            
-            <div id="map"></div>
-            
-            <div class="mt-8 grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div class="bg-white p-6 rounded-xl shadow-sm text-center">
-                    <div class="w-12 h-12 bg-primary bg-opacity-10 rounded-full flex items-center justify-center mx-auto mb-4">
-                        <i class="ri-car-line text-primary text-xl"></i>
-                    </div>
-                    <h3 class="text-lg font-semibold text-gray-900 mb-2" data-i18n="contact.transport.car">En voiture</h3>
-                    <p class="text-gray-600" data-i18n="contact.transport.carDescription">Parking gratuit disponible devant le bâtiment.</p>
-                </div>
-                
-                <div class="bg-white p-6 rounded-xl shadow-sm text-center">
-                    <div class="w-12 h-12 bg-secondary bg-opacity-10 rounded-full flex items-center justify-center mx-auto mb-4">
-                        <i class="ri-bus-line text-secondary text-xl"></i>
-                    </div>
-                    <h3 class="text-lg font-semibold text-gray-900 mb-2" data-i18n="contact.transport.bus">En bus</h3>
-                    <p class="text-gray-600" data-i18n="contact.transport.busDescription">Lignes 12, 23 et 45 - Arrêt "Solidarité".</p>
-                </div>
-                
-                <div class="bg-white p-6 rounded-xl shadow-sm text-center">
-                    <div class="w-12 h-12 bg-primary bg-opacity-10 rounded-full flex items-center justify-center mx-auto mb-4">
-                        <i class="ri-taxi-line text-primary text-xl"></i>
-                    </div>
-                    <h3 class="text-lg font-semibold text-gray-900 mb-2" data-i18n="contact.transport.taxi">En taxi</h3>
-                    <p class="text-gray-600" data-i18n="contact.transport.taxiDescription">Dites "Avenue de la Solidarité" au chauffeur.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- FAQ -->
-    <section class="py-20 bg-white">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16">
-                <h2 class="text-4xl font-bold text-gray-900 mb-4" data-i18n="contact.faq.title">Questions fréquentes</h2>
-                <p class="text-xl text-gray-600 max-w-3xl mx-auto" data-i18n="contact.faq.description">
-                    Trouvez rapidement des réponses à vos questions les plus courantes.
-                </p>
-            </div>
-            
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
                 <div class="space-y-6">
-                    <div class="bg-gray-50 p-6 rounded-xl">
-                        <h3 class="text-lg font-semibold text-gray-900 mb-3" data-i18n="contact.faq.question1">Comment faire un don ?</h3>
-                        <p class="text-gray-600" data-i18n="contact.faq.answer1">
-                            Vous pouvez faire un don en ligne via notre site, par virement bancaire ou en nous contactant directement. Tous les dons sont sécurisés et déductibles des impôts.
-                        </p>
+                    <div>
+                        <label class="block text-gray-700 mb-2" data-i18n="donation.amount">Montant du don</label>
+                        <div class="grid grid-cols-2 md:grid-cols-2 gap-3 mb-4">
+                            <div class="donation-amount" data-amount="10000">
+                                <div class="text-lg font-semibold">10 000 F</div>
+                                <div class="text-sm text-gray-500" data-i18n="donation.food">Nourriture 1 mois</div>
+                            </div>
+                            <div class="donation-amount" data-amount="25000">
+                                <div class="text-lg font-semibold">25 000 F</div>
+                                <div class="text-sm text-gray-500" data-i18n="donation.medical">Soins médicaux</div>
+                            </div>
+                            <div class="donation-amount" data-amount="50000">
+                                <div class="text-lg font-semibold">50 000 F</div>
+                                <div class="text-sm text-gray-500" data-i18n="donation.education">Éducation 1 enfant</div>
+                            </div>
+                            <div class="donation-amount" data-amount="100000">
+                                <div class="text-lg font-semibold">100 000 F</div>
+                                <div class="text-sm text-gray-500" data-i18n="donation.water">Accès à l'eau</div>
+                            </div>
+                        </div>
+                        <div class="relative">
+                            <input
+                                type="number"
+                                id="customAmount"
+                                placeholder="Autre montant"
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                                data-i18n-placeholder="donation.custom"
+                            >
+                            <div class="absolute right-3 top-3 text-gray-500">FCFA</div>
+                        </div>
                     </div>
-                    
-                    <div class="bg-gray-50 p-6 rounded-xl">
-                        <h3 class="text-lg font-semibold text-gray-900 mb-3" data-i18n="contact.faq.question2">Comment devenir bénévole ?</h3>
-                        <p class="text-gray-600" data-i18n="contact.faq.answer2">
-                            Remplissez notre formulaire de bénévolat en ligne ou contactez-nous pour discuter des opportunités disponibles. Nous avons besoin de compétences variées.
-                        </p>
+                    <div>
+                        <label class="block text-gray-700 mb-2" data-i18n="donation.method">Méthode de paiement</label>
+                        <div class="grid grid-cols-2 md:grid-cols-3 gap-3">
+                            <button class="flex flex-col items-center justify-center p-4 border border-gray-300 rounded-lg hover:border-primary transition-colors">
+                                <i class="ri-smartphone-line text-2xl text-gray-700 mb-2"></i>
+                                <span class="text-sm">Wave</span>
+                            </button>
+                            <button class="flex flex-col items-center justify-center p-4 border border-gray-300 rounded-lg hover:border-primary transition-colors">
+                                <i class="ri-phone-line text-2xl text-gray-700 mb-2"></i>
+                                <span class="text-sm">Orange Money</span>
+                            </button>
+                            <button class="flex flex-col items-center justify-center p-4 border border-gray-300 rounded-lg hover:border-primary transition-colors">
+                                <i class="ri-bank-card-line text-2xl text-gray-700 mb-2"></i>
+                                <span class="text-sm">Carte bancaire</span>
+                            </button>
+                        </div>
                     </div>
-                    
-                    <div class="bg-gray-50 p-6 rounded-xl">
-                        <h3 class="text-lg font-semibold text-gray-900 mb-3" data-i18n="contact.faq.question3">Puis-je visiter vos projets ?</h3>
-                        <p class="text-gray-600" data-i18n="contact.faq.answer3">
-                            Oui, nous organisons régulièrement des visites de nos projets pour les donateurs et partenaires. Contactez-nous pour planifier une visite.
-                        </p>
+                    <div class="pt-4">
+                        <button class="w-full bg-primary text-white py-4 rounded-lg hover:bg-orange-600 transition-colors font-semibold" data-i18n="donation.submit">
+                            Effectuer le don
+                        </button>
                     </div>
-                </div>
-                
-                <div class="space-y-6">
-                    <div class="bg-gray-50 p-6 rounded-xl">
-                        <h3 class="text-lg font-semibold text-gray-900 mb-3" data-i18n="contact.faq.question4">Comment suivre l'impact de mon don ?</h3>
-                        <p class="text-gray-600" data-i18n="contact.faq.answer4">
-                            Tous nos donateurs reçoivent des rapports réguliers sur l'utilisation des fonds et l'impact de nos actions. Vous pouvez aussi consulter notre galerie et actualités.
-                        </p>
-                    </div>
-                    
-                    <div class="bg-gray-50 p-6 rounded-xl">
-                        <h3 class="text-lg font-semibold text-gray-900 mb-3" data-i18n="contact.faq.question5">Proposez-vous des reçus fiscaux ?</h3>
-                        <p class="text-gray-600" data-i18n="contact.faq.answer5">
-                            Oui, nous délivrons des reçus fiscaux pour tous les dons éligibles. Ces reçus vous permettent de bénéficier d'une réduction d'impôt.
-                        </p>
-                    </div>
-                    
-                    <div class="bg-gray-50 p-6 rounded-xl">
-                        <h3 class="text-lg font-semibold text-gray-900 mb-3" data-i18n="contact.faq.question6">Comment organiser un événement de collecte ?</h3>
-                        <p class="text-gray-600" data-i18n="contact.faq.answer6">
-                            Nous accompagnons les particuliers et entreprises qui souhaitent organiser des événements de collecte. Contactez-nous pour discuter de votre projet.
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Call to Action -->
-    <section class="py-20 bg-gradient-to-r from-primary to-secondary">
-        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h2 class="text-3xl font-bold text-white mb-6" data-i18n="contact.cta.title">Prêt à nous rejoindre ?</h2>
-            <p class="text-xl text-white mb-8" data-i18n="contact.cta.description">
-                Que vous souhaitiez faire un don, devenir bénévole ou simplement en savoir plus sur nos actions, nous sommes là pour vous.
-            </p>
-            <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                <button class="bg-white text-primary px-8 py-4 !rounded-button hover:bg-gray-100 transition-colors font-semibold whitespace-nowrap" onclick="openDonationModal()" data-i18n="contact.cta.donate">
-                    Faire un don maintenant
-                </button>
-                <a href="mailto:contact@entraidehumanitaire.org" class="bg-transparent border-2 border-white text-white px-8 py-4 !rounded-button hover:bg-white hover:text-primary transition-colors font-semibold whitespace-nowrap" data-i18n="contact.cta.email">
-                    Nous écrire un email
-                </a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="bg-gray-900 text-white py-16">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid md:grid-cols-4 gap-8">
-                <div>
-                    <img src="logo.png" style="width: 70px;" alt="Logo" class="w-12 md:w-16 lg:w-20">
-                    <p class="text-gray-300 mb-6" data-i18n="footer.description">
-                        Association humanitaire œuvrant pour un monde plus solidaire et équitable.
+                    <p class="text-sm text-gray-500 text-center" data-i18n="donation.security">
+                        Votre don est sécurisé. 98% des fonds sont directement alloués aux programmes.
                     </p>
-                    <div class="space-y-2 text-sm text-gray-300">
-                        <div class="flex items-center">
-                            <div class="w-4 h-4 flex items-center justify-center mr-3">
-                                <i class="ri-map-pin-line"></i>
-                            </div>
-                            <span data-i18n="footer.address">123 Avenue de la Solidarité, Dakar, Sénégal</span>
-                        </div>
-                        <div class="flex items-center">
-                            <div class="w-4 h-4 flex items-center justify-center mr-3">
-                                <i class="ri-phone-line"></i>
-                            </div>
-                            <span>+221 33 123 45 67</span>
-                        </div>
-                        <div class="flex items-center">
-                            <div class="w-4 h-4 flex items-center justify-center mr-3">
-                                <i class="ri-mail-line"></i>
-                            </div>
-                            <span>contact@entraidehumanitaire.org</span>
-                        </div>
-                    </div>
                 </div>
-                
-                <div>
-                    <h3 class="text-lg font-semibold mb-4" data-i18n="footer.links">Liens utiles</h3>
-                    <ul class="space-y-2 text-gray-300">
-                        <li><a href="apropos.html" class="hover:text-primary transition-colors" data-i18n="nav.about">À propos</a></li>
-                        <li><a href="projets.html" class="hover:text-primary transition-colors" data-i18n="nav.projects">Nos projets</a></li>
-                        <li><a href="#" class="hover:text-primary transition-colors" onclick="openDonationModal()" data-i18n="header.donate">Faire un don</a></li>
-                        <li><a href="galerie.html" class="hover:text-primary transition-colors" data-i18n="nav.gallery">Galerie</a></li>
-                        <li><a href="articles.html" class="hover:text-primary transition-colors" data-i18n="nav.news">Actualités</a></li>
-                        <li><a href="contact.html" class="hover:text-primary transition-colors" data-i18n="nav.contact">Contact</a></li>
-                    </ul>
-                </div>
-                
-                <div>
-                    <h3 class="text-lg font-semibold mb-4" data-i18n="footer.follow">Suivez-nous</h3>
-                    <div class="flex space-x-4 mb-6">
-                        <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-primary transition-colors">
-                            <i class="ri-facebook-line"></i>
-                        </a>
-                        <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-primary transition-colors">
-                            <i class="ri-twitter-line"></i>
-                        </a>
-                        <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-primary transition-colors">
-                            <i class="ri-instagram-line"></i>
-                        </a>
-                        <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-primary transition-colors">
-                            <i class="ri-linkedin-line"></i>
-                        </a>
-                    </div>
-                    <div class="text-sm text-gray-300">
-                        <p class="mb-2" data-i18n="footer.payment">Modes de paiement acceptés :</p>
-                        <div class="flex space-x-3">
-                            <div class="w-6 h-6 flex items-center justify-center">
-                                <i class="ri-smartphone-line"></i>
-                            </div>
-                            <span class="text-xs">Wave</span>
-                            <div class="w-6 h-6 flex items-center justify-center">
-                                <i class="ri-phone-line"></i>
-                            </div>
-                            <span class="text-xs">Orange Money</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <div>
-                    <h3 class="text-lg font-semibold mb-4" data-i18n="footer.legal">Informations légales</h3>
-                    <ul class="space-y-2 text-gray-300 text-sm">
-                        <li><a href="#" class="hover:text-primary transition-colors" data-i18n="footer.legalNotice">Mentions légales</a></li>
-                        <li><a href="#" class="hover:text-primary transition-colors" data-i18n="footer.privacyPolicy">Politique de confidentialité</a></li>
-                        <li><a href="#" class="hover:text-primary transition-colors" data-i18n="footer.terms">Conditions d'utilisation</a></li>
-                        <li><a href="#" class="hover:text-primary transition-colors" data-i18n="footer.financialReport">Rapport financier</a></li>
-                    </ul>
-                </div>
-            </div>
-            
-            <div class="border-t border-gray-800 mt-12 pt-8 text-center text-gray-400 text-sm">
-                <p data-i18n="footer.copyright">&copy; 2025 Entr'aide Humanitaire. Tous droits réservés.</p>
             </div>
         </div>
-    </footer>
-
-    <!-- Scripts -->
-    <script>
+        <!-- Hero Section -->
+        <section class="relative py-24" style="background-image: url('logo.png'); background-size: cover; background-position: center;">
+            <div class="absolute inset-0 bg-black bg-opacity-50"></div>
+            <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="max-w-3xl">
+                    <h1 class="text-5xl font-bold text-white mb-6" data-i18n="contact.title">Contactez-nous</h1>
+                    <p class="text-xl text-white leading-relaxed" data-i18n="contact.description">
+                        Nous sommes à votre écoute pour répondre à vos questions et échanger sur nos projets humanitaires.
+                    </p>
+                </div>
+            </div>
+        </section>
+        <!-- Contact Section -->
+        <section class="py-20 bg-white">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-16">
+                    <!-- Formulaire de contact -->
+                    <div>
+                        <h2 class="text-3xl font-bold text-gray-900 mb-8" data-i18n="contact.form.title">Envoyez-nous un message</h2>
+                        <form class="space-y-6">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div>
+                                    <label class="block text-gray-700 mb-2" data-i18n="contact.form.firstName">Prénom</label>
+                                    <input type="text" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-colors" data-i18n-placeholder="contact.form.firstNamePlaceholder">
+                                </div>
+                                <div>
+                                    <label class="block text-gray-700 mb-2" data-i18n="contact.form.lastName">Nom</label>
+                                    <input type="text" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-colors" data-i18n-placeholder="contact.form.lastNamePlaceholder">
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-gray-700 mb-2" data-i18n="contact.form.email">Email</label>
+                                <input type="email" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-colors" data-i18n-placeholder="contact.form.emailPlaceholder">
+                            </div>
+                            <div>
+                                <label class="block text-gray-700 mb-2" data-i18n="contact.form.phone">Téléphone</label>
+                                <input type="tel" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-colors" data-i18n-placeholder="contact.form.phonePlaceholder">
+                            </div>
+                            <div>
+                                <label class="block text-gray-700 mb-2" data-i18n="contact.form.subject">Sujet</label>
+                                <select class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-colors">
+                                    <option value="" data-i18n="contact.form.subjectSelect">Sélectionnez un sujet</option>
+                                    <option value="donation" data-i18n="contact.form.subjectDonation">Informations sur les dons</option>
+                                    <option value="volunteer" data-i18n="contact.form.subjectVolunteer">Devenir bénévole</option>
+                                    <option value="partnership" data-i18n="contact.form.subjectPartnership">Partenariat</option>
+                                    <option value="information" data-i18n="contact.form.subjectInformation">Demande d'information</option>
+                                    <option value="other" data-i18n="contact.form.subjectOther">Autre</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-gray-700 mb-2" data-i18n="contact.form.message">Message</label>
+                                <textarea rows="6" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-colors resize-none" data-i18n-placeholder="contact.form.messagePlaceholder"></textarea>
+                            </div>
+                            <button type="submit" class="w-full bg-primary text-white py-4 rounded-lg hover:bg-orange-600 transition-colors font-semibold" data-i18n="contact.form.submit">
+                                Envoyer le message
+                            </button>
+                        </form>
+                    </div>
+                    <!-- Informations de contact -->
+                    <div>
+                        <h2 class="text-3xl font-bold text-gray-900 mb-8" data-i18n="contact.info.title">Nos coordonnées</h2>
+                        <div class="space-y-8">
+                            <!-- Adresse -->
+                            <div class="flex items-start">
+                                <div class="w-12 h-12 bg-primary bg-opacity-10 rounded-full flex items-center justify-center mr-6 mt-1">
+                                    <div class="w-6 h-6 flex items-center justify-center">
+                                        <i class="ri-map-pin-line text-primary text-xl"></i>
+                                    </div>
+                                </div>
+                                <div>
+                                    <h3 class="text-xl font-semibold text-gray-900 mb-2" data-i18n="contact.info.addressTitle">Adresse</h3>
+                                    <p class="text-gray-600" data-i18n="contact.info.address">123 Avenue de la Solidarité
+                                        <br>Dakar, Sénégal
+                                    </p>
+                                </div>
+                            </div>
+                            <!-- Téléphone -->
+                            <div class="flex items-start">
+                                <div class="w-12 h-12 bg-secondary bg-opacity-10 rounded-full flex items-center justify-center mr-6 mt-1">
+                                    <div class="w-6 h-6 flex items-center justify-center">
+                                        <i class="ri-phone-line text-secondary text-xl"></i>
+                                    </div>
+                                </div>
+                                <div>
+                                    <h3 class="text-xl font-semibold text-gray-900 mb-2" data-i18n="contact.info.phoneTitle">Téléphone</h3>
+                                    <p class="text-gray-600">+221 33 123 45 67</p>
+                                    <p class="text-gray-600">+221 77 987 65 43</p>
+                                </div>
+                            </div>
+                            <!-- Email -->
+                            <div class="flex items-start">
+                                <div class="w-12 h-12 bg-primary bg-opacity-10 rounded-full flex items-center justify-center mr-6 mt-1">
+                                    <div class="w-6 h-6 flex items-center justify-center">
+                                        <i class="ri-mail-line text-primary text-xl"></i>
+                                    </div>
+                                </div>
+                                <div>
+                                    <h3 class="text-xl font-semibold text-gray-900 mb-2" data-i18n="contact.info.emailTitle">Email</h3>
+                                    <p class="text-gray-600">contact@entraidehumanitaire.org</p>
+                                    <p class="text-gray-600">info@entraidehumanitaire.org</p>
+                                </div>
+                            </div>
+                            <!-- Horaires -->
+                            <div class="flex items-start">
+                                <div class="w-12 h-12 bg-secondary bg-opacity-10 rounded-full flex items-center justify-center mr-6 mt-1">
+                                    <div class="w-6 h-6 flex items-center justify-center">
+                                        <i class="ri-time-line text-secondary text-xl"></i>
+                                    </div>
+                                </div>
+                                <div>
+                                    <h3 class="text-xl font-semibold text-gray-900 mb-2" data-i18n="contact.info.hoursTitle">Horaires d'ouverture</h3>
+                                    <p class="text-gray-600" data-i18n="contact.info.hoursWeek">Lundi - Vendredi : 8h00 - 18h00</p>
+                                    <p class="text-gray-600" data-i18n="contact.info.hoursWeekend">Samedi : 9h00 - 13h00</p>
+                                    <p class="text-gray-600" data-i18n="contact.info.hoursSunday">Dimanche : Fermé</p>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Réseaux sociaux -->
+                        <div class="mt-12">
+                            <h3 class="text-xl font-semibold text-gray-900 mb-6" data-i18n="contact.social.title">Suivez-nous</h3>
+                            <div class="flex space-x-4">
+                                <a href="#" class="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center hover:bg-primary hover:text-white transition-colors">
+                                    <i class="ri-facebook-fill text-xl"></i>
+                                </a>
+                                <a href="#" class="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center hover:bg-primary hover:text-white transition-colors">
+                                    <i class="ri-twitter-fill text-xl"></i>
+                                </a>
+                                <a href="#" class="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center hover:bg-primary hover:text-white transition-colors">
+                                    <i class="ri-instagram-fill text-xl"></i>
+                                </a>
+                                <a href="#" class="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center hover:bg-primary hover:text-white transition-colors">
+                                    <i class="ri-linkedin-fill text-xl"></i>
+                                </a>
+                                <a href="#" class="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center hover:bg-primary hover:text-white transition-colors">
+                                    <i class="ri-youtube-fill text-xl"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Carte -->
+        <section class="py-20 bg-gray-50">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-12">
+                    <h2 class="text-4xl font-bold text-gray-900 mb-4" data-i18n="contact.map.title">Nous trouver</h2>
+                    <p class="text-xl text-gray-600 max-w-3xl mx-auto" data-i18n="contact.map.description">
+                        Visitez notre siège social à Dakar ou contactez-nous pour planifier une rencontre.
+                    </p>
+                </div>
+                <div id="map"></div>
+                <div class="mt-8 grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="bg-white p-6 rounded-xl shadow-sm text-center">
+                        <div class="w-12 h-12 bg-primary bg-opacity-10 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="ri-car-line text-primary text-xl"></i>
+                        </div>
+                        <h3 class="text-lg font-semibold text-gray-900 mb-2" data-i18n="contact.transport.car">En voiture</h3>
+                        <p class="text-gray-600" data-i18n="contact.transport.carDescription">Parking gratuit disponible devant le bâtiment.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl shadow-sm text-center">
+                        <div class="w-12 h-12 bg-secondary bg-opacity-10 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="ri-bus-line text-secondary text-xl"></i>
+                        </div>
+                        <h3 class="text-lg font-semibold text-gray-900 mb-2" data-i18n="contact.transport.bus">En bus</h3>
+                        <p class="text-gray-600" data-i18n="contact.transport.busDescription">Lignes 12, 23 et 45 - Arrêt "Solidarité".</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl shadow-sm text-center">
+                        <div class="w-12 h-12 bg-primary bg-opacity-10 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="ri-taxi-line text-primary text-xl"></i>
+                        </div>
+                        <h3 class="text-lg font-semibold text-gray-900 mb-2" data-i18n="contact.transport.taxi">En taxi</h3>
+                        <p class="text-gray-600" data-i18n="contact.transport.taxiDescription">Dites "Avenue de la Solidarité" au chauffeur.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- FAQ -->
+        <section class="py-20 bg-white">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-16">
+                    <h2 class="text-4xl font-bold text-gray-900 mb-4" data-i18n="contact.faq.title">Questions fréquentes</h2>
+                    <p class="text-xl text-gray-600 max-w-3xl mx-auto" data-i18n="contact.faq.description">
+                        Trouvez rapidement des réponses à vos questions les plus courantes.
+                    </p>
+                </div>
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <div class="space-y-6">
+                        <div class="bg-gray-50 p-6 rounded-xl">
+                            <h3 class="text-lg font-semibold text-gray-900 mb-3" data-i18n="contact.faq.question1">Comment faire un don ?</h3>
+                            <p class="text-gray-600" data-i18n="contact.faq.answer1">
+                                Vous pouvez faire un don en ligne via notre site, par virement bancaire ou en nous contactant directement. Tous les dons sont sécurisés et déductibles des impôts.
+                            </p>
+                        </div>
+                        <div class="bg-gray-50 p-6 rounded-xl">
+                            <h3 class="text-lg font-semibold text-gray-900 mb-3" data-i18n="contact.faq.question2">Comment devenir bénévole ?</h3>
+                            <p class="text-gray-600" data-i18n="contact.faq.answer2">
+                                Remplissez notre formulaire de bénévolat en ligne ou contactez-nous pour discuter des opportunités disponibles. Nous avons besoin de compétences variées.
+                            </p>
+                        </div>
+                        <div class="bg-gray-50 p-6 rounded-xl">
+                            <h3 class="text-lg font-semibold text-gray-900 mb-3" data-i18n="contact.faq.question3">Puis-je visiter vos projets ?</h3>
+                            <p class="text-gray-600" data-i18n="contact.faq.answer3">
+                                Oui, nous organisons régulièrement des visites de nos projets pour les donateurs et partenaires. Contactez-nous pour planifier une visite.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="space-y-6">
+                        <div class="bg-gray-50 p-6 rounded-xl">
+                            <h3 class="text-lg font-semibold text-gray-900 mb-3" data-i18n="contact.faq.question4">Comment suivre l'impact de mon don ?</h3>
+                            <p class="text-gray-600" data-i18n="contact.faq.answer4">
+                                Tous nos donateurs reçoivent des rapports réguliers sur l'utilisation des fonds et l'impact de nos actions. Vous pouvez aussi consulter notre galerie et actualités.
+                            </p>
+                        </div>
+                        <div class="bg-gray-50 p-6 rounded-xl">
+                            <h3 class="text-lg font-semibold text-gray-900 mb-3" data-i18n="contact.faq.question5">Proposez-vous des reçus fiscaux ?</h3>
+                            <p class="text-gray-600" data-i18n="contact.faq.answer5">
+                                Oui, nous délivrons des reçus fiscaux pour tous les dons éligibles. Ces reçus vous permettent de bénéficier d'une réduction d'impôt.
+                            </p>
+                        </div>
+                        <div class="bg-gray-50 p-6 rounded-xl">
+                            <h3 class="text-lg font-semibold text-gray-900 mb-3" data-i18n="contact.faq.question6">Comment organiser un événement de collecte ?</h3>
+                            <p class="text-gray-600" data-i18n="contact.faq.answer6">
+                                Nous accompagnons les particuliers et entreprises qui souhaitent organiser des événements de collecte. Contactez-nous pour discuter de votre projet.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Call to Action -->
+        <section class="py-20 bg-gradient-to-r from-primary to-secondary">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <h2 class="text-3xl font-bold text-white mb-6" data-i18n="contact.cta.title">Prêt à nous rejoindre ?</h2>
+                <p class="text-xl text-white mb-8" data-i18n="contact.cta.description">
+                    Que vous souhaitiez faire un don, devenir bénévole ou simplement en savoir plus sur nos actions, nous sommes là pour vous.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <button class="bg-white text-primary px-8 py-4 !rounded-button hover:bg-gray-100 transition-colors font-semibold whitespace-nowrap" onclick="openDonationModal()" data-i18n="contact.cta.donate">
+                        Faire un don maintenant
+                    </button>
+                    <a href="mailto:contact@entraidehumanitaire.org" class="bg-transparent border-2 border-white text-white px-8 py-4 !rounded-button hover:bg-white hover:text-primary transition-colors font-semibold whitespace-nowrap" data-i18n="contact.cta.email">
+                        Nous écrire un email
+                    </a>
+                </div>
+            </div>
+        </section>
+        <!-- Footer -->
+        <footer class="bg-gray-900 text-white py-16">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid md:grid-cols-4 gap-8">
+                    <div>
+                        <img
+                            src="logo.png"
+                            style="width: 70px;"
+                            alt="Logo"
+                            class="w-12 md:w-16 lg:w-20"
+                        >
+                        <p class="text-gray-300 mb-6" data-i18n="footer.description">
+                            Association humanitaire œuvrant pour un monde plus solidaire et équitable.
+                        </p>
+                        <div class="space-y-2 text-sm text-gray-300">
+                            <div class="flex items-center">
+                                <div class="w-4 h-4 flex items-center justify-center mr-3">
+                                    <i class="ri-map-pin-line"></i>
+                                </div>
+                                <span data-i18n="footer.address">123 Avenue de la Solidarité, Dakar, Sénégal</span>
+                            </div>
+                            <div class="flex items-center">
+                                <div class="w-4 h-4 flex items-center justify-center mr-3">
+                                    <i class="ri-phone-line"></i>
+                                </div>
+                                <span>
+                                    +221 33 123 45 67 <br>+221 77 987 65 43
+                                </span>
+                               
+                            </div>
+                            <div class="flex items-center">
+                                <div class="w-4 h-4 flex items-center justify-center mr-3">
+                                    <i class="ri-mail-line"></i>
+                                </div>
+                                <span>toleye2@gmail.com <br> eapsh1@outlook.com</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-semibold mb-4" data-i18n="footer.links">Liens utiles</h3>
+                        <ul class="space-y-2 text-gray-300">
+                            <li>
+                                <a href="apropos.html" class="hover:text-primary transition-colors" data-i18n="nav.about">À propos</a>
+                            </li>
+                            <li>
+                                <a href="projets.html" class="hover:text-primary transition-colors" data-i18n="nav.projects">Nos projets</a>
+                            </li>
+                            <li>
+                                <a
+                                    href="#"
+                                    class="hover:text-primary transition-colors"
+                                    onclick="openDonationModal()"
+                                    data-i18n="header.donate"
+                                >Faire un don</a>
+                            </li>
+                            <li>
+                                <a href="galerie.html" class="hover:text-primary transition-colors" data-i18n="nav.gallery">Galerie</a>
+                            </li>
+                            <li>
+                                <a href="articles.html" class="hover:text-primary transition-colors" data-i18n="nav.news">Actualités</a>
+                            </li>
+                            <li>
+                                <a href="contact.html" class="hover:text-primary transition-colors" data-i18n="nav.contact">Contact</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-semibold mb-4" data-i18n="footer.follow">Suivez-nous</h3>
+                        <div class="flex space-x-4 mb-6">
+                            <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-primary transition-colors">
+                                <i class="ri-facebook-line"></i>
+                            </a>
+                            <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-primary transition-colors">
+                                <i class="ri-twitter-line"></i>
+                            </a>
+                            <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-primary transition-colors">
+                                <i class="ri-instagram-line"></i>
+                            </a>
+                            <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-primary transition-colors">
+                                <i class="ri-linkedin-line"></i>
+                            </a>
+                        </div>
+                        <div class="text-sm text-gray-300">
+                            <p class="mb-2" data-i18n="footer.payment">Modes de paiement acceptés :</p>
+                            <div class="flex space-x-3">
+                                <div class="w-6 h-6 flex items-center justify-center">
+                                    <i class="ri-smartphone-line"></i>
+                                </div>
+                                <span class="text-xs">Wave</span>
+                                <div class="w-6 h-6 flex items-center justify-center">
+                                    <i class="ri-phone-line"></i>
+                                </div>
+                                <span class="text-xs">Orange Money</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-semibold mb-4" data-i18n="footer.legal">Informations légales</h3>
+                        <ul class="space-y-2 text-gray-300 text-sm">
+                            <li>
+                                <a href="#" class="hover:text-primary transition-colors" data-i18n="footer.legalNotice">Mentions légales</a>
+                            </li>
+                            <li>
+                                <a href="#" class="hover:text-primary transition-colors" data-i18n="footer.privacyPolicy">Politique de confidentialité</a>
+                            </li>
+                            <li>
+                                <a href="#" class="hover:text-primary transition-colors" data-i18n="footer.terms">Conditions d'utilisation</a>
+                            </li>
+                            <li>
+                                <a href="#" class="hover:text-primary transition-colors" data-i18n="footer.financialReport">Rapport financier</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="border-t border-gray-800 mt-12 pt-8 text-center text-gray-400 text-sm">
+                    <p data-i18n="footer.copyright">&copy; 2025 Entr'aide Humanitaire. Tous droits réservés.</p>
+                </div>
+            </div>
+        </footer>
+        <!-- Scripts -->
+        <script>
         // Dictionnaire de traduction
         const translations = {
             fr: {
@@ -625,7 +627,7 @@
                 // Informations de contact
                 "contact.info.title": "Nos coordonnées",
                 "contact.info.addressTitle": "Adresse",
-                "contact.info.address": "123 Avenue de la Solidarité<br>Dakar, Sénégal",
+                "contact.info.address": "Medine  N 260, Mbour, Sénégal",
                 "contact.info.phoneTitle": "Téléphone",
                 "contact.info.emailTitle": "Email",
                 "contact.info.hoursTitle": "Horaires d'ouverture",
@@ -670,7 +672,7 @@
                 
                 // Footer
                 "footer.description": "Association humanitaire œuvrant pour un monde plus solidaire et équitable.",
-                "footer.address": "123 Avenue de la Solidarité, Dakar, Sénégal",
+                "footer.address": "Medine  N 260, Mbour, Sénégal",
                 "footer.links": "Liens utiles",
                 "footer.follow": "Suivez-nous",
                 "footer.payment": "Modes de paiement acceptés :",
@@ -732,7 +734,7 @@
                 // Informations de contact
                 "contact.info.title": "Our contact details",
                 "contact.info.addressTitle": "Address",
-                "contact.info.address": "123 Solidarity Avenue<br>Dakar, Senegal",
+                "contact.info.address": "Medine 260 ,Mbour, Senegal",
                 "contact.info.phoneTitle": "Phone",
                 "contact.info.emailTitle": "Email",
                 "contact.info.hoursTitle": "Opening hours",
@@ -777,7 +779,7 @@
                 
                 // Footer
                 "footer.description": "Humanitarian association working for a more supportive and equitable world.",
-                "footer.address": "123 Solidarity Avenue, Dakar, Senegal",
+                "footer.address": "Medine  260, Mbour, Sénégal",
                 "footer.links": "Useful links",
                 "footer.follow": "Follow us",
                 "footer.payment": "Accepted payment methods:",
@@ -839,7 +841,7 @@
                 // Informations de contact
                 "contact.info.title": "معلومات الاتصال بنا",
                 "contact.info.addressTitle": "العنوان",
-                "contact.info.address": "123 شارع التضامن<br>داكار، السنغال",
+                "contact.info.address": "المدينة رقم 260، مبور، السنغال",
                 "contact.info.phoneTitle": "الهاتف",
                 "contact.info.emailTitle": "البريد الإلكتروني",
                 "contact.info.hoursTitle": "ساعات العمل",
@@ -884,7 +886,7 @@
                 
                 // Footer
                 "footer.description": "جمعية إنسانية تعمل من أجل عالم أكثر تضامنًا وعدالة.",
-                "footer.address": "123 شارع التضامن، داكار، السنغال",
+                "footer.address": "المدينة رقم 260، مبور، السنغال",
                 "footer.links": "روابط مفيدة",
                 "footer.follow": "تابعنا",
                 "footer.payment": "طرق الدفع المقبولة:",
@@ -961,14 +963,14 @@
 
         // Function to initialize the map
         function initMap() {
-            const map = L.map('map').setView([14.7167, -17.4677], 15); // Coordonnées de Dakar
+            const map = L.map('map').setView([14.7167, -17.4677], 15);
             
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                 attribution: '© OpenStreetMap contributors'
             }).addTo(map);
             
             // Ajouter un marqueur
-            L.marker([14.7167, -17.4677])
+            L.marker([14.442867166505046, -16.974034378754762])
                 .addTo(map)
                 .bindPopup('<b>Entr\'aide Humanitaire</b><br>123 Avenue de la Solidarité<br>Dakar, Sénégal')
                 .openPopup();
@@ -1095,6 +1097,6 @@
                 });
             }
         });
-    </script>
-</body>
+        </script>
+    </body>
 </html>
