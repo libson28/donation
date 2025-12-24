@@ -1,10 +1,9 @@
 <!DOCTYPE html>
 <html lang="fr">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Galerie - Entr'aide Humanitaire</title>
+    <title data-i18n="page.title">Galerie - Entr'aide Humanitaire</title>
     <script src="https://cdn.tailwindcss.com/3.4.16"></script>
     <script>
         tailwind.config = {
@@ -21,23 +20,27 @@
             }
         }
     </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@2.7.1/css/lightgallery-bundle.min.css">
     <style>
+        :where([class^="ri-"])::before {
+            content: "\f3c2";
+        }
         .gallery-item {
             transition: all 0.3s ease;
             cursor: pointer;
         }
-
         .gallery-item:hover {
             transform: translateY(-5px);
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
         }
-
         .video-thumbnail {
             position: relative;
         }
-
         .video-thumbnail::after {
             content: '';
             position: absolute;
@@ -48,7 +51,6 @@
             background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.4));
             border-radius: 12px;
         }
-
         .play-button {
             position: absolute;
             top: 50%;
@@ -64,21 +66,17 @@
             z-index: 2;
             transition: all 0.3s ease;
         }
-
         .play-button:hover {
             background: white;
             transform: translate(-50%, -50%) scale(1.1);
         }
-
         .filter-btn {
             transition: all 0.3s ease;
         }
-
         .filter-btn.active {
             background-color: #EF9221;
             color: white;
         }
-
         .modal {
             display: none;
             position: fixed;
@@ -92,21 +90,18 @@
             justify-content: center;
             cursor: pointer;
         }
-
         .modal-content {
             max-width: 90%;
             max-height: 90vh;
             position: relative;
             cursor: default;
         }
-
         .modal-content img,
         .modal-content video {
             max-width: 100%;
             max-height: 90vh;
             border-radius: 8px;
         }
-
         .modal-close {
             position: absolute;
             top: -40px;
@@ -118,7 +113,6 @@
             cursor: pointer;
             z-index: 1002;
         }
-
         .lightbox-nav {
             position: absolute;
             top: 50%;
@@ -137,34 +131,27 @@
             transition: all 0.3s ease;
             z-index: 1001;
         }
-
         .lightbox-nav:hover {
             background: rgba(255, 255, 255, 0.3);
         }
-
         .lightbox-nav.prev {
             left: 20px;
         }
-
         .lightbox-nav.next {
             right: 20px;
         }
-
         @media (max-width: 768px) {
             .lightbox-nav {
                 width: 40px;
                 height: 40px;
                 font-size: 20px;
             }
-            
             .lightbox-nav.prev {
                 left: 10px;
             }
-            
             .lightbox-nav.next {
                 right: 10px;
             }
-            
             .modal-close {
                 top: 20px;
                 right: 20px;
@@ -181,7 +168,7 @@
                 <!-- Logo -->
                 <div class="flex items-center">
                     <a href="index.html">
-                        <img src="logo.png" style="width: 70px;" alt="Logo" class="w-12 md:w-16 lg:w-20">
+                        <img src="logo.png" style="width: 70px;" alt="Logo" class="w-12 md:w-16 lg:w-20" data-i18n-alt="header.logoAlt">
                     </a>
                 </div>
 
@@ -254,8 +241,8 @@
     <section class="relative bg-gradient-to-r from-primary to-secondary py-10 md:py-18">
         <div class="absolute inset-0 bg-black bg-opacity-20"></div>
         <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h1 class="text-4xl md:text-6xl font-bold text-white mb-6" data-i18n="gallery.title">Notre Galerie</h1>
-            <p class="text-xl text-white mb-8 max-w-3xl mx-auto" data-i18n="gallery.description">
+            <h1 class="text-4xl md:text-6xl font-bold text-white mb-6" data-i18n="gallery.hero.title">Notre Galerie</h1>
+            <p class="text-xl text-white mb-8 max-w-3xl mx-auto" data-i18n="gallery.hero.description">
                 Découvrez en images et vidéos l'impact de nos actions humanitaires sur le terrain
             </p>
         </div>
@@ -265,26 +252,26 @@
     <section class="py-8 bg-white shadow-sm">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex flex-wrap gap-3 justify-center">
-                <button class="filter-btn active px-4 py-2 rounded-full bg-primary text-white hover:bg-orange-600 transition-colors" data-filter="all" data-i18n="filter.all">
+                <button class="filter-btn active px-4 py-2 rounded-full bg-primary text-white hover:bg-orange-600 transition-colors" data-filter="all" data-i18n="gallery.filters.all">
                     Tous
                 </button>
-                <button class="filter-btn px-4 py-2 rounded-full bg-gray-100 text-gray-700 hover:bg-gray-200 transition-colors" data-filter="photos" data-i18n="filter.photos">
-                    <i class="ri-camera-line mr-2"></i>Photos
+                <button class="filter-btn px-4 py-2 rounded-full bg-gray-100 text-gray-700 hover:bg-gray-200 transition-colors" data-filter="photos">
+                    <i class="ri-camera-line mr-2"></i><span data-i18n="gallery.filters.photos">Photos</span>
                 </button>
-                <button class="filter-btn px-4 py-2 rounded-full bg-gray-100 text-gray-700 hover:bg-gray-200 transition-colors" data-filter="education" data-i18n="filter.education">
-                    Éducation
+                <button class="filter-btn px-4 py-2 rounded-full bg-gray-100 text-gray-700 hover:bg-gray-200 transition-colors" data-filter="education">
+                    <span data-i18n="gallery.filters.education">Éducation</span>
                 </button>
-                <button class="filter-btn px-4 py-2 rounded-full bg-gray-100 text-gray-700 hover:bg-gray-200 transition-colors" data-filter="sante" data-i18n="filter.health">
-                    Santé
+                <button class="filter-btn px-4 py-2 rounded-full bg-gray-100 text-gray-700 hover:bg-gray-200 transition-colors" data-filter="sante">
+                    <span data-i18n="gallery.filters.health">Santé</span>
                 </button>
-                <button class="filter-btn px-4 py-2 rounded-full bg-gray-100 text-gray-700 hover:bg-gray-200 transition-colors" data-filter="eau" data-i18n="filter.water">
-                    Eau potable
+                <button class="filter-btn px-4 py-2 rounded-full bg-gray-100 text-gray-700 hover:bg-gray-200 transition-colors" data-filter="eau">
+                    <span data-i18n="gallery.filters.water">Eau potable</span>
                 </button>
-                <button class="filter-btn px-4 py-2 rounded-full bg-gray-100 text-gray-700 hover:bg-gray-200 transition-colors" data-filter="evenements" data-i18n="filter.events">
-                    Événements
+                <button class="filter-btn px-4 py-2 rounded-full bg-gray-100 text-gray-700 hover:bg-gray-200 transition-colors" data-filter="evenements">
+                    <span data-i18n="gallery.filters.events">Événements</span>
                 </button>
-                <button class="filter-btn px-4 py-2 rounded-full bg-gray-100 text-gray-700 hover:bg-gray-200 transition-colors" data-filter="senegal" data-i18n="filter.senegal">
-                    Sénégal
+                <button class="filter-btn px-4 py-2 rounded-full bg-gray-100 text-gray-700 hover:bg-gray-200 transition-colors" data-filter="senegal">
+                    <span data-i18n="gallery.filters.senegal">Sénégal</span>
                 </button>
             </div>
         </div>
@@ -296,22 +283,20 @@
             <!-- Grid des médias -->
             <div id="galleryGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                 <!-- Photos Éducation -->
-                <div class="gallery-item rounded-xl overflow-hidden shadow-md bg-white"
-                    data-category="photos education senegal">
+                <div class="gallery-item rounded-xl overflow-hidden shadow-md bg-white" data-category="photos education senegal">
                     <div class="relative">
-                        <img src="education.jpeg" alt="Enfants étudiant en classe"
-                            class="w-full h-64 object-cover cursor-pointer" data-type="image">
+                        <img src="education.jpeg" alt="" class="w-full h-64 object-cover cursor-pointer" data-type="image" data-i18n-alt="gallery.items.education1.alt">
                         <div class="absolute top-3 right-3 bg-white bg-opacity-90 rounded-full p-2">
                             <i class="ri-camera-line text-primary"></i>
                         </div>
                         <div class="absolute bottom-3 left-3">
-                            <span class="bg-primary text-white text-xs px-3 py-1 rounded-full" data-i18n="category.education">Éducation</span>
-                            <span class="bg-secondary text-white text-xs px-3 py-1 rounded-full ml-2" data-i18n="category.senegal">Sénégal</span>
+                            <span class="bg-primary text-white text-xs px-3 py-1 rounded-full" data-i18n="gallery.filters.education">Éducation</span>
+                            <span class="bg-secondary text-white text-xs px-3 py-1 rounded-full ml-2" data-i18n="gallery.filters.senegal">Sénégal</span>
                         </div>
                     </div>
                     <div class="p-4">
-                        <h3 class="font-semibold text-gray-900 mb-2" data-i18n="gallery.education.title">Scolarisation des enfants</h3>
-                        <p class="text-sm text-gray-600" data-i18n="gallery.education.description">Distribution de fournitures scolaires dans l'école de Mbour</p>
+                        <h3 class="font-semibold text-gray-900 mb-2" data-i18n="gallery.items.education1.title">Scolarisation des enfants</h3>
+                        <p class="text-sm text-gray-600" data-i18n="gallery.items.education1.description">Distribution de fournitures scolaires dans l'école de Mbour</p>
                         <div class="flex items-center mt-3 text-sm text-gray-500">
                             <i class="ri-calendar-line mr-1"></i>
                             <span>15 Mars 2024</span>
@@ -320,24 +305,20 @@
                 </div>
 
                 <!-- Vidéo Santé -->
-                <div class="gallery-item rounded-xl overflow-hidden shadow-md bg-white"
-                    data-category="videos sante senegal">
+                <div class="gallery-item rounded-xl overflow-hidden shadow-md bg-white" data-category="videos sante senegal">
                     <div class="relative video-thumbnail">
-                        <img src="inaugurations.jpg" alt="Clinique rurale" class="w-full h-64 object-cover cursor-pointer"
-                            data-type="image"
-                            data-video-id="https://assets.mixkit.co/videos/preview/mixkit-nurse-taking-care-of-a-patient-41532-large.mp4">
-                       
-                       <div class="absolute top-3 right-3 bg-white bg-opacity-90 rounded-full p-2">
+                        <img src="inaugurations.jpg" alt="" class="w-full h-64 object-cover cursor-pointer" data-type="image" data-i18n-alt="gallery.items.health1.alt">
+                        <div class="absolute top-3 right-3 bg-white bg-opacity-90 rounded-full p-2">
                             <i class="ri-camera-line text-primary"></i>
                         </div>
                         <div class="absolute bottom-3 left-3">
-                            <span class="bg-red-500 text-white text-xs px-3 py-1 rounded-full" data-i18n="category.health">Santé</span>
-                            <span class="bg-purple-500 text-white text-xs px-3 py-1 rounded-full ml-2" data-i18n="category.senegal">Sénégal</span>
+                            <span class="bg-red-500 text-white text-xs px-3 py-1 rounded-full" data-i18n="gallery.filters.health">Santé</span>
+                            <span class="bg-purple-500 text-white text-xs px-3 py-1 rounded-full ml-2" data-i18n="gallery.filters.senegal">Sénégal</span>
                         </div>
                     </div>
                     <div class="p-4">
-                        <h3 class="font-semibold text-gray-900 mb-2" data-i18n="gallery.health.title">Centre de santé communautaire</h3>
-                        <p class="text-sm text-gray-600" data-i18n="gallery.health.description">Inauguration de notre nouveau centre médical à Mbour</p>
+                        <h3 class="font-semibold text-gray-900 mb-2" data-i18n="gallery.items.health1.title">Centre de santé communautaire</h3>
+                        <p class="text-sm text-gray-600" data-i18n="gallery.items.health1.description">Inauguration de notre nouveau centre médical à Mbour</p>
                         <div class="flex items-center mt-3 text-sm text-gray-500">
                             <i class="ri-calendar-line mr-1"></i>
                             <span>10 Fév 2024</span>
@@ -346,22 +327,20 @@
                 </div>
 
                 <!-- Photo Eau Potable -->
-                <div class="gallery-item rounded-xl overflow-hidden shadow-md bg-white"
-                    data-category="photos eau senegal">
+                <div class="gallery-item rounded-xl overflow-hidden shadow-md bg-white" data-category="photos eau senegal">
                     <div class="relative">
-                        <img src="puits.jpeg" alt="Construction de puits" class="w-full h-64 object-cover cursor-pointer"
-                            data-type="image">
+                        <img src="puits.jpeg" alt="" class="w-full h-64 object-cover cursor-pointer" data-type="image" data-i18n-alt="gallery.items.water1.alt">
                         <div class="absolute top-3 right-3 bg-white bg-opacity-90 rounded-full p-2">
                             <i class="ri-camera-line text-primary"></i>
                         </div>
                         <div class="absolute bottom-3 left-3">
-                            <span class="bg-blue-500 text-white text-xs px-3 py-1 rounded-full" data-i18n="category.water">Eau potable</span>
-                            <span class="bg-secondary text-white text-xs px-3 py-1 rounded-full ml-2" data-i18n="category.senegal">Sénégal</span>
+                            <span class="bg-blue-500 text-white text-xs px-3 py-1 rounded-full" data-i18n="gallery.filters.water">Eau potable</span>
+                            <span class="bg-secondary text-white text-xs px-3 py-1 rounded-full ml-2" data-i18n="gallery.filters.senegal">Sénégal</span>
                         </div>
                     </div>
                     <div class="p-4">
-                        <h3 class="font-semibold text-gray-900 mb-2" data-i18n="gallery.water.title">Puits communautaire</h3>
-                        <p class="text-sm text-gray-600" data-i18n="gallery.water.description">Construction d'un puits dans le village de Kaolack</p>
+                        <h3 class="font-semibold text-gray-900 mb-2" data-i18n="gallery.items.water1.title">Puits communautaire</h3>
+                        <p class="text-sm text-gray-600" data-i18n="gallery.items.water1.description">Construction d'un puits dans le village de Kaolack</p>
                         <div class="flex items-center mt-3 text-sm text-gray-500">
                             <i class="ri-calendar-line mr-1"></i>
                             <span>5 Jan 2024</span>
@@ -370,23 +349,19 @@
                 </div>
 
                 <!-- Vidéo Événement -->
-                <div class="gallery-item rounded-xl overflow-hidden shadow-md bg-white"
-                    data-category="videos evenements">
+                <div class="gallery-item rounded-xl overflow-hidden shadow-md bg-white" data-category="videos evenements">
                     <div class="relative video-thumbnail">
-                        <img src="distribution.jpeg" alt="Événement humanitaire" class="w-full h-64 object-cover cursor-pointer"
-                            data-type="image"
-                            data-video-id="https://assets.mixkit.co/videos/preview/mixkit-group-of-volunteers-cleaning-a-park-41542-large.mp4">
-                        
-                         <div class="absolute top-3 right-3 bg-white bg-opacity-90 rounded-full p-2">
+                        <img src="distribution.jpeg" alt="" class="w-full h-64 object-cover cursor-pointer" data-type="image" data-i18n-alt="gallery.items.event1.alt">
+                        <div class="absolute top-3 right-3 bg-white bg-opacity-90 rounded-full p-2">
                             <i class="ri-camera-line text-primary"></i>
                         </div>
                         <div class="absolute bottom-3 left-3">
-                            <span class="bg-orange-500 text-white text-xs px-3 py-1 rounded-full" data-i18n="category.events">Événements</span>
+                            <span class="bg-orange-500 text-white text-xs px-3 py-1 rounded-full" data-i18n="gallery.filters.events">Événements</span>
                         </div>
                     </div>
                     <div class="p-4">
-                        <h3 class="font-semibold text-gray-900 mb-2" data-i18n="gallery.event.title">Journée de solidarité</h3>
-                        <p class="text-sm text-gray-600" data-i18n="gallery.event.description">Notre événement annuel de collecte de fonds à Dakar</p>
+                        <h3 class="font-semibold text-gray-900 mb-2" data-i18n="gallery.items.event1.title">Journée de solidarité</h3>
+                        <p class="text-sm text-gray-600" data-i18n="gallery.items.event1.description">Notre événement annuel de collecte de fonds à Dakar</p>
                         <div class="flex items-center mt-3 text-sm text-gray-500">
                             <i class="ri-calendar-line mr-1"></i>
                             <span>15 Déc 2023</span>
@@ -397,17 +372,17 @@
                 <!-- Photo Santé -->
                 <div class="gallery-item rounded-xl overflow-hidden shadow-md bg-white" data-category="photos sante">
                     <div class="relative">
-                        <img src="consultation.jpeg" alt="Camp médical" class="w-full h-64 object-cover cursor-pointer" data-type="image">
+                        <img src="consultation.jpeg" alt="" class="w-full h-64 object-cover cursor-pointer" data-type="image" data-i18n-alt="gallery.items.health2.alt">
                         <div class="absolute top-3 right-3 bg-white bg-opacity-90 rounded-full p-2">
                             <i class="ri-camera-line text-primary"></i>
                         </div>
                         <div class="absolute bottom-3 left-3">
-                            <span class="bg-red-500 text-white text-xs px-3 py-1 rounded-full" data-i18n="category.health">Santé</span>
+                            <span class="bg-red-500 text-white text-xs px-3 py-1 rounded-full" data-i18n="gallery.filters.health">Santé</span>
                         </div>
                     </div>
                     <div class="p-4">
-                        <h3 class="font-semibold text-gray-900 mb-2" data-i18n="gallery.medical.title">Camp médical mobile</h3>
-                        <p class="text-sm text-gray-600" data-i18n="gallery.medical.description">Consultations gratuites dans les zones reculées</p>
+                        <h3 class="font-semibold text-gray-900 mb-2" data-i18n="gallery.items.health2.title">Camp médical mobile</h3>
+                        <p class="text-sm text-gray-600" data-i18n="gallery.items.health2.description">Consultations gratuites dans les zones reculées</p>
                         <div class="flex items-center mt-3 text-sm text-gray-500">
                             <i class="ri-calendar-line mr-1"></i>
                             <span>20 Nov 2023</span>
@@ -416,21 +391,19 @@
                 </div>
 
                 <!-- Photo Éducation -->
-                <div class="gallery-item rounded-xl overflow-hidden shadow-md bg-white"
-                    data-category="photos education">
+                <div class="gallery-item rounded-xl overflow-hidden shadow-md bg-white" data-category="photos education">
                     <div class="relative">
-                        <img src="educationn.jpeg" alt="Formation informatique" class="w-full h-64 object-cover cursor-pointer"
-                            data-type="image">
+                        <img src="educationn.jpeg" alt="" class="w-full h-64 object-cover cursor-pointer" data-type="image" data-i18n-alt="gallery.items.education2.alt">
                         <div class="absolute top-3 right-3 bg-white bg-opacity-90 rounded-full p-2">
                             <i class="ri-camera-line text-primary"></i>
                         </div>
                         <div class="absolute bottom-3 left-3">
-                            <span class="bg-primary text-white text-xs px-3 py-1 rounded-full" data-i18n="category.education">Éducation</span>
+                            <span class="bg-primary text-white text-xs px-3 py-1 rounded-full" data-i18n="gallery.filters.education">Éducation</span>
                         </div>
                     </div>
                     <div class="p-4">
-                        <h3 class="font-semibold text-gray-900 mb-2" data-i18n="gallery.computer.title">Formation informatique</h3>
-                        <p class="text-sm text-gray-600" data-i18n="gallery.computer.description">Programme d'initiation au numérique pour les jeunes</p>
+                        <h3 class="font-semibold text-gray-900 mb-2" data-i18n="gallery.items.education2.title">Formation informatique</h3>
+                        <p class="text-sm text-gray-600" data-i18n="gallery.items.education2.description">Programme d'initiation au numérique pour les jeunes</p>
                         <div class="flex items-center mt-3 text-sm text-gray-500">
                             <i class="ri-calendar-line mr-1"></i>
                             <span>10 Nov 2023</span>
@@ -441,19 +414,17 @@
                 <!-- Vidéo Eau -->
                 <div class="gallery-item rounded-xl overflow-hidden shadow-md bg-white" data-category="videos eau">
                     <div class="relative video-thumbnail">
-                        <img src="flitrage.jpeg" alt="Système de filtration" class="w-full h-64 object-cover cursor-pointer"
-                            data-type="image"
-                            data-video-id="https://assets.mixkit.co/videos/preview/mixkit-water-flowing-from-a-faucet-41537-large.mp4">
+                        <img src="flitrage.jpeg" alt="" class="w-full h-64 object-cover cursor-pointer" data-type="image" data-i18n-alt="gallery.items.water2.alt">
                         <div class="absolute top-3 right-3 bg-white bg-opacity-90 rounded-full p-2">
                             <i class="ri-camera-line text-primary"></i>
                         </div>
                         <div class="absolute bottom-3 left-3">
-                            <span class="bg-blue-500 text-white text-xs px-3 py-1 rounded-full" data-i18n="category.water">Eau potable</span>
+                            <span class="bg-blue-500 text-white text-xs px-3 py-1 rounded-full" data-i18n="gallery.filters.water">Eau potable</span>
                         </div>
                     </div>
                     <div class="p-4">
-                        <h3 class="font-semibold text-gray-900 mb-2" data-i18n="gallery.filtration.title">Installation filtration</h3>
-                        <p class="text-sm text-gray-600" data-i18n="gallery.filtration.description">Mise en service du système de purification d'eau</p>
+                        <h3 class="font-semibold text-gray-900 mb-2" data-i18n="gallery.items.water2.title">Installation filtration</h3>
+                        <p class="text-sm text-gray-600" data-i18n="gallery.items.water2.description">Mise en service du système de purification d'eau</p>
                         <div class="flex items-center mt-3 text-sm text-gray-500">
                             <i class="ri-calendar-line mr-1"></i>
                             <span>25 Oct 2023</span>
@@ -462,20 +433,19 @@
                 </div>
 
                 <!-- Photo Événement -->
-                <div class="gallery-item rounded-xl overflow-hidden shadow-md bg-white"
-                    data-category="photos evenements">
+                <div class="gallery-item rounded-xl overflow-hidden shadow-md bg-white" data-category="photos evenements">
                     <div class="relative">
-                        <img src="ecole.jpeg" alt="Célébration projet" class="w-full h-64 object-cover cursor-pointer" data-type="image">
+                        <img src="ecole.jpeg" alt="" class="w-full h-64 object-cover cursor-pointer" data-type="image" data-i18n-alt="gallery.items.event2.alt">
                         <div class="absolute top-3 right-3 bg-white bg-opacity-90 rounded-full p-2">
                             <i class="ri-camera-line text-primary"></i>
                         </div>
                         <div class="absolute bottom-3 left-3">
-                            <span class="bg-orange-500 text-white text-xs px-3 py-1 rounded-full" data-i18n="category.events">Événements</span>
+                            <span class="bg-orange-500 text-white text-xs px-3 py-1 rounded-full" data-i18n="gallery.filters.events">Événements</span>
                         </div>
                     </div>
                     <div class="p-4">
-                        <h3 class="font-semibold text-gray-900 mb-2" data-i18n="gallery.school.title">Inauguration école</h3>
-                        <p class="text-sm text-gray-600" data-i18n="gallery.school.description">Cérémonie d'ouverture de l'école rénovée</p>
+                        <h3 class="font-semibold text-gray-900 mb-2" data-i18n="gallery.items.event2.title">Inauguration école</h3>
+                        <p class="text-sm text-gray-600" data-i18n="gallery.items.event2.description">Cérémonie d'ouverture de l'école rénovée</p>
                         <div class="flex items-center mt-3 text-sm text-gray-500">
                             <i class="ri-calendar-line mr-1"></i>
                             <span>15 Oct 2023</span>
@@ -486,8 +456,8 @@
 
             <!-- Bouton Charger Plus -->
             <div class="text-center mt-12">
-                <button id="loadMore" class="bg-primary text-white px-8 py-3 rounded-button hover:bg-orange-600 transition-colors font-semibold" data-i18n="gallery.loadMore">
-                    <i class="ri-add-line mr-2"></i>Charger plus
+                <button id="loadMore" class="bg-primary text-white px-8 py-3 rounded-button hover:bg-orange-600 transition-colors font-semibold">
+                    <i class="ri-add-line mr-2"></i><span data-i18n="gallery.loadMore">Charger plus</span>
                 </button>
             </div>
 
@@ -508,14 +478,14 @@
                 Aidez-nous à diffuser nos actions et à inspirer d'autres personnes à rejoindre notre mission
             </p>
             <div class="flex flex-wrap justify-center gap-4">
-                <button class="bg-white text-primary px-6 py-3 rounded-button hover:bg-gray-100 transition-colors font-semibold flex items-center" data-i18n="gallery.share.facebook">
-                    <i class="ri-facebook-fill mr-2"></i>Partager sur Facebook
+                <button class="bg-white text-primary px-6 py-3 rounded-button hover:bg-gray-100 transition-colors font-semibold flex items-center">
+                    <i class="ri-facebook-fill mr-2"></i><span data-i18n="gallery.share.facebook">Partager sur Facebook</span>
                 </button>
-                <button class="bg-white text-primary px-6 py-3 rounded-button hover:bg-gray-100 transition-colors font-semibold flex items-center" data-i18n="gallery.share.twitter">
-                    <i class="ri-twitter-fill mr-2"></i>Partager sur Twitter
+                <button class="bg-white text-primary px-6 py-3 rounded-button hover:bg-gray-100 transition-colors font-semibold flex items-center">
+                    <i class="ri-twitter-fill mr-2"></i><span data-i18n="gallery.share.twitter">Partager sur Twitter</span>
                 </button>
-                <button class="bg-white text-primary px-6 py-3 rounded-button hover:bg-gray-100 transition-colors font-semibold flex items-center" data-i18n="gallery.share.whatsapp">
-                    <i class="ri-whatsapp-fill mr-2"></i>Partager sur WhatsApp
+                <button class="bg-white text-primary px-6 py-3 rounded-button hover:bg-gray-100 transition-colors font-semibold flex items-center">
+                    <i class="ri-whatsapp-fill mr-2"></i><span data-i18n="gallery.share.whatsapp">Partager sur WhatsApp</span>
                 </button>
             </div>
         </div>
@@ -540,18 +510,40 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid md:grid-cols-4 gap-8">
                 <div>
-                    <img src="logo.png" alt="Logo" class="w-12 md:w-16 lg:w-20 mb-4">
+                    <img src="logo.png" alt="" class="w-12 md:w-16 lg:w-20 mb-4" data-i18n-alt="footer.logoAlt">
                     <p class="text-gray-300 text-sm" data-i18n="footer.description">
                         Association humanitaire œuvrant pour un monde plus solidaire et équitable.
                     </p>
+                    <div class="space-y-2 text-sm text-gray-300 mt-4">
+                        <div class="flex items-center">
+                            <div class="w-4 h-4 flex items-center justify-center mr-3">
+                                <i class="ri-map-pin-line"></i>
+                            </div>
+                            <span data-i18n="footer.address">Medine N 260, Mbour, Sénégal</span>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="w-4 h-4 flex items-center justify-center mr-3">
+                                <i class="ri-phone-line"></i>
+                            </div>
+                            <span>+221 33 123 45 67</span>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="w-4 h-4 flex items-center justify-center mr-3">
+                                <i class="ri-mail-line"></i>
+                            </div>
+                            <span>contact@entraidehumanitaire.org</span>
+                        </div>
+                    </div>
                 </div>
 
                 <div>
                     <h3 class="text-lg font-semibold mb-4" data-i18n="footer.links">Liens utiles</h3>
                     <ul class="space-y-2 text-gray-300 text-sm">
                         <li><a href="index.html" class="hover:text-primary transition-colors" data-i18n="nav.home">Accueil</a></li>
-                        <li><a href="projet.html" class="hover:text-primary transition-colors" data-i18n="nav.projects">Nos projets</a></li>
+                        <li><a href="Apropos.html" class="hover:text-primary transition-colors" data-i18n="nav.about">À propos</a></li>
+                        <li><a href="projet.html" class="hover:text-primary transition-colors" data-i18n="nav.projects">Projets</a></li>
                         <li><a href="galerie.html" class="text-primary font-semibold" data-i18n="nav.gallery">Galerie</a></li>
+                        <li><a href="article.html" class="hover:text-primary transition-colors" data-i18n="nav.news">Actualités</a></li>
                         <li><a href="contact.html" class="hover:text-primary transition-colors" data-i18n="nav.contact">Contact</a></li>
                     </ul>
                 </div>
@@ -569,19 +561,32 @@
                             <i class="ri-youtube-line"></i>
                         </a>
                     </div>
+                    <div class="text-sm text-gray-300">
+                        <p class="mb-2" data-i18n="footer.payment">Modes de paiement acceptés :</p>
+                        <div class="flex space-x-3">
+                            <div class="w-6 h-6 flex items-center justify-center">
+                                <i class="ri-smartphone-line"></i>
+                            </div>
+                            <span class="text-xs">Wave</span>
+                            <div class="w-6 h-6 flex items-center justify-center">
+                                <i class="ri-phone-line"></i>
+                            </div>
+                            <span class="text-xs">Orange Money</span>
+                        </div>
+                    </div>
                 </div>
 
                 <div>
-                    <h3 class="text-lg font-semibold mb-4" data-i18n="gallery.downloads">Téléchargements</h3>
+                    <h3 class="text-lg font-semibold mb-4" data-i18n="footer.downloads">Téléchargements</h3>
                     <ul class="space-y-2 text-gray-300 text-sm">
                         <li><a href="#" class="hover:text-primary transition-colors flex items-center">
-                                <i class="ri-download-line mr-2"></i><span data-i18n="gallery.downloads.report">Rapport annuel 2023</span>
+                                <i class="ri-download-line mr-2"></i><span data-i18n="footer.downloads.report">Rapport annuel 2023</span>
                             </a></li>
                         <li><a href="#" class="hover:text-primary transition-colors flex items-center">
-                                <i class="ri-image-line mr-2"></i><span data-i18n="gallery.downloads.media">Kit médias</span>
+                                <i class="ri-image-line mr-2"></i><span data-i18n="footer.downloads.mediaKit">Kit médias</span>
                             </a></li>
                         <li><a href="#" class="hover:text-primary transition-colors flex items-center">
-                                <i class="ri-file-text-line mr-2"></i><span data-i18n="gallery.downloads.brochure">Brochure institutionnelle</span>
+                                <i class="ri-file-text-line mr-2"></i><span data-i18n="footer.downloads.brochure">Brochure institutionnelle</span>
                             </a></li>
                     </ul>
                 </div>
@@ -598,6 +603,9 @@
         // Dictionnaire de traduction
         const translations = {
             fr: {
+                // Page
+                "page.title": "Galerie - Entr'aide Humanitaire",
+                
                 // Navigation
                 "nav.home": "Accueil",
                 "nav.about": "À propos",
@@ -607,70 +615,83 @@
                 "nav.contact": "Contact",
                 "header.donate": "Faire un don",
                 "language": "Langue :",
+                "header.logoAlt": "Logo Entr'aide Humanitaire",
                 
-                // Section Galerie
-                "gallery.title": "Notre Galerie",
-                "gallery.description": "Découvrez en images et vidéos l'impact de nos actions humanitaires sur le terrain",
+                // Hero Section
+                "gallery.hero.title": "Notre Galerie",
+                "gallery.hero.description": "Découvrez en images et vidéos l'impact de nos actions humanitaires sur le terrain",
                 
                 // Filtres
-                "filter.all": "Tous",
-                "filter.photos": "Photos",
-                "filter.education": "Éducation",
-                "filter.health": "Santé",
-                "filter.water": "Eau potable",
-                "filter.events": "Événements",
-                "filter.senegal": "Sénégal",
+                "gallery.filters.all": "Tous",
+                "gallery.filters.photos": "Photos",
+                "gallery.filters.education": "Éducation",
+                "gallery.filters.health": "Santé",
+                "gallery.filters.water": "Eau potable",
+                "gallery.filters.events": "Événements",
+                "gallery.filters.senegal": "Sénégal",
                 
-                // Catégories
-                "category.education": "Éducation",
-                "category.health": "Santé",
-                "category.water": "Eau potable",
-                "category.events": "Événements",
-                "category.senegal": "Sénégal",
+                // Items de galerie
+                "gallery.items.education1.alt": "Enfants étudiant en classe",
+                "gallery.items.education1.title": "Scolarisation des enfants",
+                "gallery.items.education1.description": "Distribution de fournitures scolaires dans l'école de Mbour",
                 
-                // Éléments de galerie
-                "gallery.education.title": "Scolarisation des enfants",
-                "gallery.education.description": "Distribution de fournitures scolaires dans l'école de Mbour",
-                "gallery.health.title": "Centre de santé communautaire",
-                "gallery.health.description": "Inauguration de notre nouveau centre médical à Mbour",
-                "gallery.water.title": "Puits communautaire",
-                "gallery.water.description": "Construction d'un puits dans le village de Kaolack",
-                "gallery.event.title": "Journée de solidarité",
-                "gallery.event.description": "Notre événement annuel de collecte de fonds à Dakar",
-                "gallery.medical.title": "Camp médical mobile",
-                "gallery.medical.description": "Consultations gratuites dans les zones reculées",
-                "gallery.computer.title": "Formation informatique",
-                "gallery.computer.description": "Programme d'initiation au numérique pour les filles",
-                  "gallery.filtration.title": "Installation filtration",
-                "gallery.filtration.description": "Mise en service du système de purification d'eau",
-                "gallery.school.title": "Inauguration école",
-                "gallery.school.description": "Cérémonie d'ouverture de l'école rénovée",
+                "gallery.items.health1.alt": "Inauguration clinique rurale",
+                "gallery.items.health1.title": "Centre de santé communautaire",
+                "gallery.items.health1.description": "Inauguration de notre nouveau centre médical à Mbour",
                 
-                // Boutons et actions
+                "gallery.items.water1.alt": "Construction de puits communautaire",
+                "gallery.items.water1.title": "Puits communautaire",
+                "gallery.items.water1.description": "Construction d'un puits dans le village de Kaolack",
+                
+                "gallery.items.event1.alt": "Événement humanitaire de solidarité",
+                "gallery.items.event1.title": "Journée de solidarité",
+                "gallery.items.event1.description": "Notre événement annuel de collecte de fonds à Dakar",
+                
+                "gallery.items.health2.alt": "Camp médical mobile",
+                "gallery.items.health2.title": "Camp médical mobile",
+                "gallery.items.health2.description": "Consultations gratuites dans les zones reculées",
+                
+                "gallery.items.education2.alt": "Formation informatique pour jeunes",
+                "gallery.items.education2.title": "Formation informatique",
+                "gallery.items.education2.description": "Programme d'initiation au numérique pour les jeunes",
+                
+                "gallery.items.water2.alt": "Installation système filtration eau",
+                "gallery.items.water2.title": "Installation filtration",
+                "gallery.items.water2.description": "Mise en service du système de purification d'eau",
+                
+                "gallery.items.event2.alt": "Inauguration école rénovée",
+                "gallery.items.event2.title": "Inauguration école",
+                "gallery.items.event2.description": "Cérémonie d'ouverture de l'école rénovée",
+                
+                // Boutons et messages
                 "gallery.loadMore": "Charger plus",
+                "gallery.noResults.title": "Aucun résultat trouvé",
+                "gallery.noResults.description": "Essayez avec d'autres filtres ou mots-clés",
+                
+                // Section Partage
                 "gallery.share.title": "Partagez notre galerie",
                 "gallery.share.description": "Aidez-nous à diffuser nos actions et à inspirer d'autres personnes à rejoindre notre mission",
                 "gallery.share.facebook": "Partager sur Facebook",
                 "gallery.share.twitter": "Partager sur Twitter",
                 "gallery.share.whatsapp": "Partager sur WhatsApp",
                 
-                // Téléchargements
-                "gallery.downloads": "Téléchargements",
-                "gallery.downloads.report": "Rapport annuel 2023",
-                "gallery.downloads.media": "Kit médias",
-                "gallery.downloads.brochure": "Brochure institutionnelle",
-                
-                // Résultats
-                "gallery.noResults.title": "Aucun résultat trouvé",
-                "gallery.noResults.description": "Essayez avec d'autres filtres ou mots-clés",
-                
                 // Footer
                 "footer.description": "Association humanitaire œuvrant pour un monde plus solidaire et équitable.",
+                "footer.address": "Medine N 260, Mbour, Sénégal",
                 "footer.links": "Liens utiles",
-                "footer.follow": "Nous suivre",
-                "footer.copyright": "© 2024 Entr'aide Humanitaire. Tous droits réservés."
+                "footer.follow": "Suivez-nous",
+                "footer.payment": "Modes de paiement acceptés :",
+                "footer.downloads": "Téléchargements",
+                "footer.downloads.report": "Rapport annuel 2023",
+                "footer.downloads.mediaKit": "Kit médias",
+                "footer.downloads.brochure": "Brochure institutionnelle",
+                "footer.copyright": "© 2024 Entr'aide Humanitaire. Tous droits réservés.",
+                "footer.logoAlt": "Logo Entr'aide Humanitaire"
             },
             en: {
+                // Page
+                "page.title": "Gallery - Humanitarian Aid",
+                
                 // Navigation
                 "nav.home": "Home",
                 "nav.about": "About",
@@ -680,70 +701,83 @@
                 "nav.contact": "Contact",
                 "header.donate": "Make a donation",
                 "language": "Language:",
+                "header.logoAlt": "Humanitarian Aid Logo",
                 
-                // Gallery Section
-                "gallery.title": "Our Gallery",
-                "gallery.description": "Discover through images and videos the impact of our humanitarian actions on the ground",
+                // Hero Section
+                "gallery.hero.title": "Our Gallery",
+                "gallery.hero.description": "Discover through images and videos the impact of our humanitarian actions on the ground",
                 
-                // Filters
-                "filter.all": "All",
-                "filter.photos": "Photos",
-                "filter.education": "Education",
-                "filter.health": "Health",
-                "filter.water": "Drinking water",
-                "filter.events": "Events",
-                "filter.senegal": "Senegal",
+                // Filtres
+                "gallery.filters.all": "All",
+                "gallery.filters.photos": "Photos",
+                "gallery.filters.education": "Education",
+                "gallery.filters.health": "Health",
+                "gallery.filters.water": "Drinking water",
+                "gallery.filters.events": "Events",
+                "gallery.filters.senegal": "Senegal",
                 
-                // Categories
-                "category.education": "Education",
-                "category.health": "Health",
-                "category.water": "Drinking water",
-                "category.events": "Events",
-                "category.senegal": "Senegal",
+                // Items de galerie
+                "gallery.items.education1.alt": "Children studying in classroom",
+                "gallery.items.education1.title": "Children schooling",
+                "gallery.items.education1.description": "Distribution of school supplies in Mbour school",
                 
-                // Gallery items
-                "gallery.education.title": "Children's schooling",
-                "gallery.education.description": "Distribution of school supplies at Mbour school",
-                "gallery.health.title": "Community health center",
-                "gallery.health.description": "Inauguration of our new medical center in Mbour",
-                "gallery.water.title": "Community well",
-                "gallery.water.description": "Construction of a well in Kaolack village",
-                "gallery.event.title": "Solidarity day",
-                "gallery.event.description": "Our annual fundraising event in Dakar",
-                "gallery.medical.title": "Mobile medical camp",
-                "gallery.medical.description": "Free consultations in remote areas",
-                "gallery.computer.title": "IT training",
-                "gallery.computer.description": "Digital initiation program for youth",
-                "gallery.filtration.title": "Filtration installation",
-                "gallery.filtration.description": "Commissioning of water purification system",
-                "gallery.school.title": "School inauguration",
-                "gallery.school.description": "Opening ceremony of the renovated school",
+                "gallery.items.health1.alt": "Rural clinic inauguration",
+                "gallery.items.health1.title": "Community health center",
+                "gallery.items.health1.description": "Inauguration of our new medical center in Mbour",
                 
-                // Buttons and actions
+                "gallery.items.water1.alt": "Community well construction",
+                "gallery.items.water1.title": "Community well",
+                "gallery.items.water1.description": "Construction of a well in Kaolack village",
+                
+                "gallery.items.event1.alt": "Humanitarian solidarity event",
+                "gallery.items.event1.title": "Solidarity day",
+                "gallery.items.event1.description": "Our annual fundraising event in Dakar",
+                
+                "gallery.items.health2.alt": "Mobile medical camp",
+                "gallery.items.health2.title": "Mobile medical camp",
+                "gallery.items.health2.description": "Free consultations in remote areas",
+                
+                "gallery.items.education2.alt": "IT training for youth",
+                "gallery.items.education2.title": "IT training",
+                "gallery.items.education2.description": "Digital initiation program for youth",
+                
+                "gallery.items.water2.alt": "Water filtration system installation",
+                "gallery.items.water2.title": "Filtration installation",
+                "gallery.items.water2.description": "Commissioning of water purification system",
+                
+                "gallery.items.event2.alt": "Renovated school inauguration",
+                "gallery.items.event2.title": "School inauguration",
+                "gallery.items.event2.description": "Opening ceremony of renovated school",
+                
+                // Boutons et messages
                 "gallery.loadMore": "Load more",
+                "gallery.noResults.title": "No results found",
+                "gallery.noResults.description": "Try with other filters or keywords",
+                
+                // Section Partage
                 "gallery.share.title": "Share our gallery",
                 "gallery.share.description": "Help us spread our actions and inspire others to join our mission",
                 "gallery.share.facebook": "Share on Facebook",
                 "gallery.share.twitter": "Share on Twitter",
                 "gallery.share.whatsapp": "Share on WhatsApp",
                 
-                // Downloads
-                "gallery.downloads": "Downloads",
-                "gallery.downloads.report": "Annual report 2023",
-                "gallery.downloads.media": "Media kit",
-                "gallery.downloads.brochure": "Institutional brochure",
-                
-                // Results
-                "gallery.noResults.title": "No results found",
-                "gallery.noResults.description": "Try with other filters or keywords",
-                
                 // Footer
-                "footer.description": "Humanitarian association working for a more united and equitable world.",
+                "footer.description": "Humanitarian association working for a more supportive and equitable world.",
+                "footer.address": "Medine N 260, Mbour, Senegal",
                 "footer.links": "Useful links",
                 "footer.follow": "Follow us",
-                "footer.copyright": "© 2024 Entr'aide Humanitaire. All rights reserved."
+                "footer.payment": "Accepted payment methods:",
+                "footer.downloads": "Downloads",
+                "footer.downloads.report": "Annual report 2023",
+                "footer.downloads.mediaKit": "Media kit",
+                "footer.downloads.brochure": "Institutional brochure",
+                "footer.copyright": "© 2024 Humanitarian Aid. All rights reserved.",
+                "footer.logoAlt": "Humanitarian Aid Logo"
             },
             ar: {
+                // Page
+                "page.title": "معرض الصور - التضامن الإنساني",
+                
                 // Navigation
                 "nav.home": "الرئيسية",
                 "nav.about": "من نحن",
@@ -751,155 +785,121 @@
                 "nav.gallery": "معرض الصور",
                 "nav.news": "الأخبار",
                 "nav.contact": "اتصل بنا",
-                "header.donate": "تبرع الآن",
+                "header.donate": "التبرع",
                 "language": "اللغة:",
+                "header.logoAlt": "شعار التضامن الإنساني",
                 
-                // Gallery Section
-                "gallery.title": "معرضنا",
-                "gallery.description": "اكتشف من خلال الصور والفيديوهات تأثير أعمالنا الإنسانية على الأرض",
+                // Hero Section
+                "gallery.hero.title": "معرضنا",
+                "gallery.hero.description": "اكتشف من خلال الصور والفيديوهات تأثير إجراءاتنا الإنسانية على الأرض",
                 
-                // Filters
-                "filter.all": "الكل",
-                "filter.photos": "الصور",
-                "filter.education": "التعليم",
-                "filter.health": "الصحة",
-                "filter.water": "مياه الشرب",
-                "filter.events": "الفعاليات",
-                "filter.senegal": "السنغال",
+                // Filtres
+                "gallery.filters.all": "الكل",
+                "gallery.filters.photos": "الصور",
+                "gallery.filters.education": "التعليم",
+                "gallery.filters.health": "الصحة",
+                "gallery.filters.water": "الماء الصالح للشرب",
+                "gallery.filters.events": "الفعاليات",
+                "gallery.filters.senegal": "السنغال",
                 
-                // Categories
-                "category.education": "التعليم",
-                "category.health": "الصحة",
-                "category.water": "مياه الشرب",
-                "category.events": "الفعاليات",
-                "category.senegal": "السنغال",
+                // Items de galerie
+                "gallery.items.education1.alt": "أطفال يدرسون في الفصل",
+                "gallery.items.education1.title": "تعليم الأطفال",
+                "gallery.items.education1.description": "توزيع المستلزمات المدرسية في مدرسة مبور",
                 
-                // Gallery items
-                "gallery.education.title": "تعليم الأطفال",
-                "gallery.education.description": "توزيع المستلزمات المدرسية في مدرسة مبور",
-                "gallery.health.title": "مركز صحي مجتمعي",
-                "gallery.health.description": "افتتاح مركزنا الطبي الجديد في مبور",
-                "gallery.water.title": "بئر مجتمعي",
-                "gallery.water.description": "بناء بئر في قرية كاولاك",
-                "gallery.event.title": "يوم التضامن",
-                "gallery.event.description": "حدثنا السنوي لجمع التبرعات في داكار",
-                "gallery.medical.title": "مخيم طبي متنقل",
-                "gallery.medical.description": "استشارات طبية مجانية في المناطق النائية",
-                "gallery.computer.title": "تدريب على الحاسوب",
-                "gallery.computer.description": "برنامج تعريفي رقمي للشباب",
-                "gallery.filtration.title": "تركيب نظام الترشيح",
-                "gallery.filtration.description": "تشغيل نظام تنقية المياه",
-                "gallery.school.title": "افتتاح المدرسة",
-                "gallery.school.description": "حفل افتتاح المدرسة المتجددة",
+                "gallery.items.health1.alt": "افتتاح عيادة ريفية",
+                "gallery.items.health1.title": "مركز صحة مجتمعي",
+                "gallery.items.health1.description": "افتتاح مركزنا الطبي الجديد في مبور",
                 
-                // Buttons and actions
+                "gallery.items.water1.alt": "بناء بئر مجتمعي",
+                "gallery.items.water1.title": "بئر مجتمعي",
+                "gallery.items.water1.description": "بناء بئر في قرية كولاك",
+                
+                "gallery.items.event1.alt": "حدث تضامن إنساني",
+                "gallery.items.event1.title": "يوم التضامن",
+                "gallery.items.event1.description": "حدثنا السنوي لجمع التبرعات في داكار",
+                
+                "gallery.items.health2.alt": "معسكر طبي متنقل",
+                "gallery.items.health2.title": "معسكر طبي متنقل",
+                "gallery.items.health2.description": "استشارات مجانية في المناطق النائية",
+                
+                "gallery.items.education2.alt": "تدريب معلوماتي للشباب",
+                "gallery.items.education2.title": "تدريب معلوماتي",
+                "gallery.items.education2.description": "برنامج تعريفي رقمي للشباب",
+                
+                "gallery.items.water2.alt": "تركيب نظام ترشيح المياه",
+                "gallery.items.water2.title": "تركيب الترشيح",
+                "gallery.items.water2.description": "تشغيل نظام تنقية المياه",
+                
+                "gallery.items.event2.alt": "افتتاح مدرسة مجددة",
+                "gallery.items.event2.title": "افتتاح المدرسة",
+                "gallery.items.event2.description": "حفل افتتاح المدرسة المجددة",
+                
+                // Boutons et messages
                 "gallery.loadMore": "تحميل المزيد",
+                "gallery.noResults.title": "لم يتم العثور على نتائج",
+                "gallery.noResults.description": "جرب مع فلاتر أو كلمات مفتاحية أخرى",
+                
+                // Section Partage
                 "gallery.share.title": "شارك معرضنا",
-                "gallery.share.description": "ساعدنا في نشر أعمالنا وإلهام الآخرين للانضمام إلى مهمتنا",
+                "gallery.share.description": "ساعدنا في نشر إجراءاتنا وإلهام الآخرين للانضمام إلى مهمتنا",
                 "gallery.share.facebook": "شارك على فيسبوك",
                 "gallery.share.twitter": "شارك على تويتر",
                 "gallery.share.whatsapp": "شارك على واتساب",
                 
-                // Downloads
-                "gallery.downloads": "التحميلات",
-                "gallery.downloads.report": "التقرير السنوي 2023",
-                "gallery.downloads.media": "حزمة الوسائط",
-                "gallery.downloads.brochure": "الكتيب المؤسسي",
-                
-                // Results
-                "gallery.noResults.title": "لم يتم العثور على نتائج",
-                "gallery.noResults.description": "جرب فلاتر أو كلمات أخرى",
-                
                 // Footer
-                "footer.description": "جمعية إنسانية تعمل من أجل عالم أكثر تضامناً وإنصافاً.",
+                "footer.description": "جمعية إنسانية تعمل من أجل عالم أكثر تضامنًا وعدالة.",
+                "footer.address": "المدينة رقم 260، مبور، السنغال",
                 "footer.links": "روابط مفيدة",
                 "footer.follow": "تابعنا",
-                "footer.copyright": "© 2024 المساعدة الإنسانية. جميع الحقوق محفوظة."
+                "footer.payment": "طرق الدفع المقبولة:",
+                "footer.downloads": "التحميلات",
+                "footer.downloads.report": "التقرير السنوي 2023",
+                "footer.downloads.mediaKit": "حزمة الوسائط",
+                "footer.downloads.brochure": "الكتيب المؤسسي",
+                "footer.copyright": "© 2024 التضامن الإنساني. جميع الحقوق محفوظة.",
+                "footer.logoAlt": "شعار التضامن الإنساني"
             }
         };
 
-           
-        // Fonction de traduction
-        function translatePage(lang) {
-            // Mettre à jour tous les éléments avec data-i18n
+        // Initial language
+        let currentLang = 'fr';
+
+        // Function to change language
+        function changeLanguage(lang) {
+            currentLang = lang;
+            document.getElementById('currentLang').textContent = lang.toUpperCase();
+            document.documentElement.lang = lang;
+            
+            // Update page title
+            const titleKey = 'page.title';
+            if (translations[lang] && translations[lang][titleKey]) {
+                document.title = translations[lang][titleKey];
+            }
+            
+            // Update all elements with data-i18n attribute
             document.querySelectorAll('[data-i18n]').forEach(element => {
                 const key = element.getAttribute('data-i18n');
                 if (translations[lang] && translations[lang][key]) {
                     element.textContent = translations[lang][key];
-                    
-                    // Gérer les attributs placeholder et autres si nécessaire
-                    if (element.hasAttribute('placeholder')) {
-                        element.setAttribute('placeholder', translations[lang][key]);
-                    }
-                    
-                    // Gérer les attributs alt pour les images
-                    if (element.tagName === 'IMG' && element.hasAttribute('alt')) {
-                        element.setAttribute('alt', translations[lang][key]);
-                    }
                 }
             });
             
-            // Mettre à jour la langue actuelle
-            document.getElementById('currentLang').textContent = lang.toUpperCase();
+            // Update alt attributes
+            document.querySelectorAll('[data-i18n-alt]').forEach(element => {
+                const key = element.getAttribute('data-i18n-alt');
+                if (translations[lang] && translations[lang][key]) {
+                    element.alt = translations[lang][key];
+                }
+            });
             
-            // Sauvegarder la préférence de langue
+            // Close language menu
+            document.getElementById('languageMenu').classList.add('hidden');
+            
+            // Save preference to localStorage
             localStorage.setItem('preferredLanguage', lang);
-            
-            // Mettre à jour la direction pour l'arabe
-            if (lang === 'ar') {
-                document.documentElement.dir = 'rtl';
-                document.documentElement.lang = 'ar';
-            } else {
-                document.documentElement.dir = 'ltr';
-                document.documentElement.lang = lang;
-            }
         }
 
-        // Initialiser la langue au chargement
-        document.addEventListener('DOMContentLoaded', function() {
-            // Récupérer la langue sauvegardée ou utiliser le français par défaut
-            const savedLang = localStorage.getItem('preferredLanguage') || 'fr';
-            translatePage(savedLang);
-            
-            // Gestionnaire pour le bouton de langue
-            document.getElementById('languageBtn')?.addEventListener('click', function() {
-                const menu = document.getElementById('languageMenu');
-                menu.classList.toggle('hidden');
-            });
-            
-            // Gestionnaires pour les options de langue
-            document.querySelectorAll('.lang-option').forEach(option => {
-                option.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    const lang = this.getAttribute('data-lang');
-                    translatePage(lang);
-                    
-                    // Fermer les menus
-                    document.getElementById('languageMenu').classList.add('hidden');
-                    document.getElementById('mobileMenu').classList.add('hidden');
-                });
-            });
-            
-            // Gestionnaire pour le menu mobile
-            document.getElementById('mobileMenuBtn')?.addEventListener('click', function() {
-                document.getElementById('mobileMenu').classList.toggle('hidden');
-            });
-            
-            // Fermer le menu langue en cliquant à l'extérieur
-            document.addEventListener('click', function(event) {
-                const languageBtn = document.getElementById('languageBtn');
-                const languageMenu = document.getElementById('languageMenu');
-                
-                if (languageBtn && languageMenu && 
-                    !languageBtn.contains(event.target) && 
-                    !languageMenu.contains(event.target)) {
-                    languageMenu.classList.add('hidden');
-                }
-            });
-        });
-    </script>
-
-     <script>
         document.addEventListener('DOMContentLoaded', function () {
             // Menu mobile
             const mobileMenuBtn = document.getElementById('mobileMenuBtn');
@@ -916,6 +916,36 @@
                     }
                 });
             }
+            
+            // Sélecteur de langue
+            const languageBtn = document.getElementById('languageBtn');
+            const languageMenu = document.getElementById('languageMenu');
+            
+            if (languageBtn && languageMenu) {
+                languageBtn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    languageMenu.classList.toggle('hidden');
+                });
+                
+                // Fermer le menu langue en cliquant ailleurs
+                document.addEventListener('click', function() {
+                    languageMenu.classList.add('hidden');
+                });
+                
+                // Empêcher la fermeture quand on clique dans le menu
+                languageMenu.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                });
+            }
+            
+            // Gestion des clics sur les options de langue
+            document.querySelectorAll('.lang-option').forEach(option => {
+                option.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const lang = this.getAttribute('data-lang');
+                    changeLanguage(lang);
+                });
+            });
 
             // Variables pour la galerie
             let currentFilter = 'all';
@@ -990,14 +1020,19 @@
                     lightboxContent.innerHTML = `<img src="${imgSrc}" alt="${title}" class="w-full h-auto">`;
                     mediaInfo.textContent = title;
                 } else if (type === 'video') {
-                    const videoId = item.querySelector('[data-video-id]').dataset.videoId;
+                    const videoId = item.querySelector('[data-video-id]')?.dataset.videoId;
                     const title = item.querySelector('h3').textContent;
-                    lightboxContent.innerHTML = `
-                        <video controls autoplay class="w-full h-auto">
-                            <source src="${videoId}" type="video/mp4">
-                            Votre navigateur ne supporte pas la lecture de vidéos.
-                        </video>
-                    `;
+                    if (videoId) {
+                        lightboxContent.innerHTML = `
+                            <video controls autoplay class="w-full h-auto">
+                                <source src="${videoId}" type="video/mp4">
+                                Votre navigateur ne supporte pas la lecture de vidéos.
+                            </video>
+                        `;
+                    } else {
+                        const imgSrc = item.querySelector('img').src;
+                        lightboxContent.innerHTML = `<img src="${imgSrc}" alt="${title}" class="w-full h-auto">`;
+                    }
                     mediaInfo.textContent = title;
                 }
 
@@ -1006,18 +1041,13 @@
 
                 // Afficher la lightbox
                 modal.style.display = 'flex';
-                document.body.style.overflow = 'hidden'; // Empêcher le défilement de la page
-
-                // Empêcher la propagation du clic sur le contenu de la lightbox
-                lightboxContent.addEventListener('click', function (e) {
-                    e.stopPropagation();
-                });
+                document.body.style.overflow = 'hidden';
             }
 
             function closeLightbox() {
                 const modal = document.getElementById('lightboxModal');
                 modal.style.display = 'none';
-                document.body.style.overflow = 'auto'; // Réactiver le défilement de la page
+                document.body.style.overflow = 'auto';
                 
                 const video = document.querySelector('#lightboxContent video');
                 if (video) {
@@ -1060,22 +1090,12 @@
                 }
             });
 
-            // Fermer la lightbox en cliquant en dehors du contenu
+            // Fermer la lightbox
             document.getElementById('lightboxModal').addEventListener('click', function (e) {
-                // Si on clique directement sur le modal (et pas sur le contenu ou les boutons)
                 if (e.target === this || 
                     e.target.classList.contains('modal-close') || 
-                    e.target.closest('.modal-close') ||
-                    e.target.classList.contains('lightbox-nav') ||
-                    e.target.closest('.lightbox-nav')) {
-                    // Les boutons ont leur propre gestionnaire
-                    if (!e.target.classList.contains('lightbox-nav') && 
-                        !e.target.closest('.lightbox-nav') &&
-                        !e.target.classList.contains('modal-close') &&
-                        !e.target.closest('.modal-close')) {
-                        // Clic en dehors du contenu -> fermer
-                        closeLightbox();
-                    }
+                    e.target.closest('.modal-close')) {
+                    closeLightbox();
                 }
             });
 
@@ -1091,13 +1111,18 @@
 
             // Charger plus d'éléments
             document.getElementById('loadMore').addEventListener('click', function () {
-                // Simuler le chargement de plus de contenu
                 const btn = this;
-                btn.innerHTML = '<i class="ri-loader-4-line animate-spin mr-2"></i>Chargement...';
+                btn.innerHTML = '<i class="ri-loader-4-line animate-spin mr-2"></i><span data-i18n="gallery.loading">Chargement...</span>';
                 btn.disabled = true;
+                
+                // Mettre à jour le texte de chargement
+                const loadingText = translations[currentLang]?.['gallery.loading'] || 'Chargement...';
+                btn.querySelector('span').textContent = loadingText;
 
                 setTimeout(() => {
-                    btn.innerHTML = '<i class="ri-check-line mr-2"></i>Tout est chargé';
+                    btn.innerHTML = '<i class="ri-check-line mr-2"></i><span data-i18n="gallery.allLoaded">Tout est chargé</span>';
+                    const loadedText = translations[currentLang]?.['gallery.allLoaded'] || 'Tout est chargé';
+                    btn.querySelector('span').textContent = loadedText;
                     btn.classList.remove('bg-primary', 'hover:bg-orange-600');
                     btn.classList.add('bg-gray-300', 'text-gray-600', 'cursor-not-allowed');
                     btn.disabled = true;
@@ -1107,27 +1132,26 @@
             // Initialiser la galerie
             initGallery();
 
-            const additionalMedia = [
-                {
-                    type: 'image',
-                    category: 'photos education senegal',
-                    image: 'education.jpeg',
-                    title: 'Bibliothèque scolaire',
-                    description: 'Inauguration de la nouvelle bibliothèque',
-                    date: '8 Oct 2023'
-                },
-                {
-                    type: 'video',
-                    category: 'videos sante',
-                    image: 'sante.jpg',
-                    video: 'distribution.mp4',
-                    title: 'Campagne de vaccination',
-                    description: 'Programme de vaccination infantile',
-                    date: '30 Sep 2023',
-                    duration: '1:45'
-                }
-            ];
+            // Restaurer la langue préférée
+            const savedLang = localStorage.getItem('preferredLanguage');
+            if (savedLang && translations[savedLang]) {
+                changeLanguage(savedLang);
+            }
+            
+            // Ajouter les traductions manquantes pour les états de chargement
+            if (!translations.fr['gallery.loading']) {
+                translations.fr['gallery.loading'] = "Chargement...";
+                translations.fr['gallery.allLoaded'] = "Tout est chargé";
+            }
+            if (!translations.en['gallery.loading']) {
+                translations.en['gallery.loading'] = "Loading...";
+                translations.en['gallery.allLoaded'] = "All loaded";
+            }
+            if (!translations.ar['gallery.loading']) {
+                translations.ar['gallery.loading'] = "جارٍ التحميل...";
+                translations.ar['gallery.allLoaded'] = "تم تحميل الكل";
+            }
         });
     </script>
-      </body>
+</body>
 </html>
